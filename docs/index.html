@@ -4,25 +4,34 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Draw Party 234 MiniGames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
 <style>
-  html,body{margin:0;height:100%;overflow:hidden;background:#0f1424;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#fff;touch-action:none;user-select:none;-webkit-user-select:none}
-  canvas{display:block;position:fixed;inset:0}
-  .overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(10,14,28,.88);text-align:center;padding:12px;box-sizing:border-box}
+  :root{--ink:#2a2340;--paper:#fbf6ea}
+  html,body{margin:0;height:100%;overflow:hidden;background:#3a2f4a;font-family:'Mochiy Pop One',system-ui,sans-serif;color:var(--ink);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+  canvas{display:block;position:fixed;left:0;top:0;width:100vw;height:100vh;width:100dvw;height:100dvh}
+  .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:8px;box-sizing:border-box;background:rgba(58,47,74,.35)}
   .hidden{display:none!important}
-  h1{margin:0;font-size:30px}
-  h1 span{color:#5ee0a0}
-  h3{margin:4px 0 0;font-size:13px;opacity:.7;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .card{background-color:var(--paper);background-image:repeating-linear-gradient(transparent 0 25px,#cfe0f3 25px 27px);border:3px solid var(--ink);border-radius:20px 26px 18px 24px;box-shadow:6px 6px 0 var(--ink);padding:12px 18px;width:100%;max-width:640px;max-height:100%;overflow:auto;box-sizing:border-box;text-align:center;display:flex;flex-direction:column;gap:7px;transform:rotate(-.6deg)}
+  h1{margin:0;font-size:26px;line-height:1.15;font-weight:400;color:#fff;-webkit-text-stroke:1.5px var(--ink);text-shadow:3px 3px 0 var(--ink);letter-spacing:.5px}
+  h1 .a{color:#ff6b8b}h1 .b{color:#ffcb47}h1 .c{color:#5aa9ff}
+  h3{margin:2px 0 0;font-size:12px;font-weight:400;opacity:.65}
   .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-  .chip{font-size:15px;font-weight:700;padding:10px 14px;border-radius:12px;border:2px solid #2d3860;background:#1a2342;color:#fff;cursor:pointer}
-  .chip.sel{border-color:#5ee0a0;background:#1f3d38}
-  .chip small{display:block;font-weight:500;font-size:11px;opacity:.7;margin-top:2px}
-  .go{font-size:20px;font-weight:800;padding:12px 50px;border:0;border-radius:14px;background:#5ee0a0;color:#0b2a1b;cursor:pointer;margin-top:4px}
-  .hint{font-size:12px;opacity:.6;max-width:520px;line-height:1.4}
-  #quit{position:fixed;top:6px;left:50%;transform:translateX(-50%);z-index:5;background:rgba(255,255,255,.1);border:0;color:#fff;border-radius:10px;padding:4px 14px;font-size:14px;opacity:.5}
-  #rot{display:none;position:fixed;inset:0;z-index:10;background:#0f1424;align-items:center;justify-content:center;text-align:center;font-size:20px;padding:30px}
+  .chip{font-family:inherit;font-size:14px;padding:7px 12px;border-radius:12px 14px 11px 13px;border:2.5px solid var(--ink);background:#fff;color:var(--ink);box-shadow:3px 3px 0 var(--ink);cursor:pointer;transition:transform .08s}
+  .chip small{display:block;font-size:10px;opacity:.65;margin-top:1px}
+  .chip.sel{background:#ffe27a;transform:translate(-1px,-2px) rotate(-1.5deg);box-shadow:4px 5px 0 var(--ink)}
+  .chip:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+  .go{font-family:inherit;font-size:20px;padding:9px 40px;border:3px solid var(--ink);border-radius:16px 12px 18px 14px;background:#5fd68a;color:var(--ink);box-shadow:4px 4px 0 var(--ink);cursor:pointer;align-self:center}
+  .go:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+  .go.alt{background:#5aa9ff}
+  .hint{font-size:10.5px;opacity:.7;line-height:1.45}
+  .ver{position:absolute;right:14px;bottom:6px;font-size:10px;opacity:.45}
+  #quit{position:fixed;top:4px;left:50%;transform:translateX(-50%);z-index:5;font-family:inherit;background:var(--paper);border:2px solid var(--ink);color:var(--ink);border-radius:10px;padding:1px 12px;font-size:12px;opacity:.75;box-shadow:2px 2px 0 var(--ink)}
+  #rot{display:none;position:fixed;inset:0;z-index:10;background:var(--paper);align-items:center;justify-content:center;text-align:center;font-size:20px;padding:30px}
   @media (orientation:portrait){#rot{display:flex}}
-  #champ{font-size:28px;font-weight:800}
-  #tab{font-size:18px;line-height:1.7}
+  #champ{font-size:26px}
+  #tab{font-size:15px;line-height:1.7}
 </style>
 </head>
 <body>
@@ -30,147 +39,210 @@
 <button id="quit" class="hidden">✕ Menu</button>
 
 <div class="overlay" id="menu">
-  <h1>Draw Party <span>234</span> MiniGames</h1>
-  <h3>Mode</h3>
-  <div class="row" id="modes">
-    <button class="chip" data-m="eat">Sel Rebutan<small>makan &amp; membesar</small></button>
-    <button class="chip" data-m="sumo">Sumo Blob<small>dorong keluar</small></button>
-    <button class="chip" data-m="food">Rebutan Makanan<small>kumpulkan paling banyak</small></button>
-    <button class="chip sel" data-m="combo">Gabungan<small>3 mode bergantian</small></button>
+  <div class="card" style="position:relative">
+    <h1><span class="a">Draw Party</span> <span class="b">234</span> <span class="c">MiniGames</span></h1>
+    <h3>✎ Pilih mode</h3>
+    <div class="row" id="modes">
+      <button class="chip" data-m="eat">🍡 Sel Rebutan<small>makan &amp; membesar</small></button>
+      <button class="chip" data-m="sumo">🤼 Sumo Blob<small>dorong keluar</small></button>
+      <button class="chip" data-m="food">🍙 Rebutan Makanan<small>kumpulkan terbanyak</small></button>
+      <button class="chip sel" data-m="combo">🎲 Gabungan<small>3 mode bergantian</small></button>
+    </div>
+    <h3>✎ Jumlah pemain</h3>
+    <div class="row" id="np">
+      <button class="chip sel" data-n="2">2 pemain</button>
+      <button class="chip" data-n="3">3 pemain</button>
+      <button class="chip" data-n="4">4 pemain</button>
+    </div>
+    <button class="go" id="start">MULAI!</button>
+    <div class="hint">Tiap pemain punya area sendiri. <b>Sentuh &amp; geser</b> di areamu untuk bergerak, tekan tombol <b>DASH</b> di pojokmu (atau ketuk cepat / pakai jari kedua) untuk menerjang.</div>
+    <div class="ver" id="ver"></div>
   </div>
-  <h3>Jumlah pemain</h3>
-  <div class="row" id="np">
-    <button class="chip sel" data-n="2">2</button>
-    <button class="chip" data-n="3">3</button>
-    <button class="chip" data-n="4">4</button>
-  </div>
-  <button class="go" id="start">MULAI</button>
-  <div class="hint">Tiap pemain pakai satu jempol di areanya: <b>geser</b> untuk bergerak, <b>ketuk cepat</b> untuk dash. Pemain 2: kiri/kanan. Pemain 3–4: sudut layar (P1 kiri-bawah, P2 kanan-bawah, P3 kiri-atas, P4 kanan-atas).</div>
 </div>
 
 <div class="overlay hidden" id="end">
-  <div id="champ"></div>
-  <div id="tab"></div>
-  <div class="row">
-    <button class="go" id="again">MAIN LAGI</button>
-    <button class="go" id="tomenu" style="background:#8aa0ff">MENU</button>
+  <div class="card" style="max-width:420px">
+    <div id="champ"></div>
+    <div id="tab"></div>
+    <div class="row">
+      <button class="go" id="again">MAIN LAGI</button>
+      <button class="go alt" id="tomenu">MENU</button>
+    </div>
   </div>
 </div>
 
 <div id="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
+const VERSION = 'v0.2 · gaya anime + kontrol baru';
 const $ = id => document.getElementById(id);
+$('ver').textContent = VERSION;
 const cv = $('c'), ctx = cv.getContext('2d');
+const INK = '#2a2340', FONT = "'Mochiy Pop One',system-ui,sans-serif";
+const font = px => `${px}px ${FONT}`;
+const WW = 1200, WH = 675, CX = 600, CY = 337.5;
 let W, H, DPR, S, OX, OY;
-const WW = 1600, WH = 900, CX = 800, CY = 450;
 function resize(){
   DPR = Math.min(devicePixelRatio || 1, 2);
   W = innerWidth; H = innerHeight;
+  cv.style.width = W + 'px'; cv.style.height = H + 'px';
   cv.width = W*DPR; cv.height = H*DPR;
   S = Math.min(W/WW, H/WH); OX = (W-WW*S)/2; OY = (H-WH*S)/2;
 }
 addEventListener('resize', resize); resize();
 
-const PCOL = [{h:0,n:'Merah'},{h:210,n:'Biru'},{h:130,n:'Hijau'},{h:45,n:'Kuning'}];
-const MODES = {
-  eat: {name:'Sel Rebutan', time:75, hint:'Makan titik &amp; sel yang lebih kecil!'},
-  sumo:{name:'Sumo Blob', time:90, hint:'Dorong lawan keluar arena!'},
-  food:{name:'Rebutan Makanan', time:60, hint:'Kumpulkan makanan terbanyak! Emas = 3 poin.'}
-};
 const rnd = (a,b) => a + Math.random()*(b-a);
+const CHARS = [
+  {n:'Merah',  c:'#ff6b8b', d:'#d9436a', acc:'ears'},
+  {n:'Biru',   c:'#5aa9ff', d:'#3478d6', acc:'ahoge'},
+  {n:'Hijau',  c:'#5fd68a', d:'#2f9e5a', acc:'leaf'},
+  {n:'Kuning', c:'#ffcb47', d:'#d98e12', acc:'bow'}
+];
+const MODES = {
+  eat: {name:'Sel Rebutan', time:75, hint:'Makan permen & blob yang lebih kecil!'},
+  sumo:{name:'Sumo Blob', time:0, hint:'Dorong lawan keluar ring!'},
+  food:{name:'Rebutan Makanan', time:60, hint:'Onigiri = 1 poin, bintang = 3 poin!'}
+};
 
+// ---------- Kertas buku tulis (digambar sekali) ----------
+function doodle(p, x, y, s, k){
+  p.beginPath();
+  if(k === 0){ for(let i=0;i<=10;i++){ const a = -Math.PI/2 + i*Math.PI/5, r = i%2 ? s*.45 : s; p.lineTo(x+Math.cos(a)*r, y+Math.sin(a)*r); } }
+  else if(k === 1){ p.moveTo(x, y+s*.7); p.bezierCurveTo(x-s*1.4, y-s*.2, x-s*.5, y-s*1.1, x, y-s*.3); p.bezierCurveTo(x+s*.5, y-s*1.1, x+s*1.4, y-s*.2, x, y+s*.7); }
+  else { for(let i=0;i<40;i++){ const a = i*.45, r = i*s/40; p.lineTo(x+Math.cos(a)*r, y+Math.sin(a)*r); } }
+  p.stroke();
+}
+const paper = document.createElement('canvas'); paper.width = WW; paper.height = WH;
+(function(){
+  const p = paper.getContext('2d');
+  p.fillStyle = '#fbf6ea'; p.fillRect(0,0,WW,WH);
+  p.strokeStyle = 'rgba(110,155,210,.33)'; p.lineWidth = 2;
+  for(let y=45;y<WH;y+=40){ p.beginPath(); p.moveTo(0,y); p.lineTo(WW,y); p.stroke(); }
+  p.strokeStyle = 'rgba(230,90,110,.35)'; p.beginPath(); p.moveTo(90,0); p.lineTo(90,WH); p.stroke();
+  for(let i=0;i<1500;i++){ p.fillStyle = `rgba(60,50,80,${Math.random()*.06})`; p.fillRect(Math.random()*WW, Math.random()*WH, 1+Math.random()*2, 1+Math.random()*2); }
+  p.globalAlpha = .12; p.strokeStyle = INK; p.lineWidth = 3; p.lineJoin = 'round';
+  for(let i=0;i<16;i++) doodle(p, rnd(40,WW-40), rnd(40,WH-40), rnd(12,22), i%3);
+  p.globalAlpha = 1;
+})();
+
+// ---------- State ----------
 let sel = {mode:'combo', n:2};
-let match = null, players = [], food = [], mode = 'eat', state = 'menu', tCount = 0, tLeft = 0, tEnd = 0, endText = '', arenaR = 440, elapsed = 0;
+let match = null, players = [], food = [], parts = [], mode = 'eat', state = 'menu';
+let tCount = 0, tLeft = 0, tEnd = 0, endText = '', endCol = INK, arenaR = 300, elapsed = 0, T = 0, shake = 0;
 
-// ---------- Menu ----------
 document.querySelectorAll('#modes .chip').forEach(b => b.onclick = () => {
   document.querySelectorAll('#modes .chip').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); sel.mode = b.dataset.m;
 });
 document.querySelectorAll('#np .chip').forEach(b => b.onclick = () => {
   document.querySelectorAll('#np .chip').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); sel.n = +b.dataset.n;
 });
-$('start').onclick = startMatch;
+$('start').onclick = () => { goFull(); startMatch(); };
 $('again').onclick = startMatch;
 $('tomenu').onclick = toMenu;
 $('quit').onclick = toMenu;
-function toMenu(){ state = 'menu'; match = null; $('menu').classList.remove('hidden'); $('end').classList.add('hidden'); $('quit').classList.add('hidden'); }
 
+function goFull(){
+  try{
+    const d = document.documentElement;
+    if(!document.fullscreenElement && d.requestFullscreen){
+      d.requestFullscreen().then(() => { try{ screen.orientation.lock('landscape').catch(()=>{}); }catch(e){} }).catch(()=>{});
+    }
+  }catch(e){}
+}
+function resetInput(){ ptrs.clear(); pads.forEach(p => { p.id = null; p.press = 0; }); }
+function toMenu(){
+  state = 'menu'; match = null; players = []; parts = []; resetInput();
+  $('menu').classList.remove('hidden'); $('end').classList.add('hidden'); $('quit').classList.add('hidden');
+}
 function startMatch(){
-  const order = sel.mode === 'combo' ? ['eat','sumo','food'] : [sel.mode,sel.mode,sel.mode];
+  const order = sel.mode === 'combo' ? ['eat','sumo','food'] : [sel.mode, sel.mode, sel.mode];
   match = {order, idx:0, wins:new Array(sel.n).fill(0), n:sel.n};
+  resetInput();
   $('menu').classList.add('hidden'); $('end').classList.add('hidden'); $('quit').classList.remove('hidden');
   startRound();
 }
 
-// ---------- Round setup ----------
 function spawnPos(i, n){
   if(mode === 'sumo'){
-    const a = (Math.PI*2/n)*i + Math.PI/4;
-    return {x: CX + Math.cos(a)*240, y: CY + Math.sin(a)*240};
+    const a = n === 2 ? (i ? 0 : Math.PI) : (Math.PI*2/n)*i + Math.PI*.75;
+    return {x: CX + Math.cos(a)*170, y: CY + Math.sin(a)*170};
   }
-  if(n === 2) return i === 0 ? {x:300,y:CY} : {x:1300,y:CY};
-  return [{x:260,y:650},{x:1340,y:650},{x:260,y:250},{x:1340,y:250}][i];
+  if(n === 2) return i === 0 ? {x:220,y:CY} : {x:980,y:CY};
+  return [{x:200,y:480},{x:1000,y:480},{x:200,y:195},{x:1000,y:195}][i];
 }
 function startRound(){
   mode = match.order[match.idx];
-  const n = match.n;
-  const oldTouch = players.map(p => p.t);
   players = [];
-  for(let i=0;i<n;i++){
-    const sp = spawnPos(i, n);
+  for(let i=0;i<match.n;i++){
+    const sp = spawnPos(i, match.n);
     const fx = CX - sp.x, fy = CY - sp.y, fl = Math.hypot(fx,fy) || 1;
-    players.push({i, x:sp.x, y:sp.y, vx:0, vy:0, m: mode === 'eat' ? 500 : 784, score:0, alive:true, fall:0, cx:0, cy:0,
-      fx:fx/fl, fy:fy/fl, dashCd:0, dashFx:0, h:PCOL[i].h,
-      t: oldTouch[i] || {id:null, ox:0, oy:0, px:0, py:0, t0:0, moved:false}});
+    players.push({i, x:sp.x, y:sp.y, vx:0, vy:0, m: mode === 'eat' ? 900 : 1600, score:0, alive:true, fall:0, fallMax:.6,
+      cx:0, cy:0, fx:fx/fl, fy:fy/fl, dashCd:0, dashMax:1, dashFx:0, seed:rnd(0,9), blink:rnd(1,3), scared:false, won:false, expr:'normal'});
   }
-  food = [];
-  if(mode === 'eat') for(let i=0;i<140;i++) food.push(newFood());
-  if(mode === 'food') for(let i=0;i<14;i++) food.push(newFood(true));
-  arenaR = 440; elapsed = 0; tLeft = MODES[mode].time; tCount = 3.2; state = 'count';
+  food = []; parts = [];
+  if(mode === 'eat') for(let i=0;i<100;i++) food.push(newFood());
+  if(mode === 'food') for(let i=0;i<12;i++) food.push(newFood());
+  arenaR = 300; elapsed = 0; tLeft = MODES[mode].time; tCount = 3.2; state = 'count';
 }
-function newFood(special){
-  const f = {x: rnd(40,WW-40), y: rnd(40,WH-40), h: rnd(0,360), v:1};
-  if(mode === 'food' && Math.random() < .12) f.v = 3;
-  return f;
+function newFood(){
+  return {x: rnd(30,WW-30), y: rnd(30,WH-30), hue: rnd(0,360), v: (mode === 'food' && Math.random() < .14) ? 3 : 1, ph: rnd(0,6)};
 }
 
-// ---------- Input ----------
+// ---------- Kontrol ----------
+// Tiap pemain punya "pad": joystick mengambang + tombol DASH tetap di pojoknya.
+const pads = [0,1,2,3].map(() => ({id:null, ox:0, oy:0, px:0, py:0, t0:0, moved:false, press:0}));
+const ptrs = new Map();               // pointerId -> {z, kind:'joy'|'btn'|'extra', x, y}
+const JR = () => Math.max(42, Math.min(W,H)*.11);   // radius joystick
+const BR = () => Math.max(32, Math.min(W,H)*.085);  // radius tombol dash
+function btnPos(z){
+  const m = BR() + 14;
+  return [{x:m,y:H-m},{x:W-m,y:H-m},{x:m,y:m},{x:W-m,y:m}][z];
+}
 function zoneOf(x, y){
   const n = match ? match.n : 2;
   if(n === 2) return x < W/2 ? 0 : 1;
-  const left = x < W/2, top = y < H/2;
-  const z = top ? (left ? 2 : 3) : (left ? 0 : 1);
+  const z = y < H/2 ? (x < W/2 ? 2 : 3) : (x < W/2 ? 0 : 1);
   return z < n ? z : -1;
 }
-const ptrOwner = new Map();
+const inputOn = () => match && (state === 'count' || state === 'play' || state === 'end');
+function startJoy(pad, id, x, y){ pad.id = id; pad.ox = pad.px = x; pad.oy = pad.py = y; pad.t0 = performance.now(); pad.moved = false; }
+
 cv.addEventListener('pointerdown', e => {
-  if(state === 'menu' || !match) return;
-  const z = zoneOf(e.clientX, e.clientY); if(z < 0) return;
-  const p = players[z], t = p.t;
-  cv.setPointerCapture(e.pointerId);
-  if(t.id !== null){ dash(p); return; }       // jari kedua = dash
-  ptrOwner.set(e.pointerId, z);
-  t.id = e.pointerId; t.ox = t.px = e.clientX; t.oy = t.py = e.clientY; t.t0 = performance.now(); t.moved = false;
+  if(!inputOn()) return;
+  e.preventDefault();
+  const z = zoneOf(e.clientX, e.clientY); if(z < 0 || !players[z]) return;
+  try{ cv.setPointerCapture(e.pointerId); }catch(_){}
+  const pad = pads[z], b = btnPos(z), o = {z, kind:'joy', x:e.clientX, y:e.clientY};
+  if(Math.hypot(e.clientX-b.x, e.clientY-b.y) < BR()*1.3){ o.kind = 'btn'; pad.press = .15; dash(players[z]); }
+  else if(pad.id === null) startJoy(pad, e.pointerId, e.clientX, e.clientY);
+  else { o.kind = 'extra'; dash(players[z]); }     // jari kedua di area sendiri = dash
+  ptrs.set(e.pointerId, o);
 });
 cv.addEventListener('pointermove', e => {
-  const z = ptrOwner.get(e.pointerId); if(z === undefined || !players[z]) return;
-  const t = players[z].t;
-  t.px = e.clientX; t.py = e.clientY;
-  let x = t.px - t.ox, y = t.py - t.oy, l = Math.hypot(x,y);
-  if(l > 14) t.moved = true;
-  if(l > 60){ t.ox = t.px - x/l*60; t.oy = t.py - y/l*60; }
+  const o = ptrs.get(e.pointerId); if(!o) return;
+  o.x = e.clientX; o.y = e.clientY;
+  if(o.kind !== 'joy') return;
+  const pad = pads[o.z];
+  pad.px = o.x; pad.py = o.y;
+  const dx = pad.px-pad.ox, dy = pad.py-pad.oy, l = Math.hypot(dx,dy);
+  if(l > 12) pad.moved = true;
+  const lim = JR()*1.4;                      // pangkal joystick ikut jari kalau terlalu jauh
+  if(l > lim){ pad.ox = pad.px - dx/l*lim; pad.oy = pad.py - dy/l*lim; }
 });
 function release(e){
-  const z = ptrOwner.get(e.pointerId); if(z === undefined) return;
-  ptrOwner.delete(e.pointerId);
-  const p = players[z]; if(!p) return;
-  const t = p.t;
-  if(e.type === 'pointerup' && !t.moved && performance.now()-t.t0 < 250) dash(p);   // ketuk cepat = dash
-  t.id = null; p.cx = p.cy = 0;
+  const o = ptrs.get(e.pointerId); if(!o) return;
+  ptrs.delete(e.pointerId);
+  if(o.kind !== 'joy') return;
+  const pad = pads[o.z];
+  if(e.type === 'pointerup' && !pad.moved && performance.now()-pad.t0 < 220 && players[o.z]) dash(players[o.z]);  // ketuk cepat = dash
+  pad.id = null;
+  for(const [id,q] of ptrs){                 // jari lain di area yang sama mengambil alih joystick
+    if(q.z === o.z && q.kind === 'extra'){ q.kind = 'joy'; startJoy(pad, id, q.x, q.y); pad.moved = true; break; }
+  }
 }
 cv.addEventListener('pointerup', release);
 cv.addEventListener('pointercancel', release);
+cv.addEventListener('lostpointercapture', release);
 addEventListener('contextmenu', e => e.preventDefault());
 
 const keys = {};
@@ -178,69 +250,102 @@ addEventListener('keydown', e => {
   keys[e.code] = true;
   if(state !== 'play') return;
   if(e.code === 'Space' && players[0]) dash(players[0]);
-  if(e.code === 'Enter' && players[1]) dash(players[1]);
+  if((e.code === 'Enter' || e.code === 'ShiftRight') && players[1]) dash(players[1]);
 });
 addEventListener('keyup', e => keys[e.code] = false);
+addEventListener('blur', () => { for(const k in keys) keys[k] = false; });
 
+function readCtrl(p){
+  const pad = pads[p.i];
+  p.cx = p.cy = 0;
+  if(pad.id !== null){
+    const dx = pad.px-pad.ox, dy = pad.py-pad.oy, l = Math.hypot(dx,dy), dead = 8, R = JR();
+    if(l > dead){ const m = Math.min(1, (l-dead)/(R-dead)); p.cx = dx/l*m; p.cy = dy/l*m; }
+  } else if(p.i < 2){
+    const k = p.i === 0 ? ['KeyA','KeyD','KeyW','KeyS'] : ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'];
+    const x = (keys[k[1]]?1:0) - (keys[k[0]]?1:0), y = (keys[k[3]]?1:0) - (keys[k[2]]?1:0);
+    if(x || y){ const l = Math.hypot(x,y); p.cx = x/l; p.cy = y/l; }
+  }
+}
+const canDash = p => p.alive && p.dashCd <= 0 && !(mode === 'eat' && p.m < 400);
 function dash(p){
-  if(state !== 'play' || !p.alive || p.dashCd > 0) return;
-  if(mode === 'eat'){ if(p.m < 220) return; p.m -= p.m*0.06; }
-  const imp = mode === 'eat' ? 700 : mode === 'sumo' ? 700 : 800;
-  p.vx += p.fx*imp; p.vy += p.fy*imp;
-  p.dashCd = mode === 'eat' ? .8 : 1; p.dashFx = .25;
+  if(state !== 'play' || !canDash(p)) return;
+  if(mode === 'eat') p.m *= .94;
+  let dx = p.fx, dy = p.fy;
+  const cl = Math.hypot(p.cx,p.cy);
+  if(cl > .2){ dx = p.cx/cl; dy = p.cy/cl; }
+  const imp = mode === 'sumo' ? 560 : mode === 'eat' ? 520 : 600;
+  p.vx += dx*imp; p.vy += dy*imp; p.fx = dx; p.fy = dy;
+  p.dashMax = p.dashCd = mode === 'sumo' ? 1.1 : .8; p.dashFx = .3;
+  const r = rad(p);
+  for(let k=0;k<6;k++) parts.push({type:'line', x:p.x - dx*r*rnd(1,1.6) + rnd(-r,r)*-dy, y:p.y - dy*r*rnd(1,1.6) + rnd(-r,r)*dx, dx, dy, len:rnd(20,45), life:.3, max:.3});
+  buzz(15);
+}
+function buzz(ms){ try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} }
+
+// ---------- Efek ----------
+function burst(x, y, col, n, spd){
+  for(let i=0;i<n;i++){ const a = rnd(0,6.28), s = rnd(spd*.4, spd);
+    parts.push({type:'spark', x, y, vx:Math.cos(a)*s, vy:Math.sin(a)*s, life:rnd(.35,.7), max:.7, col, sz:rnd(5,10), rot:rnd(0,6)}); }
+}
+function popText(x, y, txt, col, sz){ parts.push({type:'text', x, y, vx:0, vy:-70, life:.9, max:.9, txt, col, sz}); }
+function updateParts(dt){
+  for(const q of parts){ q.life -= dt; if(q.vx !== undefined){ q.x += q.vx*dt; q.y += q.vy*dt; q.vx *= .92; q.vy *= .92; } }
+  parts = parts.filter(q => q.life > 0);
+  if(parts.length > 300) parts.splice(0, parts.length-300);
 }
 
 // ---------- Update ----------
 const rad = p => Math.sqrt(p.m);
 function params(p){
-  if(mode === 'eat'){ const ms = 330*Math.pow(rad(p)/22, -0.3); return {ms, k:4}; }
-  if(mode === 'sumo') return {ms:310, k:2.2};
-  return {ms:340, k:3.5};
-}
-function readCtrl(p){
-  const t = p.t;
-  if(t.id !== null){
-    const x = t.px-t.ox, y = t.py-t.oy, l = Math.hypot(x,y);
-    if(l > 6){ const m = Math.min(1, l/45); p.cx = x/l*m; p.cy = y/l*m; } else { p.cx = p.cy = 0; }
-  } else if(p.i < 2) {
-    const k = p.i === 0 ? ['KeyA','KeyD','KeyW','KeyS'] : ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'];
-    let x = (keys[k[1]]?1:0) - (keys[k[0]]?1:0), y = (keys[k[3]]?1:0) - (keys[k[2]]?1:0);
-    const l = Math.hypot(x,y) || 1; p.cx = x/l; p.cy = y/l;
-    if(!x && !y){ p.cx = p.cy = 0; }
-  }
+  if(mode === 'eat') return {ms: 280*Math.pow(rad(p)/30, -0.35), k:6};
+  if(mode === 'sumo') return {ms:260, k:3.4};
+  return {ms:290, k:5};
 }
 
 function update(dt){
-  if(state === 'count'){ tCount -= dt; if(tCount <= 0) state = 'play'; }
-  for(const p of players){ if(p.fall > 0) p.fall = Math.max(0, p.fall - dt); }
+  T += dt;
+  shake *= Math.exp(-10*dt);
+  updateParts(dt);
+  for(const p of pads) p.press = Math.max(0, p.press-dt);
+  for(const p of players){
+    p.blink -= dt; if(p.blink < -.12) p.blink = rnd(2,4.5);
+    if(!p.alive){ p.fall = Math.max(0, p.fall-dt); p.x += p.vx*dt; p.y += p.vy*dt; p.vx *= Math.exp(-2*dt); p.vy *= Math.exp(-2*dt); }
+    p.expr = !p.alive ? 'dead' : p.won ? 'happy' : p.dashFx > 0 ? 'dash' : p.scared ? 'scared' : p.blink < 0 ? 'blink' : 'normal';
+  }
+  if(state === 'count'){ tCount -= dt; if(tCount <= 0) state = 'play'; return; }
   if(state === 'end'){
     tEnd -= dt;
-    if(tEnd <= 0){
-      match.idx++;
-      if(match.idx >= match.order.length) finishMatch(); else startRound();
-    }
+    if(tEnd <= 0){ match.idx++; if(match.idx >= match.order.length) finishMatch(); else startRound(); }
     return;
   }
   if(state !== 'play') return;
-  elapsed += dt; tLeft -= dt;
+  elapsed += dt; if(MODES[mode].time) tLeft -= dt;
 
   for(const p of players){
     if(!p.alive) continue;
     readCtrl(p);
-    if(Math.hypot(p.cx,p.cy) > .2){ const l = Math.hypot(p.cx,p.cy); p.fx = p.cx/l; p.fy = p.cy/l; }
+    const cl = Math.hypot(p.cx,p.cy);
+    if(cl > .2){ p.fx = p.cx/cl; p.fy = p.cy/cl; }
     const {ms,k} = params(p);
     p.vx += p.cx*ms*k*dt; p.vy += p.cy*ms*k*dt;
     const f = Math.exp(-k*dt); p.vx *= f; p.vy *= f;
     p.x += p.vx*dt; p.y += p.vy*dt;
     p.dashCd = Math.max(0, p.dashCd-dt); p.dashFx = Math.max(0, p.dashFx-dt);
+    p.scared = false;
   }
 
   if(mode === 'sumo'){
-    arenaR = Math.max(30, 440 - elapsed*5.5);
-    collide();
+    if(elapsed > 3) arenaR = Math.max(60, 300 - (elapsed-3)*3.6);
+    collide(.9);
     for(const p of players){
       if(!p.alive) continue;
-      if(Math.hypot(p.x-CX, p.y-CY) > arenaR + rad(p)*0.35){ p.alive = false; p.fall = .45; buzz(); }
+      const d = Math.hypot(p.x-CX, p.y-CY), r = rad(p);
+      if(d > arenaR - r*.8) p.scared = true;
+      if(d > arenaR + r*.3){
+        p.alive = false; p.fall = p.fallMax = .6; shake = 12; buzz(60);
+        popText(p.x, p.y - r, 'OUT!', CHARS[p.i].c, 40); burst(p.x, p.y, CHARS[p.i].c, 14, 260);
+      }
     }
   } else {
     for(const p of players){
@@ -249,43 +354,57 @@ function update(dt){
       if(p.x < r){ p.x = r; p.vx = Math.abs(p.vx)*.3; } if(p.x > WW-r){ p.x = WW-r; p.vx = -Math.abs(p.vx)*.3; }
       if(p.y < r){ p.y = r; p.vy = Math.abs(p.vy)*.3; } if(p.y > WH-r){ p.y = WH-r; p.vy = -Math.abs(p.vy)*.3; }
     }
-    if(mode === 'food') collide();
-    // makanan
+    if(mode === 'food') collide(.7);
     for(const p of players){
       if(!p.alive) continue;
       const r = rad(p);
       for(let i=0;i<food.length;i++){
-        const f = food[i], fr = mode === 'food' ? (f.v>1?16:11) : 7;
-        if(Math.hypot(f.x-p.x, f.y-p.y) < r + fr*0.6){
-          if(mode === 'eat') p.m += 14; else p.score += f.v;
+        const f = food[i], fr = mode === 'food' ? (f.v > 1 ? 20 : 16) : 6;
+        if(Math.hypot(f.x-p.x, f.y-p.y) < r + fr*.6){
+          if(mode === 'eat'){ p.m += 16; if(Math.random() < .3) burst(f.x, f.y, `hsl(${f.hue},85%,70%)`, 3, 90); }
+          else { p.score += f.v; burst(f.x, f.y, f.v > 1 ? '#ffd54a' : '#fff', f.v > 1 ? 12 : 6, 200); popText(f.x, f.y-14, '+' + f.v, f.v > 1 ? '#ffcb47' : CHARS[p.i].c, f.v > 1 ? 30 : 22); }
           food[i] = newFood();
         }
       }
-      if(mode === 'eat' && p.m > 1400) p.m -= p.m*0.004*dt;
+      if(mode === 'eat' && p.m > 3000) p.m -= p.m*.005*dt;
     }
     if(mode === 'eat'){
       for(const a of players) for(const b of players){
         if(a === b || !a.alive || !b.alive) continue;
-        const ra = rad(a), rb = rad(b);
-        if(ra > rb*1.12 && Math.hypot(a.x-b.x, a.y-b.y) < ra - rb*0.3){ a.m += b.m*0.85; b.alive = false; b.fall = .3; buzz(); }
+        const ra = rad(a), rb = rad(b), d = Math.hypot(a.x-b.x, a.y-b.y);
+        if(ra > rb*1.1){
+          if(d < ra + rb + 120) b.scared = true;
+          if(d < ra - rb*.35){
+            a.m += b.m*.85; b.alive = false; b.fall = b.fallMax = .35;
+            b.vx = (a.x-b.x)*3; b.vy = (a.y-b.y)*3;
+            shake = 10; buzz(60);
+            popText(a.x, a.y - ra, 'NYAM!', CHARS[a.i].c, 36); burst(b.x, b.y, CHARS[b.i].c, 14, 240);
+          }
+        }
       }
     }
   }
   checkRoundEnd();
 }
-function buzz(){ try{ navigator.vibrate && navigator.vibrate(40); }catch(e){} }
 
-function collide(){
+function collide(rest){
   for(let i=0;i<players.length;i++) for(let j=i+1;j<players.length;j++){
     const a = players[i], b = players[j];
     if(!a.alive || !b.alive) continue;
-    let dx = b.x-a.x, dy = b.y-a.y, d = Math.hypot(dx,dy) || .001;
-    const min = rad(a)+rad(b);
+    const dx = b.x-a.x, dy = b.y-a.y, d = Math.hypot(dx,dy) || .001, min = rad(a)+rad(b);
     if(d < min){
       const nx = dx/d, ny = dy/d, ov = (min-d)/2;
       a.x -= nx*ov; a.y -= ny*ov; b.x += nx*ov; b.y += ny*ov;
       const rel = (a.vx-b.vx)*nx + (a.vy-b.vy)*ny;
-      if(rel > 0){ const imp = (1+.95)*rel/2; a.vx -= imp*nx; a.vy -= imp*ny; b.vx += imp*nx; b.vy += imp*ny; }
+      if(rel > 0){
+        const imp = (1+rest)*rel/2;
+        a.vx -= imp*nx; a.vy -= imp*ny; b.vx += imp*nx; b.vy += imp*ny;
+        if(rel > 260){
+          const hx = a.x + nx*rad(a), hy = a.y + ny*rad(a);
+          burst(hx, hy, '#fff', 8, 220); shake = Math.max(shake, 6); buzz(25);
+          if(rel > 420) popText(hx, hy - 20, Math.random() < .5 ? 'BONK!' : 'DUAK!', '#ffcb47', 30);
+        }
+      }
     }
   }
 }
@@ -293,137 +412,324 @@ function collide(){
 function checkRoundEnd(){
   const alive = players.filter(p => p.alive);
   let winners = null;
-  if(mode === 'sumo'){
-    if(alive.length <= 1) winners = alive;
-  } else if(mode === 'eat'){
+  if(mode === 'sumo'){ if(alive.length <= 1) winners = alive; }
+  else if(mode === 'eat'){
     if(alive.length <= 1) winners = alive;
     else if(tLeft <= 0){ const mx = Math.max(...alive.map(p => p.m)); winners = alive.filter(p => p.m === mx); }
-  } else {
-    if(tLeft <= 0){ const mx = Math.max(...players.map(p => p.score)); winners = mx > 0 ? players.filter(p => p.score === mx) : []; }
+  } else if(tLeft <= 0){
+    const mx = Math.max(...players.map(p => p.score)); winners = mx > 0 ? players.filter(p => p.score === mx) : [];
   }
   if(!winners) return;
-  for(const w of winners) match.wins[w.i]++;
-  endText = winners.length === 0 ? 'Seri!' : winners.length === 1 ? PCOL[winners[0].i].n + ' menang ronde ini!' : 'Seri: ' + winners.map(w => PCOL[w.i].n).join(' & ');
-  endHue = winners.length === 1 ? PCOL[winners[0].i].h : 0;
+  for(const w of winners){ match.wins[w.i]++; w.won = true; burst(w.x, w.y, '#ffd54a', 18, 300); }
+  endText = winners.length === 0 ? 'Seri!' : winners.length === 1 ? CHARS[winners[0].i].n + ' menang!' : 'Seri: ' + winners.map(w => CHARS[w.i].n).join(' & ');
+  endCol = winners.length === 1 ? CHARS[winners[0].i].c : '#fff';
   state = 'end'; tEnd = 2.8;
 }
-let endHue = 0;
 
 function finishMatch(){
   state = 'over';
   const mx = Math.max(...match.wins);
   const champs = match.wins.map((w,i) => w === mx ? i : -1).filter(i => i >= 0);
-  $('champ').textContent = mx === 0 ? 'Semua seri!' : champs.length === 1 ? '🏆 ' + PCOL[champs[0]].n + ' juara!' : '🤝 Seri: ' + champs.map(i => PCOL[i].n).join(' & ');
-  $('tab').innerHTML = match.wins.map((w,i) => `<span style="color:hsl(${PCOL[i].h},75%,65%)">${PCOL[i].n}</span>: ${w} ronde`).join('<br>');
+  for(const p of players) p.won = champs.includes(p.i) && mx > 0;
+  $('champ').textContent = mx === 0 ? 'Semua seri!' : champs.length === 1 ? '🏆 ' + CHARS[champs[0]].n + ' juara!' : '🤝 Seri: ' + champs.map(i => CHARS[i].n).join(' & ');
+  $('tab').innerHTML = match.wins.map((w,i) => `<span style="color:${CHARS[i].d}">${CHARS[i].n}</span>: ${'★'.repeat(w) || '–'}`).join('<br>');
   $('end').classList.remove('hidden'); $('quit').classList.add('hidden');
+  resetInput();
+}
+
+// ---------- Gambar karakter ----------
+function wobbly(x, y, r, seed, amp){
+  ctx.beginPath();
+  const N = 30;
+  for(let i=0;i<=N;i++){
+    const a = i/N*6.2832, w = 1 + amp*(Math.sin(a*3+seed+T*1.6)*.6 + Math.sin(a*5-seed*1.7+T*2.1)*.4);
+    const px = x + Math.cos(a)*r*w, py = y + Math.sin(a)*r*w;
+    i ? ctx.lineTo(px,py) : ctx.moveTo(px,py);
+  }
+  ctx.closePath();
+}
+function inkStroke(w){ ctx.lineWidth = w; ctx.strokeStyle = INK; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); }
+
+function accessoryBack(ch, r){
+  const lw = Math.max(2, r*.06);
+  if(ch.acc === 'ears'){
+    for(const s of [-1,1]){
+      const a1 = -Math.PI/2 + s*.3, a2 = -Math.PI/2 + s*1.0, at = -Math.PI/2 + s*.62;
+      const P = a => [Math.cos(a)*r*.85, Math.sin(a)*r*.85];
+      const p1 = P(a1), p2 = P(a2), tip = [Math.cos(at)*r*1.5, Math.sin(at)*r*1.5];
+      ctx.beginPath(); ctx.moveTo(...p1); ctx.lineTo(...tip); ctx.lineTo(...p2); ctx.closePath();
+      ctx.fillStyle = ch.c; ctx.fill(); inkStroke(lw);
+      const cx = (p1[0]+p2[0]+tip[0])/3, cy = (p1[1]+p2[1]+tip[1])/3, k = .5;
+      ctx.beginPath(); [p1,tip,p2].forEach((q,i) => { const x = cx+(q[0]-cx)*k, y = cy+(q[1]-cy)*k + r*.05; i ? ctx.lineTo(x,y) : ctx.moveTo(x,y); });
+      ctx.closePath(); ctx.fillStyle = '#ffc2d1'; ctx.fill();
+    }
+  } else if(ch.acc === 'ahoge'){
+    ctx.beginPath(); ctx.moveTo(-r*.08, -r*.9);
+    ctx.quadraticCurveTo(-r*.2, -r*1.55, r*.38, -r*1.5);
+    ctx.quadraticCurveTo(r*.02, -r*1.38, r*.1, -r*.9);
+    ctx.closePath(); ctx.fillStyle = ch.c; ctx.fill(); inkStroke(lw);
+  } else if(ch.acc === 'leaf'){
+    ctx.beginPath(); ctx.moveTo(0, -r*.9); ctx.quadraticCurveTo(-r*.05, -r*1.15, r*.02, -r*1.3); inkStroke(lw);
+    ctx.save(); ctx.translate(r*.22, -r*1.35); ctx.rotate(-.5);
+    ctx.beginPath(); ctx.ellipse(0, 0, r*.26, r*.12, 0, 0, 7); ctx.fillStyle = '#9be77f'; ctx.fill(); inkStroke(lw*.8);
+    ctx.beginPath(); ctx.moveTo(-r*.2, 0); ctx.lineTo(r*.18, 0); inkStroke(lw*.5);
+    ctx.restore();
+  }
+}
+function accessoryFront(ch, r){
+  if(ch.acc !== 'bow') return;
+  const lw = Math.max(2, r*.055);
+  ctx.save(); ctx.translate(r*.45, -r*.72); ctx.rotate(.35);
+  for(const s of [-1,1]){
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(s*r*.38, -r*.2); ctx.lineTo(s*r*.38, r*.2); ctx.closePath();
+    ctx.fillStyle = '#ff5d8f'; ctx.fill(); inkStroke(lw);
+  }
+  ctx.beginPath(); ctx.arc(0, 0, r*.1, 0, 7); ctx.fillStyle = '#ff5d8f'; ctx.fill(); inkStroke(lw);
+  ctx.restore();
+}
+
+function drawFace(p, r, ch){
+  const gx = p.fx*r*.14, gy = p.fy*r*.1, ex = r*.3, ey = -r*.08, lw = Math.max(2, r*.06);
+  ctx.fillStyle = 'rgba(255,105,140,.45)';
+  for(const s of [-1,1]){ ctx.beginPath(); ctx.ellipse(gx + s*r*.5, gy + r*.17, r*.13, r*.07, 0, 0, 7); ctx.fill(); }
+  const e = p.expr;
+  for(const s of [-1,1]){
+    const cx = gx + s*ex, cy = gy + ey, ew = r*.13, eh = r*.19;
+    ctx.beginPath();
+    if(e === 'dead'){
+      ctx.moveTo(cx-ew, cy-ew); ctx.lineTo(cx+ew, cy+ew); ctx.moveTo(cx+ew, cy-ew); ctx.lineTo(cx-ew, cy+ew); inkStroke(lw);
+    } else if(e === 'happy'){
+      ctx.arc(cx, cy + r*.06, ew*1.1, Math.PI*1.1, Math.PI*1.9); inkStroke(lw);
+    } else if(e === 'dash'){
+      ctx.moveTo(cx - s*ew, cy - eh*.7); ctx.lineTo(cx + s*ew, cy); ctx.lineTo(cx - s*ew, cy + eh*.7); inkStroke(lw);
+    } else if(e === 'blink'){
+      ctx.moveTo(cx-ew, cy+eh*.2); ctx.quadraticCurveTo(cx, cy+eh*.55, cx+ew, cy+eh*.2); inkStroke(lw);
+    } else if(e === 'scared'){
+      ctx.ellipse(cx, cy, ew*1.05, eh*1.05, 0, 0, 7); ctx.fillStyle = '#fff'; ctx.fill(); inkStroke(lw*.8);
+      ctx.beginPath(); ctx.arc(cx + p.fx*ew*.3, cy + p.fy*eh*.3, ew*.35, 0, 7); ctx.fillStyle = INK; ctx.fill();
+    } else {
+      ctx.ellipse(cx, cy, ew, eh, 0, 0, 7); ctx.fillStyle = INK; ctx.fill();
+      ctx.save(); ctx.clip();
+      ctx.beginPath(); ctx.ellipse(cx, cy + eh*.6, ew*.95, eh*.6, 0, 0, 7); ctx.fillStyle = ch.d; ctx.fill();
+      ctx.restore();
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(cx - ew*.3 + p.fx*ew*.15, cy - eh*.38, ew*.42, 0, 7); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx + ew*.35, cy + eh*.4, ew*.18, 0, 7); ctx.fill();
+    }
+  }
+  // mulut
+  const my = gy + r*.22;
+  ctx.beginPath();
+  if(e === 'happy' || e === 'dash' || e === 'scared'){
+    const w = e === 'happy' ? r*.13 : r*.08;
+    if(e === 'happy') ctx.arc(gx, my - r*.02, w, 0, Math.PI); else ctx.ellipse(gx, my + r*.02, w*.8, w, 0, 0, 7);
+    ctx.closePath(); ctx.fillStyle = INK; ctx.fill();
+    ctx.save(); ctx.clip(); ctx.beginPath(); ctx.arc(gx, my + w*.9, w*.7, 0, 7); ctx.fillStyle = '#ff7b9a'; ctx.fill(); ctx.restore();
+  } else if(e === 'dead'){
+    ctx.moveTo(gx - r*.12, my); for(let i=1;i<=4;i++) ctx.lineTo(gx - r*.12 + i*r*.06, my + (i%2 ? -r*.04 : 0)); inkStroke(lw*.8);
+  } else {
+    const w = r*.065;
+    ctx.arc(gx - w, my - w*.3, w, 0, Math.PI); ctx.moveTo(gx + 2*w, my - w*.3); ctx.arc(gx + w, my - w*.3, w, 0, Math.PI); inkStroke(lw*.8);
+  }
+  if(e === 'scared'){
+    const sx = r*.68, sy = -r*.5;
+    ctx.beginPath(); ctx.moveTo(sx, sy - r*.2); ctx.quadraticCurveTo(sx + r*.13, sy, sx, sy + r*.06); ctx.quadraticCurveTo(sx - r*.13, sy, sx, sy - r*.2);
+    ctx.fillStyle = '#9fd4ff'; ctx.fill(); inkStroke(lw*.6);
+  }
+}
+
+function drawChar(p){
+  let r = rad(p), spin = 0;
+  const ch = CHARS[p.i];
+  if(!p.alive){ if(p.fall <= 0) return; const k = p.fall/p.fallMax; r *= k; spin = (1-k)*7; if(r < 1) return; }
+  const sp = Math.hypot(p.vx,p.vy), st = Math.min(.16, sp/3000), ang = Math.atan2(p.vy, p.vx);
+  const bob = Math.sin(T*6 + p.i*1.7)*.03;
+  // bayangan
+  ctx.beginPath(); ctx.ellipse(p.x + r*.1, p.y + r*.92, r*.78, r*.2, 0, 0, 7); ctx.fillStyle = 'rgba(42,35,64,.14)'; ctx.fill();
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(ang); ctx.scale(1+st, 1-st); ctx.rotate(-ang + spin);
+  ctx.scale(1-bob, 1+bob);
+  accessoryBack(ch, r);
+  wobbly(0, 0, r, p.seed, .02);
+  ctx.fillStyle = ch.d; ctx.fill();
+  ctx.save(); ctx.clip();
+  ctx.beginPath(); ctx.arc(-r*.12, -r*.15, r*.98, 0, 7); ctx.fillStyle = ch.c; ctx.fill();       // cel shading
+  ctx.beginPath(); ctx.ellipse(-r*.42, -r*.48, r*.22, r*.11, -.7, 0, 7); ctx.fillStyle = 'rgba(255,255,255,.8)'; ctx.fill();
+  ctx.restore();
+  wobbly(0, 0, r, p.seed, .02); inkStroke(Math.max(3, r*.075));
+  ctx.globalAlpha = .45; wobbly(r*.02, -r*.015, r*1.02, p.seed+2, .03); inkStroke(Math.max(1.2, r*.025)); ctx.globalAlpha = 1;
+  accessoryFront(ch, r);
+  drawFace(p, r, ch);
+  ctx.restore();
+}
+
+// ---------- Gambar makanan ----------
+function drawFood(f){
+  const bob = Math.sin(T*3 + f.ph)*3;
+  if(mode === 'eat'){
+    ctx.beginPath(); ctx.arc(f.x, f.y, 6, 0, 7); ctx.fillStyle = `hsl(${f.hue},85%,72%)`; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = INK; ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillRect(f.x-3, f.y-3, 2.5, 2.5);
+    return;
+  }
+  ctx.save(); ctx.translate(f.x, f.y + bob);
+  if(f.v > 1){
+    ctx.rotate(T*1.5 + f.ph);
+    ctx.beginPath();
+    for(let i=0;i<=10;i++){ const a = -Math.PI/2 + i*Math.PI/5, r = i%2 ? 9 : 21; ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r); }
+    ctx.closePath(); ctx.fillStyle = '#ffd54a'; ctx.fill(); inkStroke(3);
+    ctx.fillStyle = INK; ctx.fillRect(-5, -3, 2.5, 5); ctx.fillRect(3, -3, 2.5, 5);
+  } else {
+    ctx.beginPath(); ctx.moveTo(0, -17); ctx.quadraticCurveTo(5, -16, 17, 6); ctx.quadraticCurveTo(19, 13, 10, 13);
+    ctx.lineTo(-10, 13); ctx.quadraticCurveTo(-19, 13, -17, 6); ctx.quadraticCurveTo(-5, -16, 0, -17); ctx.closePath();
+    ctx.fillStyle = '#fff'; ctx.fill(); inkStroke(3);
+    ctx.fillStyle = '#2d3b3a'; ctx.fillRect(-7, 2, 14, 11); ctx.strokeRect(-7, 2, 14, 11);
+  }
+  ctx.restore();
 }
 
 // ---------- Render ----------
-function eyes(p, r){
-  const px = -p.fy, py = p.fx;
-  for(const s of [-1,1]){
-    const ex = p.x + p.fx*r*.35 + px*s*r*.3, ey = p.y + p.fy*r*.35 + py*s*r*.3;
-    ctx.beginPath(); ctx.arc(ex, ey, r*.22, 0, 7); ctx.fillStyle = '#fff'; ctx.fill();
-    ctx.beginPath(); ctx.arc(ex + p.fx*r*.08, ey + p.fy*r*.08, r*.11, 0, 7); ctx.fillStyle = '#111'; ctx.fill();
+function drawArena(){
+  ctx.drawImage(paper, 0, 0);
+  if(mode === 'sumo'){
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0,0,WW,WH); ctx.arc(CX, CY, arenaR, 0, 7, true); ctx.clip();
+    ctx.strokeStyle = 'rgba(230,80,110,.22)'; ctx.lineWidth = 3; ctx.beginPath();
+    for(let x=-WH; x<WW; x+=26){ ctx.moveTo(x, WH); ctx.lineTo(x+WH, 0); }
+    ctx.stroke(); ctx.restore();
+    wobbly(CX, CY, arenaR, 1.3, .006); ctx.fillStyle = '#f6e2b8'; ctx.fill();
+    ctx.setLineDash([18,10]); ctx.beginPath(); ctx.arc(CX, CY, Math.max(10, arenaR-14), 0, 7); ctx.lineWidth = 6; ctx.strokeStyle = '#c9a36b'; ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.fillRect(CX-50, CY-14, 8, 28); ctx.fillRect(CX+42, CY-14, 8, 28);
+    wobbly(CX, CY, arenaR, 1.3, .006); inkStroke(8);
+    ctx.globalAlpha = .4; wobbly(CX+2, CY-2, arenaR+4, 3.1, .01); inkStroke(2.5); ctx.globalAlpha = 1;
+  } else {
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = INK; ctx.lineWidth = 8; ctx.strokeRect(0, 0, WW, WH);
+    ctx.globalAlpha = .4; ctx.lineWidth = 2.5; ctx.strokeRect(6, 4, WW-11, WH-9); ctx.globalAlpha = 1;
   }
 }
-function drawPlayer(p){
-  let r = rad(p);
-  if(!p.alive){ if(p.fall <= 0) return; r *= p.fall / .45; if(r < 1) return; }
-  if(p.dashFx > 0){ ctx.beginPath(); ctx.arc(p.x - p.vx*.03, p.y - p.vy*.03, r*1.25, 0, 7); ctx.fillStyle = `hsla(${p.h},80%,70%,.25)`; ctx.fill(); }
-  ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 7);
-  ctx.fillStyle = `hsl(${p.h},72%,58%)`; ctx.fill();
-  ctx.lineWidth = Math.max(3, r*.1); ctx.strokeStyle = `hsl(${p.h},72%,38%)`; ctx.stroke();
-  eyes(p, r);
+function star4(x, y, s, rot){
+  ctx.save(); ctx.translate(x,y); ctx.rotate(rot); ctx.beginPath();
+  for(let i=0;i<8;i++){ const a = i*Math.PI/4, r = i%2 ? s*.35 : s; ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r); }
+  ctx.closePath(); ctx.restore();
+}
+function drawParts(){
+  for(const q of parts){
+    const k = q.life/q.max;
+    if(q.type === 'spark'){ star4(q.x, q.y, q.sz*k, q.rot + T*4); ctx.fillStyle = q.col; ctx.fill(); ctx.globalAlpha = k; inkStroke(1.5); ctx.globalAlpha = 1; }
+    else if(q.type === 'line'){ ctx.globalAlpha = k; ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(q.x - q.dx*q.len, q.y - q.dy*q.len); inkStroke(3); ctx.globalAlpha = 1; }
+    else if(q.type === 'text'){
+      const sc = 1 + Math.max(0, (k-.8))*2.5;
+      ctx.save(); ctx.translate(q.x, q.y); ctx.scale(sc, sc); ctx.rotate(-.08);
+      ctx.font = font(q.sz); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.globalAlpha = Math.min(1, k*2);
+      ctx.lineWidth = q.sz*.18; ctx.strokeStyle = INK; ctx.lineJoin = 'round'; ctx.strokeText(q.txt, 0, 0);
+      ctx.fillStyle = q.col; ctx.fillText(q.txt, 0, 0); ctx.restore();
+    }
+  }
 }
 
 function render(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
-  ctx.fillStyle = '#0f1424'; ctx.fillRect(0,0,W,H);
-  ctx.save(); ctx.translate(OX,OY); ctx.scale(S,S);
-
-  // arena
-  if(mode === 'sumo'){
-    ctx.beginPath(); ctx.arc(CX,CY,arenaR,0,7); ctx.fillStyle = '#1a2342'; ctx.fill();
-    ctx.lineWidth = 8; ctx.strokeStyle = '#ff5d73'; ctx.stroke();
-    ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.lineWidth = 2;
-    for(let r=60;r<arenaR;r+=80){ ctx.beginPath(); ctx.arc(CX,CY,r,0,7); ctx.stroke(); }
-  } else {
-    ctx.fillStyle = '#161d33'; ctx.fillRect(0,0,WW,WH);
-    ctx.strokeStyle = 'rgba(255,255,255,.05)'; ctx.lineWidth = 2; ctx.beginPath();
-    for(let x=0;x<=WW;x+=100){ ctx.moveTo(x,0); ctx.lineTo(x,WH); }
-    for(let y=0;y<=WH;y+=100){ ctx.moveTo(0,y); ctx.lineTo(WW,y); }
-    ctx.stroke();
-    ctx.strokeStyle = '#ff5d73'; ctx.lineWidth = 8; ctx.strokeRect(0,0,WW,WH);
-  }
-  // makanan
-  for(const f of food){
-    const gold = f.v > 1, r = mode === 'food' ? (gold?16:11) : 7;
-    ctx.beginPath(); ctx.arc(f.x,f.y,r,0,7);
-    ctx.fillStyle = gold ? '#ffd54a' : `hsl(${f.h},80%,62%)`; ctx.fill();
-    if(gold){ ctx.lineWidth = 3; ctx.strokeStyle = '#fff3b0'; ctx.stroke(); }
-  }
-  [...players].sort((a,b) => a.m - b.m).forEach(drawPlayer);
+  ctx.fillStyle = '#3a2f4a'; ctx.fillRect(0,0,W,H);
+  ctx.save();
+  ctx.translate(OX + (Math.random()-.5)*shake, OY + (Math.random()-.5)*shake); ctx.scale(S,S);
+  drawArena();
+  for(const f of food) drawFood(f);
+  [...players].sort((a,b) => a.m - b.m || a.y - b.y).forEach(drawChar);
+  drawParts();
   ctx.restore();
+  if(match) hud();
+}
 
-  // garis zona
-  if(players.length){
-    ctx.strokeStyle = 'rgba(255,255,255,.08)'; ctx.lineWidth = 2; ctx.setLineDash([8,8]);
-    ctx.beginPath(); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H);
-    if(match.n > 2){ ctx.moveTo(0,H/2); ctx.lineTo(W,H/2); }
-    ctx.stroke(); ctx.setLineDash([]);
-  }
-  // joystick
-  for(const p of players){
-    const t = p.t; if(t.id === null) continue;
-    ctx.globalAlpha = .3; ctx.fillStyle = `hsl(${p.h},80%,70%)`;
-    ctx.beginPath(); ctx.arc(t.ox,t.oy,48,0,7); ctx.fill();
-    ctx.globalAlpha = .65; ctx.beginPath(); ctx.arc(t.px,t.py,20,0,7); ctx.fill(); ctx.globalAlpha = 1;
-  }
-  hud();
+function tag(x, y, text, col, size, align){
+  ctx.font = font(size); const w = ctx.measureText(text).width + 16, h = size + 10;
+  const x0 = align === 'left' ? x : align === 'right' ? x - w : x - w/2;
+  ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x0, y - h/2, w, h, 8) : ctx.rect(x0, y - h/2, w, h);
+  ctx.fillStyle = '#fbf6ea'; ctx.fill(); inkStroke(2);
+  ctx.fillStyle = col; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, x0 + w/2, y + 1);
+}
+function bigText(txt, y, size, col){
+  ctx.font = font(size); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round'; ctx.lineWidth = size*.16; ctx.strokeStyle = INK; ctx.strokeText(txt, W/2, y);
+  ctx.fillStyle = col; ctx.fillText(txt, W/2, y);
 }
 
 function hud(){
-  if(!match) return;
-  const n = match.n;
-  const pos = [{x:12,y:H-12,a:'left',b:'bottom'},{x:W-12,y:H-12,a:'right',b:'bottom'},{x:12,y:12,a:'left',b:'top'},{x:W-12,y:12,a:'right',b:'top'}];
-  ctx.font = '700 15px system-ui,sans-serif';
+  // garis pembagi area (pensil)
+  ctx.save(); ctx.strokeStyle = 'rgba(42,35,64,.25)'; ctx.lineWidth = 2; ctx.setLineDash([6,8]);
+  ctx.beginPath(); ctx.moveTo(W/2, 30); ctx.lineTo(W/2, H);
+  if(match.n > 2){ ctx.moveTo(0, H/2); ctx.lineTo(W, H/2); }
+  ctx.stroke(); ctx.restore();
+
+  const R = BR();
   for(const p of players){
-    const q = pos[p.i];
-    ctx.textAlign = q.a; ctx.textBaseline = q.b;
-    ctx.fillStyle = `hsl(${p.h},80%,70%)`;
-    const live = mode === 'eat' ? Math.floor(p.m) + ' massa' : mode === 'food' ? p.score + ' poin' : (p.alive ? 'hidup' : 'jatuh');
-    const stars = '★'.repeat(match.wins[p.i]) || '–';
-    ctx.fillText(`${PCOL[p.i].n}  ${stars}  ·  ${live}`, q.x, q.y);
+    const ch = CHARS[p.i], b = btnPos(p.i), top = p.i >= 2, pad = pads[p.i];
+    // joystick
+    if(pad.id !== null){
+      const jr = JR();
+      ctx.beginPath(); ctx.arc(pad.ox, pad.oy, jr, 0, 7); ctx.fillStyle = 'rgba(255,255,255,.25)'; ctx.fill();
+      ctx.setLineDash([5,6]); inkStroke(2.5); ctx.setLineDash([]);
+      let kx = pad.px - pad.ox, ky = pad.py - pad.oy; const kl = Math.hypot(kx,ky);
+      if(kl > jr){ kx = kx/kl*jr; ky = ky/kl*jr; }
+      ctx.beginPath(); ctx.arc(pad.ox + kx, pad.oy + ky, jr*.42, 0, 7); ctx.fillStyle = ch.c; ctx.fill(); inkStroke(3);
+    }
+    // tombol dash
+    ctx.save(); ctx.translate(b.x, b.y); if(top) ctx.rotate(Math.PI);
+    const sc = pad.press > 0 ? .88 : 1; ctx.scale(sc, sc);
+    const ready = canDash(p) && state === 'play';
+    ctx.beginPath(); ctx.arc(0, 0, R, 0, 7); ctx.fillStyle = ready ? ch.c : '#d9d2c3'; ctx.fill();
+    if(p.dashCd > 0){ ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0, 0, R, -Math.PI/2, -Math.PI/2 + Math.PI*2*(p.dashCd/p.dashMax)); ctx.closePath(); ctx.fillStyle = 'rgba(42,35,64,.3)'; ctx.fill(); }
+    ctx.beginPath(); ctx.arc(0, 0, R, 0, 7); inkStroke(3);
+    ctx.font = font(Math.round(R*.42)); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = INK; ctx.fillText('DASH', 0, 1);
+    // label pemain
+    const dir = (p.i === 0 || p.i === 3) ? 1 : -1;
+    const live = mode === 'eat' ? Math.floor(p.m/10) : mode === 'food' ? p.score + ' poin' : (p.alive ? 'aman' : 'jatuh!');
+    tag(dir*(R+10), R*.45, `${ch.n} ${'★'.repeat(match.wins[p.i]) || '·'} ${live}`, ch.d, 13, dir > 0 ? 'left' : 'right');
+    ctx.restore();
   }
-  // timer & info
-  ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillStyle = '#fff';
-  ctx.font = '800 22px system-ui,sans-serif';
-  const showT = mode === 'sumo' ? '' : Math.max(0, Math.ceil(tLeft)) + 's';
-  ctx.fillText(MODES[mode].name + (showT ? '  ' + showT : ''), W/2, 34);
-  ctx.font = '500 13px system-ui,sans-serif'; ctx.globalAlpha = .6;
-  ctx.fillText(`Ronde ${Math.min(match.idx+1, match.order.length)}/${match.order.length}`, W/2, 62); ctx.globalAlpha = 1;
+  // judul ronde & waktu
+  const t = MODES[mode].time ? '  ⏱' + Math.max(0, Math.ceil(tLeft)) : '';
+  tag(W/2, 44, `${MODES[mode].name}${t}`, INK, 15, 'center');
+  ctx.font = font(10); ctx.fillStyle = 'rgba(42,35,64,.7)'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(`Ronde ${Math.min(match.idx+1, match.order.length)}/${match.order.length}`, W/2, 66);
 
   if(state === 'count'){
-    ctx.textBaseline = 'middle'; ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fillRect(0,H/2-70,W,140);
-    ctx.fillStyle = '#fff'; ctx.font = '800 54px system-ui,sans-serif';
-    ctx.fillText(tCount > 0.2 ? Math.ceil(tCount) : 'MULAI!', W/2, H/2-8);
-    ctx.font = '500 15px system-ui,sans-serif'; ctx.globalAlpha = .8;
-    ctx.fillText(MODES[mode].hint.replace(/&amp;/g,'&'), W/2, H/2+34); ctx.globalAlpha = 1;
+    const n = Math.ceil(tCount);
+    const pop = 1 + (tCount % 1)*.35;
+    ctx.save(); ctx.translate(W/2, H/2 - 10); ctx.scale(pop, pop); ctx.translate(-W/2, -(H/2 - 10));
+    bigText(tCount > .2 ? String(n) : 'MULAI!', H/2 - 10, 64, tCount > .2 ? '#ffcb47' : '#5fd68a');
+    ctx.restore();
+    bigText(MODES[mode].hint, H/2 + 42, 16, '#fff');
   }
-  if(state === 'end'){
-    ctx.textBaseline = 'middle'; ctx.fillStyle = 'rgba(0,0,0,.55)'; ctx.fillRect(0,H/2-50,W,100);
-    ctx.fillStyle = `hsl(${endHue},80%,72%)`; ctx.font = '800 34px system-ui,sans-serif';
-    ctx.fillText(endText, W/2, H/2);
+  if(state === 'end') bigText(endText, H/2, 38, endCol);
+}
+
+// ---------- Menu (karakter berkeliaran di belakang) ----------
+const menuChars = CHARS.map((c,i) => ({i, x:[160,1040,180,1020][i], y:[520,520,160,160][i], vx:0, vy:0, m:2200, alive:true, fall:0, fallMax:1,
+  fx:0, fy:1, seed:i*2.3, expr:'normal', blink:rnd(1,3), dashFx:0}));
+function renderMenu(dt){
+  T += dt;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  ctx.fillStyle = '#3a2f4a'; ctx.fillRect(0,0,W,H);
+  ctx.save(); ctx.translate(OX,OY); ctx.scale(S,S);
+  ctx.drawImage(paper, 0, 0);
+  for(const c of menuChars){
+    c.blink -= dt; if(c.blink < -.12) c.blink = rnd(2,4);
+    const a = T*.6 + c.i*1.6;
+    c.fx = Math.cos(a); c.fy = Math.sin(a)*.6;
+    c.expr = c.blink < 0 ? 'blink' : (Math.sin(T*.8 + c.i) > .6 ? 'happy' : 'normal');
+    drawChar(c);
   }
+  ctx.restore();
 }
 
 // ---------- Loop ----------
 let last = performance.now();
 function frame(now){
   const dt = Math.min(.05, (now-last)/1000); last = now;
-  if(state === 'menu'){ ctx.setTransform(DPR,0,0,DPR,0,0); ctx.fillStyle = '#0f1424'; ctx.fillRect(0,0,W,H); }
-  else if(match){ update(dt); if(state !== 'over' || players.length) render(); }
+  if(state === 'menu' || !match) renderMenu(dt);
+  else { update(dt); render(); }
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
