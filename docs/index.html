@@ -31,6 +31,49 @@
   #rot{display:none;position:fixed;inset:0;z-index:10;background:var(--paper);align-items:center;justify-content:center;text-align:center;font-size:20px;padding:30px}
   @media (orientation:portrait){#rot{display:flex}}
   #champ{font-size:26px}
+  /* ===== Halaman utama ===== */
+  #home{position:fixed;inset:0;overflow:hidden}
+  #home button{font-family:inherit;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .side{position:absolute;left:2.5vw;top:4vh;display:flex;flex-direction:column;gap:2.5vh}
+  .sbtn{position:relative;width:16vh;height:16vh;padding:0;border:0;background:none}
+  .sbtn svg,.ico svg,.badge svg,.mbtn .ic svg,.bots svg{width:100%;height:100%;display:block;overflow:visible}
+  .sbtn:active,.ico:active,.badge:active,.bots button:active{transform:scale(.92)}
+  .dot{position:absolute;right:.5vh;top:.5vh;width:3.2vh;height:3.2vh;border-radius:50%;background:#e8735a;border:2px solid var(--ink)}
+  .logo{position:absolute;left:calc(16vh + 5vw);top:3vh;transform:rotate(-2deg);pointer-events:none}
+  .logo h1{font-size:5.6vh;-webkit-text-stroke:1.5px var(--ink);text-shadow:3px 3px 0 var(--ink);white-space:nowrap}
+  .panel{position:absolute;top:-3vh;bottom:-3vh;right:-8vw;width:54vw;transform:skewX(-7deg);transform-origin:bottom left;
+    background-color:#efe9f6;background-image:repeating-linear-gradient(45deg,rgba(38,35,34,.05) 0 2px,transparent 2px 30px),repeating-linear-gradient(-45deg,rgba(38,35,34,.05) 0 2px,transparent 2px 30px);
+    border-left:5px solid var(--ink);box-shadow:-9px 0 0 #f2c94c,-14px 0 0 var(--ink)}
+  .inner{transform:skewX(7deg);height:100%;display:flex;flex-direction:column;justify-content:center;gap:2.3vh;padding:5vh 11vw 5vh 6vw;box-sizing:border-box}
+  .tops{display:flex;align-items:center;justify-content:center;gap:3.5vw}
+  .badge{position:relative;width:19vh;height:19vh;padding:0;border:0;background:none}
+  .badge b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-top:1.5vh;font-weight:400;font-size:6.2vh;color:#fff;-webkit-text-stroke:1.5px var(--ink);text-shadow:2px 2px 0 var(--ink)}
+  .ico{display:flex;flex-direction:column;align-items:center;gap:.5vh;padding:0;border:0;background:none;font-size:3.2vh}
+  .ico svg{width:10vh;height:10vh}
+  .mbtn{position:relative;display:flex;align-items:center;height:12.5vh;padding:0 0 0 14vh;border:3px solid var(--ink);border-radius:6px;background:#fff;transform:skewX(-10deg);box-shadow:5px 5px 0 var(--ink);font-size:5vh;letter-spacing:.5px;transition:transform .08s}
+  .mbtn:nth-of-type(1){margin-left:0}.mbtn:nth-of-type(2){margin-left:2vh}.mbtn:nth-of-type(3){margin-left:4vh}.mbtn:nth-of-type(4){margin-left:6vh}
+  .mbtn span{transform:skewX(10deg);flex:1;text-align:center}
+  .mbtn .ic{position:absolute;left:-5vh;top:50%;width:16vh;height:16vh;transform:translateY(-50%) skewX(10deg)}
+  .mbtn:active{transform:skewX(-10deg) translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+  .mbtn.gold{background:#f2c94c}
+  .bots{display:flex;justify-content:flex-end;gap:3vw}
+  .bots button{width:10vh;height:10vh;padding:0;border:0;background:none}
+  /* modal */
+  #modal .card{max-width:560px;position:relative}
+  #modal h2{margin:0;font-size:22px;font-weight:400}
+  .x{position:absolute;right:8px;top:6px;font-family:inherit;border:2px solid var(--ink);background:#fff;border-radius:10px;width:34px;height:34px;font-size:16px;color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
+  .big{font-size:22px;padding:14px 22px}
+  .list{display:flex;flex-direction:column;gap:6px;font-size:15px;text-align:left}
+  .list div{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:6px 10px}
+  .ball{width:26px;height:26px;border-radius:50%;border:2.5px solid var(--ink);flex:none}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .grid4 > div{background:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:8px 4px;font-size:13px;box-shadow:3px 3px 0 var(--ink)}
+  .grid4 .ball{width:44px;height:44px;margin:0 auto 4px}
+  .wheelbox{position:relative;width:min(46vh,240px);height:min(46vh,240px);margin:6px auto}
+  .wheel{width:100%;height:100%;border-radius:50%;border:4px solid var(--ink);box-sizing:border-box;position:relative;transition:transform 3.4s cubic-bezier(.15,.8,.2,1)}
+  .wheel span{position:absolute;font-size:15px;color:var(--ink);white-space:nowrap}
+  .pin{position:absolute;left:50%;top:-10px;transform:translateX(-50%);width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:24px solid var(--ink);z-index:2}
+  #toast{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:20;background:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:8px 16px;box-shadow:3px 3px 0 var(--ink);font-size:15px;transition:opacity .3s;pointer-events:none}
   #tab{font-size:15px;line-height:1.7}
 </style>
 </head>
@@ -38,27 +81,33 @@
 <canvas id="c"></canvas>
 <button id="quit" class="hidden">✕ Menu</button>
 
-<div class="overlay" id="menu">
-  <div class="card" style="position:relative">
-    <h1><span class="a">Draw Party</span> <span class="b">234</span> <span class="c">MiniGames</span></h1>
-    <h3>✎ Pilih mode</h3>
-    <div class="row" id="modes">
-      <button class="chip" data-m="eat">🍡 Sel Rebutan<small>makan &amp; membesar</small></button>
-      <button class="chip" data-m="sumo">🤼 Sumo Blob<small>dorong keluar</small></button>
-      <button class="chip" data-m="food">🍙 Rebutan Makanan<small>kumpulkan terbanyak</small></button>
-      <button class="chip sel" data-m="combo">🎲 Gabungan<small>3 mode bergantian</small></button>
-    </div>
-    <h3>✎ Jumlah pemain</h3>
-    <div class="row" id="np">
-      <button class="chip sel" data-n="2">2 pemain</button>
-      <button class="chip" data-n="3">3 pemain</button>
-      <button class="chip" data-n="4">4 pemain</button>
-    </div>
-    <button class="go" id="start">MULAI!</button>
-    <div class="hint">Tiap pemain punya area sendiri. <b>Sentuh &amp; geser</b> di areamu untuk bergerak, tekan tombol <b>DASH</b> di pojokmu (atau ketuk cepat / pakai jari kedua) untuk menerjang.</div>
-    <div class="ver" id="ver"></div>
+<svg width="0" height="0" style="position:absolute"><filter id="wob"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3.5"/></filter></svg>
+
+<div id="home">
+  <div class="side">
+    <button class="sbtn" id="giftBtn" data-icon="gift"></button>
+    <button class="sbtn" id="spinBtn" data-icon="wheel"></button>
   </div>
+  <div class="logo"><h1><span class="a">Draw Party</span> <span class="b">234</span> <span class="c">MiniGames</span></h1></div>
+  <div class="panel"><div class="inner">
+    <div class="tops">
+      <button class="badge" id="bStars"><span data-icon="starbadge"></span><b id="starN">0</b></button>
+      <button class="ico" id="bTro"><span data-icon="trophy"></span>Trofi</button>
+      <button class="ico" id="bRank"><span data-icon="podium"></span>Peringkat</button>
+    </div>
+    <button class="mbtn" data-act="quick"><i class="ic" data-icon="bolt"></i><span>MAIN CEPAT</span></button>
+    <button class="mbtn" data-act="pick"><i class="ic" data-icon="dice"></i><span>PILIH GAME</span></button>
+    <button class="mbtn" data-act="tour"><i class="ic" data-icon="cup"></i><span>TURNAMEN</span></button>
+    <button class="mbtn gold" data-act="chars"><i class="ic" data-icon="blobs"></i><span>KARAKTER</span></button>
+    <div class="bots">
+      <button id="bSet" data-icon="gear"></button>
+      <button id="bHelp" data-icon="help"></button>
+    </div>
+  </div></div>
 </div>
+
+<div class="overlay hidden" id="modal"><div class="card"><button class="x" id="mx">✕</button><div id="mbody"></div></div></div>
+<div id="toast" style="opacity:0"></div>
 
 <div class="overlay hidden" id="end">
   <div class="card" style="max-width:420px">
@@ -74,9 +123,8 @@
 <div id="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v0.3 · gaya doodle berwarna';
+const VERSION = 'v0.4 · halaman utama baru';
 const $ = id => document.getElementById(id);
-$('ver').textContent = VERSION;
 const cv = $('c'), ctx = cv.getContext('2d');
 const INK = '#262322', FONT = "'Mochiy Pop One',system-ui,sans-serif";
 const font = px => `${px}px ${FONT}`;
@@ -184,14 +232,125 @@ buildBg();
 let match = null, players = [], food = [], parts = [], mode = 'eat', state = 'menu';
 let tCount = 0, tLeft = 0, tEnd = 0, endText = '', endCol = INK, arenaR = 300, elapsed = 0, T = 0, shake = 0;
 
-document.querySelectorAll('#modes .chip').forEach(b => b.onclick = () => {
-  document.querySelectorAll('#modes .chip').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); sel.mode = b.dataset.m;
+// ---------- Data tersimpan (di HP ini saja) ----------
+const SAVE_KEY = 'dp234';
+const save = {stars:0, wins:[0,0,0,0], trophies:[0,0,0,0], matches:0, gift:'', spin:'', vib:true, size:1};
+try{ Object.assign(save, JSON.parse(localStorage.getItem(SAVE_KEY) || '{}')); }catch(e){}
+function persist(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(save)); }catch(e){} }
+const today = () => new Date().toDateString();
+const SIZE = [.85, 1, 1.2];
+
+// ---------- Ikon doodle (SVG) ----------
+const G = inner => `<svg viewBox="0 0 100 100"><g filter="url(#wob)" stroke="#262322" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">${inner}</g></svg>`;
+function starPts(cx, cy, R, r){ let d = ''; for(let i=0;i<10;i++){ const a = -Math.PI/2 + i*Math.PI/5, q = i%2 ? r : R; d += (i ? 'L' : 'M') + (cx+Math.cos(a)*q).toFixed(1) + ' ' + (cy+Math.sin(a)*q).toFixed(1); } return d + 'Z'; }
+function wheelSvg(){
+  const cols = ['#e8735a','#f2c94c','#6aa6d8','#7cc47a','#c58fd6','#f2c94c','#e8735a','#7cc47a']; let d = '';
+  for(let i=0;i<8;i++){ const a1 = i*Math.PI/4, a2 = a1 + Math.PI/4;
+    d += `<path d="M50 50L${50+Math.cos(a1)*40} ${50+Math.sin(a1)*40}A40 40 0 0 1 ${50+Math.cos(a2)*40} ${50+Math.sin(a2)*40}Z" fill="${cols[i]}" stroke-width="2.5"/>`; }
+  return `<circle cx="50" cy="50" r="44" fill="#fff"/>${d}<circle cx="50" cy="50" r="40" fill="none"/><circle cx="50" cy="50" r="8" fill="#f2c94c"/><path d="M42 4h16l-8 12z" fill="#e8735a"/>`;
+}
+function gearSvg(){ let d = ''; for(let i=0;i<8;i++) d += `<rect x="43" y="10" width="14" height="18" rx="3" fill="#b9c7d6" transform="rotate(${i*45} 50 50)"/>`; return d + '<circle cx="50" cy="50" r="28" fill="#b9c7d6"/><circle cx="50" cy="50" r="10" fill="#efe9f6"/>'; }
+const ICONS = {
+  gift: G('<path d="M20 44h60v42H20z" fill="#e8735a"/><path d="M14 30h72v16H14z" fill="#e8735a"/><path d="M44 30h12v56H44z" fill="#f2c94c"/><path d="M50 30c-6-14-26-16-22-4 2 5 14 4 22 4zM50 30c6-14 26-16 22-4-2 5-14 4-22 4z" fill="#f2c94c"/><path d="M26 54l8 8M68 54l-6 8" stroke-width="2.5"/>'),
+  wheel: G(wheelSvg()),
+  starbadge: G(`<circle cx="50" cy="50" r="46" fill="#fff"/><circle cx="50" cy="50" r="38" fill="none" stroke-dasharray="6 7" stroke-width="2.5"/><path d="${starPts(50,53,40,18)}" fill="#f2c94c"/>`),
+  trophy: G('<path d="M32 24H18c0 16 7 22 16 22M68 24h14c0 16-7 22-16 22" fill="none"/><path d="M30 16h40v20c0 16-9 26-20 26S30 52 30 36z" fill="#f2c94c"/><path d="M44 62h12v12H44z" fill="#f2c94c"/><path d="M30 74h40v12H30z" fill="#e8735a"/><path d="' + starPts(50,36,10,4.5) + '" fill="#fff" stroke-width="3"/>'),
+  podium: G('<path d="M38 36h24v50H38z" fill="#f2c94c"/><path d="M12 54h26v32H12z" fill="#6aa6d8"/><path d="M62 62h26v24H62z" fill="#e8735a"/><path d="M42 16l4 8 4-10 4 10 4-8v14H42z" fill="#f2c94c" stroke-width="3"/><path d="M50 46v14M23 64c4-3 8 0 4 4l-5 6h8M70 70c3-3 9-1 5 3 4 1 3 7-5 5" fill="none" stroke-width="3"/>'),
+  bolt: G('<circle cx="50" cy="50" r="44" fill="#6aa6d8"/><path d="M57 12 28 55h20l-6 33 31-46H53z" fill="#f2c94c"/>'),
+  dice: G('<circle cx="50" cy="50" r="44" fill="#7cc47a"/><rect x="22" y="22" width="56" height="56" rx="12" fill="#fff" transform="rotate(-10 50 50)"/><g fill="#262322" stroke="none"><circle cx="36" cy="38" r="5"/><circle cx="50" cy="50" r="5"/><circle cx="64" cy="62" r="5"/><circle cx="62" cy="34" r="5"/><circle cx="38" cy="66" r="5"/></g>'),
+  cup: G('<circle cx="50" cy="50" r="44" fill="#e8735a"/><path d="M34 30H24c0 12 5 16 12 16M66 30h10c0 12-5 16-12 16" fill="none"/><path d="M32 22h36v16c0 14-8 22-18 22S32 52 32 38z" fill="#f2c94c"/><path d="M45 60h10v8H45z" fill="#f2c94c"/><path d="M34 68h32v10H34z" fill="#fff"/>'),
+  blobs: G('<circle cx="34" cy="56" r="22" fill="#e8735a"/><path d="M18 42l2-14 10 8M50 42l-2-14-10 8" fill="#e8735a"/><circle cx="66" cy="60" r="22" fill="#7cc47a"/><path d="M66 38c-2-8 4-12 10-10-2 6-6 8-10 10z" fill="#9ccc7a"/><circle cx="50" cy="76" r="17" fill="#f2c94c"/><g fill="#fff" stroke-width="2.5"><circle cx="27" cy="54" r="5"/><circle cx="40" cy="54" r="5"/><circle cx="60" cy="58" r="5"/><circle cx="73" cy="58" r="5"/><circle cx="44" cy="74" r="4"/><circle cx="56" cy="74" r="4"/></g><g fill="#262322" stroke="none"><circle cx="28" cy="55" r="2.3"/><circle cx="41" cy="55" r="2.3"/><circle cx="61" cy="59" r="2.3"/><circle cx="74" cy="59" r="2.3"/><circle cx="45" cy="75" r="2"/><circle cx="57" cy="75" r="2"/></g>'),
+  gear: G(gearSvg()),
+  help: G('<circle cx="50" cy="50" r="40" fill="#f2c94c"/><path d="M38 38c0-16 26-16 26 0 0 10-14 10-14 22" fill="none" stroke-width="7"/><circle cx="50" cy="74" r="4" fill="#262322"/>')
+};
+document.querySelectorAll('[data-icon]').forEach(e => e.innerHTML = ICONS[e.dataset.icon]);
+
+// ---------- Panel / modal ----------
+function openModal(html){ $('mbody').innerHTML = html; $('modal').classList.remove('hidden'); }
+function closeModal(){ $('modal').classList.add('hidden'); }
+$('mx').onclick = closeModal;
+$('modal').addEventListener('click', e => { if(e.target.id === 'modal') closeModal(); });
+let toastT = 0;
+function toast(msg){ const t = $('toast'); t.textContent = msg; t.style.opacity = 1; clearTimeout(toastT); toastT = setTimeout(() => t.style.opacity = 0, 1800); }
+const ball = i => `<span class="ball" style="background:${CHARS[i].c}"></span>`;
+function refreshHome(){
+  $('starN').textContent = save.stars;
+  const dot = (id, on) => { const b = $(id); let d = b.querySelector('.dot'); if(on && !d){ d = document.createElement('i'); d.className = 'dot'; b.appendChild(d); } if(!on && d) d.remove(); };
+  dot('giftBtn', save.gift !== today()); dot('spinBtn', save.spin !== today());
+}
+
+let lastLaunch = null;
+function launch(gen, n){ lastLaunch = {gen, n}; closeModal(); startMatch(gen(), n); }
+function askPlayers(title, sub, gen){
+  openModal(`<h2>${title}</h2><div class="hint">${sub}</div><h3>Berapa pemain?</h3><div class="row">
+    ${[2,3,4].map(n => `<button class="chip big" data-pn="${n}">${n} pemain</button>`).join('')}</div>`);
+  $('mbody').querySelectorAll('[data-pn]').forEach(b => b.onclick = () => { goFull(); launch(gen, +b.dataset.pn); });
+}
+const MODE_LIST = [['eat','🍡 Sel Rebutan','makan & membesar'],['sumo','🤼 Sumo Blob','dorong keluar ring'],['food','🍙 Rebutan Makanan','kumpulkan terbanyak'],['combo','🎲 Gabungan','3 mode bergantian']];
+function showPick(){
+  openModal(`<h2>Pilih Game</h2><h3>✎ Mode</h3><div class="row" id="pm">${MODE_LIST.map(m => `<button class="chip ${sel.mode === m[0] ? 'sel' : ''}" data-m="${m[0]}">${m[1]}<small>${m[2]}</small></button>`).join('')}</div>
+    <h3>✎ Jumlah pemain</h3><div class="row" id="pn">${[2,3,4].map(n => `<button class="chip ${sel.n === n ? 'sel' : ''}" data-n="${n}">${n} pemain</button>`).join('')}</div>
+    <button class="go" id="pgo">MULAI!</button>`);
+  const group = (id, key, cast) => $(id).querySelectorAll('.chip').forEach(b => b.onclick = () => { $(id).querySelectorAll('.chip').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); sel[key] = cast(b.dataset[key === 'mode' ? 'm' : 'n']); });
+  group('pm', 'mode', String); group('pn', 'n', Number);
+  $('pgo').onclick = () => { goFull(); const m = sel.mode; launch(() => m === 'combo' ? ['eat','sumo','food'] : [m,m,m], sel.n); };
+}
+const shuffleModes = () => [0,1,2].map(() => ['eat','sumo','food'][Math.floor(Math.random()*3)]);
+document.querySelectorAll('.mbtn').forEach(b => b.onclick = () => {
+  const a = b.dataset.act;
+  if(a === 'quick') askPlayers('⚡ Main Cepat', '3 ronde dengan mode acak. Langsung main!', shuffleModes);
+  if(a === 'pick') showPick();
+  if(a === 'tour') askPlayers('🏆 Turnamen', '6 ronde, tiap mode dimainkan 2 kali. Ronde terbanyak jadi juara!', () => ['eat','sumo','food','eat','sumo','food']);
+  if(a === 'chars') openModal(`<h2>Karakter</h2><div class="grid4">${CHARS.map((c,i) => `<div>${ball(i)}${c.n}<br><small>${['Telinga kucing','Rambut ahoge','Tunas daun','Pita manis'][i]}</small></div>`).join('')}</div><div class="hint">Kostum & karakter baru segera hadir ✎</div>`);
 });
-document.querySelectorAll('#np .chip').forEach(b => b.onclick = () => {
-  document.querySelectorAll('#np .chip').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); sel.n = +b.dataset.n;
-});
-$('start').onclick = () => { goFull(); startMatch(); };
-$('again').onclick = startMatch;
+$('bStars').onclick = () => openModal(`<h2>⭐ ${save.stars} Bintang</h2><div class="hint">Dapat bintang dari menang ronde, hadiah harian 🎁, dan roda putar 🎡.</div>`);
+$('bTro').onclick = () => openModal(`<h2>🏆 Trofi</h2><div class="grid4">${CHARS.map((c,i) => `<div>${ball(i)}${c.n}<br>🏆 ${save.trophies[i]}<br><small>⭐ ${save.wins[i]} ronde</small></div>`).join('')}</div><div class="hint">Total pertandingan: ${save.matches}</div>`);
+$('bRank').onclick = () => {
+  const ord = [0,1,2,3].sort((a,b) => save.trophies[b] - save.trophies[a] || save.wins[b] - save.wins[a]);
+  openModal(`<h2>Peringkat</h2><div class="list">${ord.map((i,k) => `<div><b>${['🥇','🥈','🥉','4.'][k]}</b>${ball(i)}<span style="flex:1">${CHARS[i].n}</span>🏆 ${save.trophies[i]} · ⭐ ${save.wins[i]}</div>`).join('')}</div>`);
+};
+$('bHelp').onclick = () => openModal(`<h2>Cara Main</h2><div class="list">
+  <div>👆 Sentuh & geser di area warnamu untuk bergerak.</div>
+  <div>💨 Tekan <b>DASH</b> di pojokmu (atau ketuk cepat / jari kedua) untuk menerjang.</div>
+  <div>🍡 <b>Sel Rebutan</b>: makan permen, telan blob yang lebih kecil.</div>
+  <div>🤼 <b>Sumo Blob</b>: dorong lawan keluar ring yang terus mengecil.</div>
+  <div>🍙 <b>Rebutan Makanan</b>: onigiri 1 poin, bintang 3 poin.</div></div>`);
+function showSettings(confirmReset){
+  openModal(`<h2>⚙️ Pengaturan</h2><h3>Getar</h3><div class="row"><button class="chip ${save.vib ? 'sel' : ''}" data-v="1">Nyala</button><button class="chip ${save.vib ? '' : 'sel'}" data-v="0">Mati</button></div>
+    <h3>Ukuran joystick & tombol</h3><div class="row">${['Kecil','Sedang','Besar'].map((t,i) => `<button class="chip ${save.size === i ? 'sel' : ''}" data-s="${i}">${t}</button>`).join('')}</div>
+    <button class="chip" id="rst" style="align-self:center;margin-top:6px">${confirmReset ? 'Yakin? Ketuk lagi untuk hapus' : '🗑 Hapus data skor'}</button><div class="hint">${VERSION}</div>`);
+  $('mbody').querySelectorAll('[data-v]').forEach(b => b.onclick = () => { save.vib = b.dataset.v === '1'; persist(); showSettings(); });
+  $('mbody').querySelectorAll('[data-s]').forEach(b => b.onclick = () => { save.size = +b.dataset.s; persist(); showSettings(); });
+  $('rst').onclick = () => {
+    if(!confirmReset) return showSettings(true);
+    Object.assign(save, {stars:0, wins:[0,0,0,0], trophies:[0,0,0,0], matches:0}); persist(); refreshHome(); showSettings(); toast('Data skor dihapus');
+  };
+}
+$('bSet').onclick = () => showSettings(false);
+$('giftBtn').onclick = () => {
+  if(save.gift === today()) return openModal(`<h2>🎁 Hadiah Harian</h2><div class="hint">Sudah diambil hari ini. Kembali besok ya!</div>`);
+  save.gift = today(); save.stars += 3; persist(); refreshHome();
+  openModal(`<h2>🎁 Hadiah Harian!</h2><div style="font-size:30px">+3 ⭐</div><div class="hint">Kembali besok untuk hadiah lagi.</div>`);
+};
+const PRIZES = [1,2,3,5,1,2,10,3];
+$('spinBtn').onclick = () => {
+  const used = save.spin === today();
+  const cols = ['#e8735a','#f2c94c','#6aa6d8','#7cc47a','#c58fd6','#f2c94c','#e8735a','#7cc47a'];
+  const grad = cols.map((c,i) => `${c} ${i*45}deg ${(i+1)*45}deg`).join(',');
+  openModal(`<h2>🎡 Roda Putar</h2><div class="wheelbox"><div class="pin"></div><div class="wheel" id="wh" style="background:conic-gradient(${grad})">
+    ${PRIZES.map((p,i) => { const a = (i*45 + 22.5 - 90)*Math.PI/180; return `<span style="left:${50+31*Math.cos(a)}%;top:${50+31*Math.sin(a)}%;transform:translate(-50%,-50%) rotate(${i*45+22.5}deg)">${p}⭐</span>`; }).join('')}</div></div>
+    <button class="go" id="spinGo" ${used ? 'disabled style="opacity:.5"' : ''}>${used ? 'Besok lagi ya' : 'PUTAR!'}</button>`);
+  if(used) return;
+  $('spinGo').onclick = () => {
+    $('spinGo').disabled = true;
+    const idx = Math.floor(Math.random()*PRIZES.length);
+    $('wh').style.transform = `rotate(${360*6 - (idx*45 + 22.5)}deg)`;
+    save.spin = today(); persist();
+    setTimeout(() => { save.stars += PRIZES[idx]; persist(); refreshHome(); $('spinGo').textContent = `+${PRIZES[idx]} ⭐ !`; buzz(40); }, 3500);
+  };
+};
+
+$('again').onclick = () => lastLaunch && launch(lastLaunch.gen, lastLaunch.n);
 $('tomenu').onclick = toMenu;
 $('quit').onclick = toMenu;
 
@@ -206,13 +365,13 @@ function goFull(){
 function resetInput(){ ptrs.clear(); pads.forEach(p => { p.id = null; p.press = 0; }); }
 function toMenu(){
   state = 'menu'; match = null; players = []; parts = []; resetInput();
-  $('menu').classList.remove('hidden'); $('end').classList.add('hidden'); $('quit').classList.add('hidden');
+  $('home').classList.remove('hidden'); $('end').classList.add('hidden'); $('quit').classList.add('hidden');
+  refreshHome();
 }
-function startMatch(){
-  const order = sel.mode === 'combo' ? ['eat','sumo','food'] : [sel.mode, sel.mode, sel.mode];
-  match = {order, idx:0, wins:new Array(sel.n).fill(0), n:sel.n};
+function startMatch(order, n){
+  match = {order, idx:0, wins:new Array(n).fill(0), n};
   resetInput();
-  $('menu').classList.add('hidden'); $('end').classList.add('hidden'); $('quit').classList.remove('hidden');
+  $('home').classList.add('hidden'); $('end').classList.add('hidden'); $('quit').classList.remove('hidden');
   startRound();
 }
 
@@ -246,8 +405,8 @@ function newFood(){
 // Tiap pemain punya "pad": joystick mengambang + tombol DASH tetap di pojoknya.
 const pads = [0,1,2,3].map(() => ({id:null, ox:0, oy:0, px:0, py:0, t0:0, moved:false, press:0}));
 const ptrs = new Map();               // pointerId -> {z, kind:'joy'|'btn'|'extra', x, y}
-const JR = () => Math.max(42, Math.min(W,H)*.11);   // radius joystick
-const BR = () => Math.max(32, Math.min(W,H)*.085);  // radius tombol dash
+const JR = () => Math.max(42, Math.min(W,H)*.11) * SIZE[save.size];   // radius joystick
+const BR = () => Math.max(32, Math.min(W,H)*.085) * SIZE[save.size];  // radius tombol dash
 function btnPos(z){
   const m = BR() + 14;
   return [{x:m,y:H-m},{x:W-m,y:H-m},{x:m,y:m},{x:W-m,y:m}][z];
@@ -335,7 +494,7 @@ function dash(p){
   for(let k=0;k<6;k++) parts.push({type:'line', x:p.x - dx*r*rnd(1,1.6) + rnd(-r,r)*-dy, y:p.y - dy*r*rnd(1,1.6) + rnd(-r,r)*dx, dx, dy, len:rnd(20,45), life:.3, max:.3});
   buzz(15);
 }
-function buzz(ms){ try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} }
+function buzz(ms){ if(!save.vib) return; try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} }
 
 // ---------- Efek ----------
 function burst(x, y, col, n, spd){
@@ -474,7 +633,7 @@ function checkRoundEnd(){
     const mx = Math.max(...players.map(p => p.score)); winners = mx > 0 ? players.filter(p => p.score === mx) : [];
   }
   if(!winners) return;
-  for(const w of winners){ match.wins[w.i]++; w.won = true; burst(w.x, w.y, '#f2c94c', 18, 300); }
+  for(const w of winners){ match.wins[w.i]++; save.wins[w.i]++; save.stars++; w.won = true; burst(w.x, w.y, '#f2c94c', 18, 300); }
   endText = winners.length === 0 ? 'Seri!' : winners.length === 1 ? CHARS[winners[0].i].n + ' menang!' : 'Seri: ' + winners.map(w => CHARS[w.i].n).join(' & ');
   endCol = winners.length === 1 ? CHARS[winners[0].i].c : '#fff';
   state = 'end'; tEnd = 2.8;
@@ -485,6 +644,7 @@ function finishMatch(){
   const mx = Math.max(...match.wins);
   const champs = match.wins.map((w,i) => w === mx ? i : -1).filter(i => i >= 0);
   for(const p of players) p.won = champs.includes(p.i) && mx > 0;
+  save.matches++; if(mx > 0 && champs.length === 1) save.trophies[champs[0]]++; persist();
   $('champ').textContent = mx === 0 ? 'Semua seri!' : champs.length === 1 ? '🏆 ' + CHARS[champs[0]].n + ' juara!' : '🤝 Seri: ' + champs.map(i => CHARS[i].n).join(' & ');
   $('tab').innerHTML = match.wins.map((w,i) => `<span style="color:${CHARS[i].d}">${CHARS[i].n}</span>: ${'★'.repeat(w) || '–'}`).join('<br>');
   $('end').classList.remove('hidden'); $('quit').classList.add('hidden');
@@ -756,24 +916,60 @@ function hud(){
   if(state === 'end') bigText(endText, H/2, 38, endCol);
 }
 
-// ---------- Menu (karakter berkeliaran di belakang) ----------
-const menuChars = CHARS.map((c,i) => ({i, x:[160,1040,180,1020][i], y:[520,520,160,160][i], vx:0, vy:0, m:2200, alive:true, fall:0, fallMax:1,
-  fx:0, fy:1, seed:i*2.3, expr:'normal', blink:rnd(1,3), dashFx:0}));
+// ---------- Hero halaman utama: trofi doodle + karakter + konfeti ----------
+const menuChars = CHARS.map((c,i) => ({i, x:0, y:0, vx:0, vy:0, m:100, alive:true, fall:0, fallMax:1, fx:0, fy:1, seed:i*2.3, expr:'happy', blink:rnd(1,3), dashFx:0}));
+const CONF = ['#e8735a','#f2c94c','#6aa6d8','#7cc47a','#c58fd6'];
+const confetti = Array.from({length:46}, () => ({x:Math.random(), y:Math.random(), s:rnd(.7,1.3), r:rnd(0,6), vr:rnd(-3,3), c:CONF[Math.floor(rnd(0,5))], v:rnd(.05,.12)}));
+function drawTrophy(x, y, h){
+  ctx.save(); ctx.translate(x, y); const k = h/100; ctx.scale(k, k);
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(-30,-40); ctx.bezierCurveTo(-60,-42,-58,-2,-20,0); ctx.moveTo(30,-40); ctx.bezierCurveTo(60,-42,58,-2,20,0);
+  ctx.lineWidth = 11; ctx.strokeStyle = INK; ctx.stroke(); ctx.lineWidth = 5; ctx.strokeStyle = '#f2c94c'; ctx.stroke();
+  const cup = () => { ctx.beginPath(); ctx.moveTo(-36,-50); ctx.lineTo(36,-50); ctx.bezierCurveTo(36,-4,18,14,0,14); ctx.bezierCurveTo(-18,14,-36,-4,-36,-50); ctx.closePath(); };
+  cup(); ctx.fillStyle = '#f2c94c'; ctx.fill();
+  ctx.save(); ctx.clip(); ctx.beginPath(); for(let i=-40;i<60;i+=7){ ctx.moveTo(8+i*.4, 20); ctx.lineTo(40+i*.4, -55); } ctx.lineWidth = 1.6; ctx.strokeStyle = 'rgba(38,35,34,.5)'; ctx.stroke(); ctx.restore();
+  cup(); inkStroke(4.5);
+  ctx.beginPath(); ctx.moveTo(-24,-40); ctx.quadraticCurveTo(-26,-20,-14,-6); inkStroke(2.5);
+  ctx.beginPath(); for(let i=0;i<10;i++){ const a = -Math.PI/2 + i*Math.PI/5, q = i%2 ? 6 : 14; ctx.lineTo(Math.cos(a)*q, -24 + Math.sin(a)*q); } ctx.closePath(); ctx.fillStyle = '#fff'; ctx.fill(); inkStroke(3);
+  ctx.beginPath(); ctx.rect(-7,14,14,14); ctx.fillStyle = '#f2c94c'; ctx.fill(); inkStroke(4);
+  ctx.beginPath(); ctx.rect(-26,28,52,12); ctx.fillStyle = '#e8735a'; ctx.fill(); inkStroke(4);
+  ctx.beginPath(); ctx.rect(-32,40,64,10); ctx.fillStyle = '#e8735a'; ctx.fill(); inkStroke(4);
+  ctx.restore();
+}
 function renderMenu(dt){
   T += dt;
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.drawImage(bg, 0, 0, W, H);
-  ctx.save(); ctx.translate(OX,OY); ctx.scale(S,S);
-  ctx.drawImage(paper, 0, 0);
+  const hx = W*.3, hy = H*.53, u = Math.min(W*.46, H*.9)/100;
+  // sinar di belakang trofi
+  ctx.save(); ctx.translate(hx, hy - u*6); ctx.rotate(T*.15);
+  for(let i=0;i<12;i++){ ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0, 0, u*75, i*Math.PI/6, i*Math.PI/6 + Math.PI/12); ctx.closePath(); ctx.fillStyle = 'rgba(242,201,76,.22)'; ctx.fill(); }
+  ctx.restore();
+  // pulau kertas
+  ctx.save(); ctx.translate(hx, hy + u*26); ctx.scale(1, .32);
+  wobbly(0, 0, u*46, 2.2, .02); ctx.fillStyle = '#f4f2ec'; ctx.fill(); ctx.restore();
+  ctx.save(); ctx.translate(hx, hy + u*26); ctx.scale(1, .32); wobbly(0, 0, u*46, 2.2, .02); ctx.restore(); inkStroke(3);
+  ctx.strokeStyle = 'rgba(38,35,34,.4)'; ctx.lineWidth = 1.6;
+  for(let i=0;i<9;i++) tuft(ctx, hx + Math.cos(i*2.1)*u*34, hy + u*26 + Math.sin(i*2.1)*u*9, u*2);
+  drawTrophy(hx, hy - u*4 + Math.sin(T*2)*u*1.2, u*46);
+  // karakter bersorak
+  const pos = [[-28,24],[28,24],[-37,2],[37,2]];
   for(const c of menuChars){
     c.blink -= dt; if(c.blink < -.12) c.blink = rnd(2,4);
-    const a = T*.6 + c.i*1.6;
-    c.fx = Math.cos(a); c.fy = Math.sin(a)*.6;
-    c.expr = c.blink < 0 ? 'blink' : (Math.sin(T*.8 + c.i) > .6 ? 'happy' : 'normal');
-    drawChar(c);
+    const jump = Math.max(0, Math.sin(T*4 + c.i*1.3))*u*5;
+    c.m = (u*9.5)**2; c.x = hx + pos[c.i][0]*u; c.y = hy + pos[c.i][1]*u - jump;
+    c.fx = (hx - c.x)/(u*40); c.fy = -.4;
+    c.expr = jump > u*2 ? 'happy' : c.blink < 0 ? 'blink' : 'normal';
   }
-  ctx.restore();
+  [...menuChars].sort((a,b) => a.y - b.y).forEach(drawChar);
+  // konfeti
+  for(const q of confetti){
+    q.y += q.v*dt; q.r += q.vr*dt; if(q.y > 1.05){ q.y = -.05; q.x = Math.random()*.6; }
+    ctx.save(); ctx.translate(q.x*W, q.y*H + Math.sin(T*2 + q.r)*4); ctx.rotate(q.r); ctx.scale(q.s, q.s*Math.abs(Math.cos(q.r*1.3)) + .2);
+    ctx.beginPath(); ctx.rect(-5,-4,10,8); ctx.fillStyle = q.c; ctx.fill(); inkStroke(1.5); ctx.restore();
+  }
 }
+refreshHome();
 
 // ---------- Loop ----------
 let last = performance.now();
