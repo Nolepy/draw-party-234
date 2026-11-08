@@ -638,6 +638,22 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .zbox{flex:0 0 auto!important;min-width:calc(var(--px)*34)!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .go{white-space:normal!important;text-align:center!important;line-height:1.25!important;flex-wrap:wrap!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items > .drawpanel{padding:calc(var(--px)*3)!important;gap:calc(var(--px)*2) calc(var(--px)*5)!important}
+  /* galeri gambar tersimpan */
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items:has(> .gal){display:block!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .galhead{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--px)*4);margin:calc(var(--px)*4) 0 calc(var(--px)*3);color:#2c3354}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(calc(var(--px)*24),1fr));gap:calc(var(--px)*3)}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gitem{position:relative}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .guse{display:block;width:100%;aspect-ratio:1;padding:calc(var(--px)*2);background:#f7f9fc;border:var(--p1) solid #2c3354;box-shadow:inset var(--p1) var(--p1) 0 #fff,inset calc(var(--p1)*-1) calc(var(--p1)*-1) 0 #a9b3c7,0 var(--p1) 0 #2c3354;cursor:pointer;box-sizing:border-box}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .guse img{width:100%;height:100%;image-rendering:pixelated;display:block}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gitem.on .guse{background:#bcd7f5;box-shadow:inset var(--p1) var(--p1) 0 #a9b3c7,0 0 0 var(--p1) #5ab230}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gdel{position:absolute;top:calc(var(--p1)*-2);right:calc(var(--p1)*-2);width:calc(var(--px)*8);height:calc(var(--px)*8);padding:0;font:inherit;font-size:calc(var(--px)*6);line-height:1;background:#ef6479;color:#fff;border:var(--p1) solid #2c3354;cursor:pointer;display:grid;place-items:center}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gdel::after{content:'';position:absolute;inset:-6px}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items > .drawpanel{grid-template-columns:calc(var(--px)*30) 1fr!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .dbrow{grid-column:2;display:flex;gap:calc(var(--px)*3);align-items:stretch}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .dbrow .go{flex:1;min-height:calc(var(--px)*13)!important;padding:calc(var(--px)*2) calc(var(--px)*5)!important;white-space:nowrap!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .hint{display:none}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .galhead{margin:calc(var(--px)*3) 0 calc(var(--px)*2)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gal{grid-template-columns:repeat(auto-fill,minmax(calc(var(--px)*20),1fr))!important;padding:calc(var(--px)*2) calc(var(--px)*1)}
 /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
   #home#home{touch-action:none}
   #home#home .hz:not(#zz){position:absolute;opacity:0;padding:0;margin:0;border:0!important;box-shadow:none!important;background:none!important;transform:none!important;min-width:0;min-height:0}
@@ -727,7 +743,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v6.3 · ringkas';
+const VERSION = 'v6.4 · galeri gambar';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -1015,6 +1031,12 @@ const FXS = [{id:'none',p:0},{id:'sparkle',p:10},{id:'hearts',p:20},{id:'bubbles
 const DEF_CUST = i => ({name:'', col:PAL[i].id, hat:'none', acc:'none', sp:['fox','cat','frog','chick'][i], fx:'none', skin:'', useSkin:false, eyes:true, outline:true});
 if(!Array.isArray(save.cust)) save.cust = [0,1,2,3].map(DEF_CUST);
 save.cust = save.cust.map((c,i) => Object.assign(DEF_CUST(i), c));
+// GALERI: semua gambar yang pernah disimpan, bisa dipakai ulang oleh pemain mana pun
+if(!Array.isArray(save.gal)) save.gal = [];
+const GAL_MAX = 24;
+function galAdd(skin, ol){ if(!skin) return; const k = save.gal.findIndex(g => g.s === skin); if(k >= 0) save.gal.splice(k, 1); save.gal.unshift({s:skin, o:ol !== false});
+  while(save.gal.length > GAL_MAX) save.gal.pop(); }
+save.cust.slice().reverse().forEach(c => { if(c.skin && !save.gal.some(g => g.s === c.skin)) galAdd(c.skin, c.outline); });
 if(!save.v2){ save.cust.forEach(c => { if(['ears','ahoge','leaf','bow'].includes(c.acc)) c.acc = 'none'; }); save.v2 = true; }   // karakter lama -> kepala hewan
 if(!Array.isArray(save.owned)) save.owned = [];
 const skinImgs = [null,null,null,null];
@@ -1224,7 +1246,7 @@ const L = {
   pname:'Nama Pemain', tabSp:'HEWAN', tabCol:'WARNA', tabHat:'TOPI', tabAcc:'AKSESORI', tabFx:'EFEK', tabDraw:'GAMBAR',
   buy:'Beli?', bought:'Terbeli! ✔', noStars:'Bintang kurang! Menang ronde untuk dapat ⭐',
   drawT:'Karakter gambarmu', drawS:'Bagian kosong jadi transparan.', autoOl:'Outline otomatis', drawGo:'✏️ MULAI GAMBAR', drawEdit:'✏️ UBAH',
-  useSkin:'Pakai gambar', modeT:'Mau pakai karakter apa?', modeA:'KOSTUM HEWAN', modeAS:'Hewan, warna, topi & lainnya', modeD:'GAMBAR SENDIRI', modeDS:'Gambar dari nol', inUse:'DIPAKAI', modeBack:'GANTI GAYA', noDraw:'Belum ada gambar', eyes:'Mata otomatis', delSkin:'🗑 Hapus gambar', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
+  useSkin:'Pakai gambar', modeT:'Mau pakai karakter apa?', modeA:'KOSTUM HEWAN', modeAS:'Hewan, warna, topi & lainnya', modeD:'GAMBAR SENDIRI', modeDS:'Gambar dari nol', inUse:'DIPAKAI', modeBack:'GANTI GAYA', noDraw:'Belum ada gambar', galT:'Gambar tersimpan', galNew:'BARU', galUse:'Pakai gambar ini', galDel:'Hapus dari galeri', galEmpty:'Belum ada gambar tersimpan.', eyes:'Mata otomatis', delSkin:'🗑 Lepas', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
   drawHint:'Gambar bebas, lingkaran hanya panduan ukuran', drawHero:'Pixel Jagoanmu!', faceL:'Outline', previewL:'Pratinjau', pen:'Pena', eraser:'Hapus', fillbg:'Isi latar',
   pts:'poin', safe:'aman', fell:'jatuh!', round:'Ronde', win:' menang!', draw:'Seri!', drawW:'Seri: ', champ:' juara!', allDraw:'Semua seri!'},
  en: {lang:'English', flag:'EN', c0:'Red', c1:'Blue', c2:'Green', c3:'Yellow',
@@ -1252,7 +1274,7 @@ const L = {
   pname:'Player Name', tabSp:'ANIMAL', tabCol:'COLOR', tabHat:'HATS', tabAcc:'EXTRAS', tabFx:'EFFECTS', tabDraw:'DRAW',
   buy:'Buy?', bought:'Bought! ✔', noStars:'Not enough stars! Win rounds to earn ⭐',
   drawT:'Your drawn character', drawS:'Empty pixels stay transparent.', autoOl:'Auto outline', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT',
-  useSkin:'Use drawing', modeT:'Which character do you want?', modeA:'ANIMAL COSTUME', modeAS:'Animal, color, hat & more', modeD:'DRAW YOUR OWN', modeDS:'Draw from scratch', inUse:'IN USE', modeBack:'CHANGE STYLE', noDraw:'No drawing yet', eyes:'Auto eyes', delSkin:'🗑 Delete drawing', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
+  useSkin:'Use drawing', modeT:'Which character do you want?', modeA:'ANIMAL COSTUME', modeAS:'Animal, color, hat & more', modeD:'DRAW YOUR OWN', modeDS:'Draw from scratch', inUse:'IN USE', modeBack:'CHANGE STYLE', noDraw:'No drawing yet', galT:'Saved drawings', galNew:'NEW', galUse:'Use this drawing', galDel:'Remove from gallery', galEmpty:'No saved drawings yet.', eyes:'Auto eyes', delSkin:'🗑 Remove', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
   drawHint:'Draw freely, the circle is just a size guide', drawHero:'Pixel your Hero!', faceL:'Outline', previewL:'Preview', pen:'Pen', eraser:'Eraser', fillbg:'Fill bg',
   pts:'pts', safe:'safe', fell:'out!', round:'Round', win:' wins!', draw:'Draw!', drawW:'Draw: ', champ:' is champion!', allDraw:'All draw!'}
 };
@@ -1450,16 +1472,21 @@ function renderChars(){
       cMode = b.dataset.m; pending = null;
       if(cMode === 'animal'){ c.useSkin = false; if(cTab === 'draw') cTab = 'sp'; }
       else if(c.skin) c.useSkin = true;
-      persist(); thumbCache = null; renderChars(); if(cMode === 'draw' && !c.skin) openDraw();
+      persist(); thumbCache = null; renderChars(); if(cMode === 'draw' && !c.skin && !save.gal.length) openDraw();
     });
     return;
   }
   if(cTab === 'draw'){
     box.innerHTML = `<div class="drawpanel"><canvas id="dpv" width="240" height="240"></canvas><div class="dcol"><h2>${t('drawT')}</h2>${c.skin ? '' : `<div class="hint" style="text-align:left">${t('drawS')}</div>`}
-      <button class="go" id="dOpen">${c.skin ? t('drawEdit') : t('drawGo')}</button>
-      ${c.skin ? `<label class="tog"><input type="checkbox" id="tEyes" ${c.outline !== false ? 'checked' : ''}> ${t('autoOl')}</label><button class="chip" id="dDel">${t('delSkin')}</button>` : ''}</div></div>`;
+      <div class="dbrow"><button class="go" id="dOpen">${c.skin ? t('drawEdit') : t('drawGo')}</button>${c.skin ? `<button class="chip" id="dDel">${t('delSkin')}</button>` : ''}</div>
+      ${c.skin ? `<label class="tog"><input type="checkbox" id="tEyes" ${c.outline !== false ? 'checked' : ''}> ${t('autoOl')}</label>` : ''}</div></div>
+      <div class="galhead"><span>${t('galT')} (${save.gal.length})</span><button class="chip" id="gNew">${iconHTML('tdraw', 16)} ${t('galNew')}</button></div>
+      <div class="gal">${save.gal.length ? save.gal.map((g,k) => `<div class="gitem ${g.s === c.skin ? 'on' : ''}"><button class="guse" data-k="${k}" aria-label="${t('galUse')}"><img src="${g.s}" alt=""></button><button class="gdel" data-k="${k}" aria-label="${t('galDel')}">✕</button></div>`).join('') : `<div class="hint">${t('galEmpty')}</div>`}</div>`;
     previewChar($('dpv'), cP, {}, {r:.3, L:240, bg:'#e3f4ee'});
     $('dOpen').onclick = openDraw;
+    $('gNew').onclick = () => openDraw(true);
+    box.querySelectorAll('.guse').forEach(b => b.onclick = () => { const g = save.gal[+b.dataset.k]; c.skin = g.s; c.outline = g.o; c.useSkin = true; c.eyes = false; c.free = true; persist(); loadSkin(cP); thumbCache = null; sfx('coin'); setTimeout(renderChars, 60); });
+    box.querySelectorAll('.gdel').forEach(b => b.onclick = e => { e.stopPropagation(); save.gal.splice(+b.dataset.k, 1); persist(); renderChars(); });
     if(c.skin){
       $('tEyes').onchange = e => { c.outline = e.target.checked; persist(); renderChars(); };
       $('dDel').onclick = () => { c.skin = ''; c.useSkin = false; persist(); loadSkin(cP); thumbCache = null; cMode = null; renderChars(); };
@@ -1521,10 +1548,10 @@ function dUpdatePen(){
   $('dTool').innerHTML = iconHTML(dTool === 'era' ? 'eraser' : 'pencil', 16);
   $('dFill').classList.toggle('on', dTool === 'fill'); $('dTool').classList.toggle('on', dTool !== 'fill');
 }
-function openDraw(){
+function openDraw(fresh){
   const c = save.cust[cP];
   dctx.globalCompositeOperation = 'source-over'; dctx.clearRect(0, 0, 32, 32); dHist = [];
-  if(c.skin && skinImgs[cP] && skinImgs[cP].complete){ dctx.imageSmoothingEnabled = skinImgs[cP].naturalWidth > 64; dctx.drawImage(skinImgs[cP], 0, 0, 32, 32); quantize(dctx, 32, 32); }
+  if(fresh !== true && c.skin && skinImgs[cP] && skinImgs[cP].complete){ dctx.imageSmoothingEnabled = skinImgs[cP].naturalWidth > 64; dctx.drawImage(skinImgs[cP], 0, 0, 32, 32); quantize(dctx, 32, 32); }
   dEyesOn = c.outline !== false; dTool = 'pen';
   $('dName').value = c.name; $('dName').placeholder = t('c'+cP);
   $('dColors').innerHTML = DCOLS.map((cc,k) => `<button data-c="${cc}" class="${cc === dCol ? 'on' : ''}" style="--r:${((k*7)%5-2)*1.5}deg;background-color:${cc === 'rainbow' ? '#e3f4ee' : cc};${cc === 'rainbow' ? 'background:conic-gradient(#d5734c,#ffc33a,#5ab230,#0a98d6,#214aa6,#d5734c)' : ''}"></button>`).join('');
@@ -1560,7 +1587,7 @@ $('dCancel').onclick = () => { $('draw').classList.add('hidden'); renderChars();
 $('dSave').onclick = () => {
   const c = save.cust[cP], prevSkin = c.skin;
   c.skin = dc.toDataURL('image/png');   // 32x32 piksel, latar transparan = bentuk karakter
-  c.useSkin = true; c.eyes = false; c.free = true; c.outline = dEyesOn; $('pName').value = c.name;
+  c.useSkin = true; c.eyes = false; c.free = true; c.outline = dEyesOn; $('pName').value = c.name; galAdd(c.skin, c.outline);
   try{ localStorage.setItem(SAVE_KEY, JSON.stringify(save)); toast(t('saved')); sfx('coin'); }
   catch(e){ c.skin = prevSkin; toast(t('saveErr')); }
   loadSkin(cP); thumbCache = null;
