@@ -389,6 +389,10 @@
   .ico .pxi{width:calc(var(--px)*12)!important;height:calc(var(--px)*14)!important}
   .badge{display:flex!important;flex-direction:column;align-items:center;gap:calc(var(--px)*2);width:auto!important;height:auto!important}
   .badge b{position:static!important;padding:0!important}
+  /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
+  #home#home{touch-action:none}
+  #home#home .hz:not(#zz){position:absolute;opacity:0;padding:0;margin:0;border:0!important;box-shadow:none!important;background:none!important;transform:none!important;min-width:0;min-height:0}
+  #home#home .hz .dot{display:none}
 </style>
 </head>
 <body>
@@ -398,26 +402,17 @@
 <svg width="0" height="0" style="position:absolute"><filter id="athr" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feComponentTransfer><feFuncA type="discrete" tableValues="0 1"/></feComponentTransfer></filter><filter id="wob"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3.5"/></filter></svg>
 
 <div id="home">
-  <div class="side">
-    <button class="sbtn" id="giftBtn" data-icon="gift"></button>
-    <button class="sbtn" id="spinBtn" data-icon="wheel"></button>
-  </div>
-  <div class="logo"><img class="logoic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABn0lEQVR4XrWWPUsDQRCGN5JChJAUgp2kNgpWMWghJJ0/wcIqCGlS2IlgJ/Y2giiIRf7FCRaKdkJML3aCxaWzU2bOWed2Z+aOoE91H7vvOzM7u3cVx2i1Nr/4/axMJg8VmosXXDgZNL3ufKPhrz/TNPKT3vfOX/04MPIG94frswYssnX6jAZVip5HCFHwTIrQxoP2HEzmYjD4pO5yqVpo40kTDSTKmJC4RVV62VnOFjdxWSYQDV88Iln7bQI3jpsAQAPohrBLli7PMpP+MDPhYj/QmPf+UE3Cl4i3HAdELHEN0vMl4hk8vqWuY0QFUNQwVoL0MAMuDvU+mprrloPWS0Ptor8iMggXtHY1cj2hQ8LnWlsXZtBu74jJaM9DxH3AkToI21doWwl1Hyx0j11tdzE3Z3VjD+9fnm5yz7ujD3d7fSAaRPsAd+04jcQtIBDoPOmoF/eBRhi5hboPsL6Dpi9HGaB02vGudlFZE0scQAPppCyTiSVOmv6TebGtF2P/Tn5XNAc/mTSVRMJawqmYrMgHGhAe9WE1/O8F8B+/Ld+zIa+/BHX7ywAAAABJRU5ErkJggg==" alt=""><h1><span class="a">Draw Party</span> <span class="b">234</span> <span class="c">MiniGames</span></h1></div>
-  <div class="panel"><div class="inner">
-    <div class="tops">
-      <button class="badge" id="bStars"><span data-icon="starbadge"></span><b id="starN">0</b></button>
-      <button class="ico" id="bTro"><span data-icon="trophy"></span><em data-t="trophies" style="font-style:normal">Trofi</em></button>
-      <button class="ico" id="bRank"><span data-icon="podium"></span><em data-t="ranks" style="font-style:normal">Peringkat</em></button>
-    </div>
-    <button class="mbtn" data-act="quick"><i class="ic" data-icon="bolt"></i><span data-t="quick">MAIN CEPAT</span></button>
-    <button class="mbtn" data-act="pick"><i class="ic" data-icon="dice"></i><span data-t="pick">PILIH GAME</span></button>
-    <button class="mbtn" data-act="tour"><i class="ic" data-icon="cup"></i><span data-t="tour">TURNAMEN</span></button>
-    <button class="mbtn gold" data-act="chars"><i class="ic" data-icon="tsp"></i><span data-t="chars">KARAKTER</span></button>
-    <div class="bots">
-      <button id="bSet" data-icon="gear"></button>
-      <button id="bHelp" data-icon="help"></button>
-    </div>
-  </div></div>
+  <button class="hz" id="bStars" aria-label="stars"><span id="starN" hidden>0</span></button>
+  <button class="hz" id="bTro" aria-label="trophy"></button>
+  <button class="hz" id="bRank" aria-label="rank"></button>
+  <button class="hz" id="bSet" aria-label="settings"></button>
+  <button class="hz" id="bHelp" aria-label="help"></button>
+  <button class="hz" id="giftBtn" aria-label="gift"></button>
+  <button class="hz" id="spinBtn" aria-label="spin"></button>
+  <button class="hz" data-act="quick" id="hQuick" aria-label="quick"></button>
+  <button class="hz" data-act="pick" id="hPick" aria-label="pick"></button>
+  <button class="hz" data-act="tour" id="hTour" aria-label="tour"></button>
+  <button class="hz" data-act="chars" id="hChars" aria-label="chars"></button>
 </div>
 
 <div id="games" class="hidden">
@@ -483,7 +478,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v1.8 · rotsprite + animasi frame';
+const VERSION = 'v1.9 · home pesta';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -940,7 +935,7 @@ const L = {
   m_eat:'Sel Rebutan', m_sumo:'Sumo Blob', m_food:'Rebutan Makanan', m_combo:'Gabungan',
   h_eat:'Makan permen & blob yang lebih kecil!', h_sumo:'Dorong lawan keluar ring!', h_food:'Onigiri = 1 poin, bintang = 3 poin!',
   d_eat:'makan & membesar', d_sumo:'dorong keluar ring', d_food:'kumpulkan terbanyak', d_combo:'3 mode bergantian',
-  trophies:'Trofi', ranks:'Peringkat', quick:'MAIN CEPAT', pick:'PILIH GAME', tour:'TURNAMEN', chars:'KARAKTER',
+  trophies:'Trofi', ranks:'Peringkat', hGift:'HADIAH', hSpin:'PUTAR RODA', quick:'MAIN CEPAT', pick:'PILIH GAME', tour:'TURNAMEN', chars:'KARAKTER',
   menu:'✕ Menu', again:'MAIN LAGI', home:'MENU', rot:'Putar HP ke mode landscape 📱↔️',
   pl:'pemain', howMany:'Berapa pemain?', quickT:'⚡ Main Cepat', quickS:'3 ronde dengan mini game acak. Langsung main!',
   tourT:'🏆 Turnamen', tourS:'6 ronde, 6 mini game berbeda. Ronde terbanyak jadi juara!',
@@ -968,7 +963,7 @@ const L = {
   m_eat:'Blob Feast', m_sumo:'Sumo Blob', m_food:'Snack Grab', m_combo:'Mixed',
   h_eat:'Eat candy & smaller blobs!', h_sumo:'Push rivals out of the ring!', h_food:'Onigiri = 1 pt, star = 3 pts!',
   d_eat:'eat & grow', d_sumo:'push them out', d_food:'collect the most', d_combo:'3 modes in turn',
-  trophies:'Trophies', ranks:'Leaders', quick:'QUICK GAME', pick:'PICK GAME', tour:'TOURNAMENT', chars:'CHARACTERS',
+  trophies:'Trophies', ranks:'Leaders', hGift:'DAILY GIFT', hSpin:'LUCKY SPIN', quick:'QUICK GAME', pick:'PICK GAME', tour:'TOURNAMENT', chars:'CHARACTERS',
   menu:'✕ Menu', again:'PLAY AGAIN', home:'MENU', rot:'Rotate your phone to landscape 📱↔️',
   pl:'players', howMany:'How many players?', quickT:'⚡ Quick Game', quickS:'3 rounds of random mini games. Jump right in!',
   tourT:'🏆 Tournament', tourS:'6 rounds, 6 different mini games. Most rounds wins!',
@@ -1302,7 +1297,7 @@ function renderDrawPreview(){
   if(Math.floor(T*10) % 3 === 0) document.querySelectorAll('.fopt canvas').forEach((cv2,k) => draw1(cv2, k === 0, k === 0 ? '#ef6479' : '#b52c25', .32, 96));
   ctx = keepCtx; PXW = 1; [c.useSkin, c.eyes, skinImgs[cP]] = keep;
 }
-document.querySelectorAll('.mbtn').forEach(b => b.onclick = () => {
+document.querySelectorAll('#home [data-act]').forEach(b => b.onclick = () => {
   const a = b.dataset.act;
   if(a === 'quick') askPlayers(t('quickT'), t('quickS'), shuffleModes);
   if(a === 'pick') showGames();
@@ -2752,62 +2747,231 @@ function hud(){
 // ---------- Hero halaman utama: trofi doodle + karakter + konfeti ----------
 const menuChars = CHARS.map((c,i) => ({i, x:0, y:0, vx:0, vy:0, m:100, alive:true, fall:0, fallMax:1, fx:0, fy:1, seed:i*2.3, expr:'happy', blink:rnd(1,3), dashFx:0}));
 const CONF = ['#ef6479','#ffc33a','#0a98d6','#5ab230','#9e1e74'];
-const confetti = Array.from({length:46}, () => ({x:Math.random(), y:Math.random(), s:rnd(.7,1.3), r:rnd(0,6), vr:rnd(-2,2), c:CONF[Math.floor(rnd(0,5))], v:rnd(.05,.12)}));
-function drawTrophy(x, y, h){
-  ctx.save(); ctx.translate(x, y); const k = h/100; ctx.scale(k, k);
-  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-  ctx.beginPath(); ctx.moveTo(-30,-40); ctx.bezierCurveTo(-60,-42,-58,-2,-20,0); ctx.moveTo(30,-40); ctx.bezierCurveTo(60,-42,58,-2,20,0);
-  ctx.lineWidth = 11; ctx.strokeStyle = INK; ctx.stroke(); ctx.lineWidth = 5; ctx.strokeStyle = '#ffc33a'; ctx.stroke();
-  const cup = () => { ctx.beginPath(); ctx.moveTo(-36,-50); ctx.lineTo(36,-50); ctx.bezierCurveTo(36,-4,18,14,0,14); ctx.bezierCurveTo(-18,14,-36,-4,-36,-50); ctx.closePath(); };
-  cup(); ctx.fillStyle = '#eb7d10'; ctx.fill();
-  { const pts = []; pts.push([-36,-50],[12,-50]); for(let i=0;i<=12;i++){ const t2 = i/12, x = -36 + 0*t2, y = 0; } 
-    ctx.beginPath(); ctx.moveTo(-36,-50); ctx.lineTo(12,-50); ctx.bezierCurveTo(12,-12,6,12,0,14); ctx.bezierCurveTo(-18,14,-36,-4,-36,-50); ctx.closePath(); ctx.fillStyle = '#ffc33a'; ctx.fill(); }
-  cup(); inkStroke(4.5);
-  ctx.beginPath(); ctx.moveTo(-24,-40); ctx.quadraticCurveTo(-26,-20,-14,-6); inkStroke(2.5);
-  ctx.beginPath(); for(let i=0;i<10;i++){ const a = -Math.PI/2 + i*Math.PI/5, q = i%2 ? 6 : 14; ctx.lineTo(Math.cos(a)*q, -24 + Math.sin(a)*q); } ctx.closePath(); ctx.fillStyle = '#e3f4ee'; ctx.fill(); inkStroke(3);
-  ctx.beginPath(); ctx.rect(-7,14,14,14); ctx.fillStyle = '#ffc33a'; ctx.fill(); inkStroke(4);
-  ctx.beginPath(); ctx.rect(-26,28,52,12); ctx.fillStyle = '#d5734c'; ctx.fill(); inkStroke(4);
-  ctx.beginPath(); ctx.rect(-32,40,64,10); ctx.fillStyle = '#d5734c'; ctx.fill(); inkStroke(4);
-  ctx.restore();
+// ===== HOME v2: panggung pesta, semuanya di grid piksel seni (1 piksel = K piksel layar) =====
+const HB = document.createElement('canvas'), HB3 = document.createElement('canvas');
+const HCOL = {
+  yel:{base:'#ffc33a', light:'#f2eee3', dark:'#eb7d10', depth:'#b8300e'},
+  blu:{base:'#0a98d6', light:'#49e2dd', dark:'#214aa6', depth:'#271e69'},
+  pnk:{base:'#e6687d', light:'#ffadaf', dark:'#9e1e74', depth:'#510c5d'},
+  grn:{base:'#5ab230', light:'#d5e848', dark:'#156948', depth:'#0e343f'},
+  crm:{base:'#f2eee3', light:'#e3f4ee', dark:'#aca394', depth:'#6f5e57'},
+};
+const LIGHTU = new Map(); for(const r of RAMPS) for(let k=1;k<r.length;k++) if(!LIGHTU.has(U32(r[k]))) LIGHTU.set(U32(r[k]), U32(r[k-1]));
+const hexU = h => { const v = parseInt(h.slice(1), 16); return ((255 << 24) | ((v & 255) << 16) | (v & 0xff00) | (v >> 16)) >>> 0; };
+const HOME = {press:null, key:'', bgKey:'', btns:[], conf:[], stars:[], imgs:{}};
+function hImg(n){ let im = HOME.imgs[n]; if(!im){ im = HOME.imgs[n] = new Image(); im.src = PIXICON[n + '@px'] || ''; } return im.complete && im.naturalWidth ? im : null; }
+// teks bitmap 1x di piksel seni
+function hW(txt){ let w = 0; for(const ch of pfChars(txt)){ const g = PF[ch]; w += (g ? g[0].length : 3) + 1; } return Math.max(0, w - 1); }
+function hText(g, txt, x, y, col, ol){
+  const draw = (dx, dy, c) => { let cx = x; for(const ch of pfChars(txt)){ const gl = PF[ch]; if(!gl){ cx += 4; continue; }
+    g.fillStyle = c || PF_COL[ch] || col; for(let r=0;r<7;r++) for(let k=0;k<gl[r].length;k++) if(gl[r][k] === '1') g.fillRect(cx + k + dx, y + r + dy, 1, 1); cx += gl[0].length + 1; } };
+  if(ol){ for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,-1],[1,-1],[-1,1],[0,2],[1,2],[-1,2]]) draw(dx, dy, INK); }
+  draw(0, 0);
 }
-const HB = document.createElement('canvas');
-function renderMenu(dt){
-  T += dt;
-  const g = artCanvas(HB, false); ctx = g; PXW = PXC;
-  ctx.drawImage(bg, 0, 0, W, H);
-  const hx = W*.3, hy = H*.53, u = Math.min(W*.46, H*.9)/100;
-  // sinar di belakang trofi
-  ctx.save(); ctx.translate(hx, hy - u*6); ctx.rotate(T*.15);
-  for(let i=0;i<12;i++){ ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0, 0, u*75, i*Math.PI/6, i*Math.PI/6 + Math.PI/12); ctx.closePath(); ctx.fillStyle = '#ffc33a'; ctx.globalAlpha = .45; ctx.fill(); ctx.globalAlpha = 1; }
-  ctx.restore();
-  // pulau kertas
-  ctx.save(); ctx.translate(hx, hy + u*26); ctx.scale(1, .32);
-  wobbly(0, 0, u*46, 2.2, .02); ctx.fillStyle = '#5ab230'; ctx.fill(); ctx.restore();
-  ctx.save(); ctx.translate(hx, hy + u*26); ctx.scale(1, .32); wobbly(0, 0, u*46, 2.2, .02); ctx.restore(); inkStroke(3);
-  ctx.strokeStyle = '#5ab230'; ctx.lineWidth = PXC*2;
-  for(let i=0;i<9;i++) tuft(ctx, hx + Math.cos(i*2.1)*u*34, hy + u*26 + Math.sin(i*2.1)*u*9, u*2);
+// logo: huruf 5x7 diperhalus Scale2x (EPX) -> garis diagonal tetap 1 piksel, tidak ada piksel ganda
+const LOGO_C = [['#ffc33a','#f2eee3','#eb7d10'],['#49e2dd','#e3f4ee','#0a98d6'],['#ef6479','#ffadaf','#b52c25'],['#d5e848','#f2eee3','#5ab230']];
+const logoCache = new Map();
+function logoGlyph(ch, ci){
+  const k = ch + ci; if(logoCache.has(k)) return logoCache.get(k);
+  const gl = PF[ch]; const w = gl[0].length, h = 7, at = (x, y) => x >= 0 && y >= 0 && x < w && y < h && gl[y][x] === '1';
+  const W2 = w*2 + 2, H2 = h*2 + 4, m = Array.from({length:H2}, () => new Array(W2).fill(0));
+  for(let y=0;y<h;y++) for(let x=0;x<w;x++){ if(!at(x,y)) continue;
+    const A = at(x,y-1), B = at(x+1,y), C = at(x-1,y), D = at(x,y+1);
+    const q = [1, 1, 1, 1];
+    m[1+2*y][1+2*x] = q[0]; m[1+2*y][2+2*x] = q[1]; m[2+2*y][1+2*x] = q[2]; m[2+2*y][2+2*x] = q[3];
+  }
+  // EPX untuk sel kosong: isi sudut dalam diagonal
+  for(let y=0;y<h;y++) for(let x=0;x<w;x++){ if(at(x,y)) continue;
+    const A = at(x,y-1), B = at(x+1,y), C = at(x-1,y), D = at(x,y+1);
+    if(C && A && !D && !B) m[1+2*y][1+2*x] = 1; if(A && B && !C && !D) m[1+2*y][2+2*x] = 1;
+    if(D && C && !B && !A) m[2+2*y][1+2*x] = 1; if(B && D && !A && !C) m[2+2*y][2+2*x] = 1; }
+  const [base, light, dark] = LOGO_C[ci % 4];
+  const c = document.createElement('canvas'); c.width = W2; c.height = H2; const g = c.getContext('2d');
+  const on = (x, y) => y >= 0 && x >= 0 && y < H2 && x < W2 && m[y][x];
+  for(let y=0;y<H2;y++) for(let x=0;x<W2;x++){
+    if(on(x,y)){ g.fillStyle = !on(x, y-1) ? light : (!on(x, y+1) || !on(x, y+2)) ? dark : base; g.fillRect(x, y, 1, 1); }
+    else if(on(x, y-1) || on(x, y-2) || on(x-1, y) || on(x+1, y) || on(x, y+1) || on(x-1, y-1) || on(x+1, y-1)){ g.fillStyle = INK; g.fillRect(x, y, 1, 1); }  // outline + tebal 2px ke bawah
+  }
+  logoCache.set(k, c); return c;
+}
+// tombol 3D pixel: outline 1px, sudut terpotong, kilap 1px atas, gelap 2px bawah, ketebalan 2px
+function hBox(g, x, y, w, h, th, down){
+  const oy = down ? 2 : 0;
+  if(!down){ g.fillStyle = INK; g.fillRect(x + 1, y + h, w - 2, 3); g.fillRect(x, y + h, 1, 2); g.fillRect(x + w - 1, y + h, 1, 2);
+    g.fillStyle = th.depth; g.fillRect(x + 1, y + h, w - 2, 2); }
+  y += oy;
+  g.fillStyle = INK; g.fillRect(x + 1, y, w - 2, h); g.fillRect(x, y + 1, w, h - 2);
+  g.fillStyle = th.base; g.fillRect(x + 1, y + 1, w - 2, h - 2);
+  g.fillStyle = th.light; g.fillRect(x + 2, y + 1, w - 4, 1); g.fillRect(x + 1, y + 2, 1, 2);
+  g.fillStyle = th.dark; g.fillRect(x + 1, y + h - 3, w - 2, 2); g.fillRect(x + w - 2, y + 2, 1, h - 4);
+  return y;
+}
+function homeLayout(){
+  const key = AW + 'x' + AH + save.lang; if(HOME.key === key) return HOME.L; HOME.key = key;
+  const m = 6, bw = Math.min(112, Math.floor(AW*.28)), ib = 18;
+  const L = {m, bw, cx:AW >> 1, stTop:Math.round(AH*.76)};
+  L.stW = Math.max(110, AW - 2*(bw + m*3)); L.stX = L.cx - (L.stW >> 1);
+  const y0 = Math.round(AH*.31), big = 28, sm = 22, gap = 7;
+  L.btns = [
+    {id:'hQuick', x:m, y:y0, w:bw, h:big, th:HCOL.yel, ic:'bolt', lab:'quick', big:true},
+    {id:'hPick', x:m, y:y0 + big + gap, w:bw, h:sm, th:HCOL.blu, ic:'dice', lab:'pick'},
+    {id:'hTour', x:m, y:y0 + big + sm + gap*2, w:bw, h:sm, th:HCOL.pnk, ic:'cup', lab:'tour'},
+    {id:'hChars', x:AW - m - bw, y:y0, w:bw, h:big, th:HCOL.grn, ic:'tsp', lab:'chars', big:true},
+    {id:'giftBtn', x:AW - m - bw, y:y0 + big + gap, w:bw, h:sm, th:HCOL.pnk, ic:'gift', lab:'hGift', dot:'gift'},
+    {id:'spinBtn', x:AW - m - bw, y:y0 + big + sm + gap*2, w:bw, h:sm, th:HCOL.blu, ic:'wheel', lab:'hSpin', dot:'spin'},
+    {id:'bStars', x:m, y:m, w:0, h:ib, th:HCOL.crm, ic:'', lab:'stars'},
+    {id:'bTro', x:AW - m - ib*4 - 9, y:m, w:ib, h:ib, th:HCOL.yel, ic:'trophy'},
+    {id:'bRank', x:AW - m - ib*3 - 6, y:m, w:ib, h:ib, th:HCOL.pnk, ic:'podium'},
+    {id:'bSet', x:AW - m - ib*2 - 3, y:m, w:ib, h:ib, th:HCOL.crm, ic:'gear'},
+    {id:'bHelp', x:AW - m - ib, y:m, w:ib, h:ib, th:HCOL.blu, ic:'help'},
+  ];
+  HOME.L = L; HOME.posKey = ''; return L;
+}
+// latar: pita warna + sinar berputar & lampu sorot dengan dithering (bukan transparansi)
+function homeBg(L, step){
+  const key = HOME.key + ':' + step; if(HOME.bgKey === key) return; HOME.bgKey = key;
+  if(HB3.width !== AW || HB3.height !== AH){ HB3.width = AW; HB3.height = AH; }
+  const g = HB3.getContext('2d'), id = g.createImageData(AW, AH), u = new Uint32Array(id.data.buffer);
+  const C1 = hexU('#271e69'), C2 = hexU('#510c5d'), C3 = hexU('#9e1e74');
+  const cx = L.cx, cy = L.stTop - 4, b1 = AH*.3, b2 = AH*.56, rot = step*Math.PI/48;
+  const sw = Math.sin(step*Math.PI/24)*AW*.06;
+  const cones = [[-4, -4, L.stX + 10 + sw, L.stTop + 8, L.stX + L.stW*.55 + sw, L.stTop + 8], [AW + 4, -4, L.stX + L.stW*.45 - sw, L.stTop + 8, L.stX + L.stW - 10 - sw, L.stTop + 8]];
+  const inTri = (px, py, t) => { const [ax, ay, bx, by, qx, qy] = t, d = (x1, y1, x2, y2) => (px - x2)*(y1 - y2) - (x1 - x2)*(py - y2);
+    const d1 = d(ax, ay, bx, by), d2 = d(bx, by, qx, qy), d3 = d(qx, qy, ax, ay); return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); };
+  for(let y=0;y<AH;y++) for(let x=0;x<AW;x++){
+    const ck = (x + y) & 1;
+    let c = y < b1 - 1 ? C1 : y < b1 + 1 ? (ck ? C1 : C2) : y < b2 - 1 ? C2 : y < b2 + 1 ? (ck ? C2 : C3) : C3;   // batas pita di-dither 2 baris
+    const a = Math.atan2(y - cy, x - cx) + rot, sec = Math.floor((a + 20*Math.PI)/(Math.PI/8));
+    let lit = (sec & 1) && ck;
+    if(inTri(x, y, cones[0]) || inTri(x, y, cones[1])) lit = lit ? true : (x & 1) === 0 && (y & 1) === 0 || ck;
+    if(lit) c = LIGHTU.get(c) || c;
+    u[y*AW + x] = c;
+  }
+  g.putImageData(id, 0, 0);
+  // panggung kayu
+  const sx = L.stX, sw2 = L.stW, st = L.stTop;
+  g.fillStyle = INK; g.fillRect(sx - 1, st - 1, sw2 + 2, AH - st + 1);
+  g.fillStyle = '#c5763b'; g.fillRect(sx, st, sw2, 10);
+  g.fillStyle = '#fcb67a'; g.fillRect(sx, st, sw2, 1);
+  g.fillStyle = '#8b3c2b'; for(let x = sx + 9; x < sx + sw2; x += 14) g.fillRect(x, st + 1 + ((x >> 3) & 1)*4, 1, 5);
+  g.fillRect(sx, st + 9, sw2, 1);
+  g.fillStyle = INK; g.fillRect(sx, st + 10, sw2, 1);
+  g.fillStyle = '#9e1e74'; g.fillRect(sx, st + 11, sw2, AH - st - 11);                 // kain depan panggung
+  g.fillStyle = '#510c5d'; for(let x = sx + 5; x < sx + sw2; x += 10) g.fillRect(x, st + 19, 1, AH - st - 19);
+  g.fillStyle = '#e6687d'; for(let x = sx; x < sx + sw2; x += 10){ g.fillRect(x, st + 11, 10, 1); g.fillRect(x + 1, st + 12, 8, 1); g.fillRect(x + 3, st + 13, 4, 1); }
+  g.fillStyle = '#ffadaf'; for(let x = sx; x < sx + sw2; x += 10) g.fillRect(x + 4, st + 14, 2, 1);
+}
+function homeFrame(dt){
+  const L = homeLayout(), ms = performance.now();
+  homeBg(L, Math.floor(ms/140) % 96);
+  if(HB.width !== AW || HB.height !== AH){ HB.width = AW; HB.height = AH; }
+  const g = HB.getContext('2d'); g.setTransform(1,0,0,1,0,0); g.imageSmoothingEnabled = false; g.filter = 'none';
+  g.drawImage(HB3, 0, 0);
+  // bintang berkelip (3 frame, durasi acak per bintang)
+  if(!HOME.stars.length) for(let i=0;i<26;i++) HOME.stars.push({x:Math.random(), y:Math.random()*.5, p:rnd(0,3000), d:rnd(900,2400)});
+  for(const q of HOME.stars){ const x = Math.round(q.x*AW), y = Math.round(q.y*AH), f = ((ms + q.p) % q.d)/q.d;
+    g.fillStyle = f < .08 ? '#f2eee3' : '#86aaa2'; g.fillRect(x, y, 1, 1);
+    if(f < .08){ g.fillStyle = '#ffc33a'; g.fillRect(x - 1, y, 1, 1); g.fillRect(x + 1, y, 1, 1); g.fillRect(x, y - 1, 1, 1); g.fillRect(x, y + 1, 1, 1); }
+    else if(f < .14){ g.fillStyle = '#ffc33a'; g.fillRect(x + 1, y, 1, 1); g.fillRect(x, y + 1, 1, 1); } }
+  // tali bendera (bunting) melengkung + kibar 2 frame
+  const flagF = Math.floor(ms/320) & 1;
+  const lgw = 70, byy = 6 + 18 + 4;
+  for(const [x0, x1, sag, yy] of [[-2, L.cx - lgw, 9, byy], [L.cx + lgw, AW + 2, 9, byy]]){
+    let px = -1; for(let x = Math.max(0, x0); x < Math.min(AW, x1); x++){ const t2 = (x - x0)/(x1 - x0), y = Math.round(yy + Math.sin(t2*Math.PI)*sag); g.fillStyle = '#aca394'; g.fillRect(x, y, 1, 1);
+      if(x - px >= 10 && x > 2 && x < AW - 8){ px = x; const col = CONF[Math.floor(x/10 + yy) % 5], ln = 7 + ((x/10 + flagF) & 1);
+        for(let r=0;r<ln;r++){ const half = Math.max(0, Math.round((ln - r)*3/ln)); g.fillStyle = r === 0 || half <= 0 ? INK : col; g.fillRect(x + 3 - half - 1, y + 1 + r, half*2 + 2, 1);
+          g.fillStyle = col; if(half > 0) g.fillRect(x + 3 - half, y + 1 + r, half*2, 1); }
+        g.fillStyle = INK; g.fillRect(x + 3, y + ln + 1, 1, 1); } } }
+  // bola disko
+  const by = Math.round((L.stTop + 50)/2), br = Math.max(7, Math.min(12, Math.round(AH*.06))), bx = L.cx, ph = Math.floor(ms/110) % 4;
+  g.fillStyle = '#aca394'; g.fillRect(bx, 0, 1, by - br);
+  const DC = ['#e3f4ee','#86aaa2','#456a71','#26364b'];
+  for(let y=-br-1;y<=br+1;y++) for(let x=-br-1;x<=br+1;x++){ const d2 = (x + .5)**2 + (y + .5)**2;
+    if(d2 > (br + 1)**2) continue;
+    if(d2 > br*br){ g.fillStyle = INK; g.fillRect(bx + x, by + y, 1, 1); continue; }
+    const lv = Math.min(3, Math.floor(Math.hypot(x + br*.45, y + br*.45)/(br*.6))), fc = (Math.floor((x + br + ph)/3) + Math.floor((y + br)/3)) & 1;
+    g.fillStyle = (x + br + ph) % 3 === 0 || (y + br) % 3 === 0 ? DC[Math.min(3, lv + 1)] : DC[Math.min(3, lv + fc)]; g.fillRect(bx + x, by + y, 1, 1); }
+  const sp = Math.floor(ms/180) % 6; if(sp < 3){ const sx2 = bx + [-br + 2, br - 3, -2][Math.floor(ms/1080) % 3], sy2 = by + [-br + 3, -2, br - 4][Math.floor(ms/1080) % 3], s2 = sp === 1 ? 2 : 1;
+    g.fillStyle = '#f2eee3'; g.fillRect(sx2 - s2, sy2, s2*2 + 1, 1); g.fillRect(sx2, sy2 - s2, 1, s2*2 + 1); }
+  // lampu panggung berkedip bergantian
+  const bf = Math.floor(ms/260) & 1;
+  for(let x = L.stX + 3, k = 0; x < L.stX + L.stW - 2; x += 8, k++){ const on = (k & 1) === bf; g.fillStyle = INK; g.fillRect(x - 1, L.stTop + 3, 4, 4);
+    g.fillStyle = on ? '#ffc33a' : '#8b3c2b'; g.fillRect(x, L.stTop + 4, 2, 2); if(on){ g.fillStyle = '#f2eee3'; g.fillRect(x, L.stTop + 4, 1, 1); } }
+  // karakter menari bergiliran di panggung: [ms, naik(px), miring(step)]
+  const HOP = [[90,-2,0],[70,-5,1],[90,-7,1],[70,-5,0],[70,-2,-1],[60,0,-1]], HOPT = HOP.reduce((a,f) => a + f[0], 0), PER = 1500;
+  const spc = Math.min(38, Math.floor(L.stW/4.2)), R = Math.max(8, Math.min(15, Math.round(spc*.42))), feet = L.stTop + 9;
   SPRSCALE = PXC; SPRMAP = (x, y) => [x/PXC, y/PXC];
-  pushSpr(cachedSpr('trophy' + Math.round(u*46), u*30, () => drawTrophy(0, 0, u*46)), hx, hy - u*4 + Math.sin(T*2)*u*1.2, Math.sin(T*1.3)*.07);
-  // karakter bersorak
-  const pos = [[-28,24],[28,24],[-37,2],[37,2]];
-  for(const c of menuChars){
-    c.blink -= dt; if(c.blink < -.12) c.blink = rnd(2,4);
-    const jump = Math.max(0, Math.sin(T*4 + c.i*1.3))*u*5;
-    c.m = (u*9.5)**2; c.x = hx + pos[c.i][0]*u; c.y = hy + pos[c.i][1]*u - jump;
-    c.fx = (hx - c.x)/(u*40); c.fy = -.4;
-    c.expr = jump > u*2 ? 'happy' : c.blink < 0 ? 'blink' : 'normal';
+  menuChars.forEach(c => {
+    const tm = (ms + (3 - c.i)*PER/4) % PER; let up = 0, ang = 0;
+    if(tm < HOPT){ let t2 = tm; for(const f of HOP){ if(t2 < f[0]){ up = f[1]; ang = f[2]; break; } t2 -= f[0]; } c.hop = true; }
+    else if(c.hop){ c.hop = false; playShot(c, 'bonk'); }
+    animStep(c, dt);
+    c.blink -= dt; if(c.blink < -.12) c.blink = rnd(2, 4);
+    c.expr = up < -3 ? 'happy' : c.blink < 0 ? 'blink' : 'normal';
+    const ax = L.cx + Math.round((c.i - 1.5)*spc);
+    c.m = (R*PXC)**2; c.x = ax*PXC; c.y = (feet - R + up)*PXC; c.fx = (L.cx - ax)/(spc*3); c.fy = .3;
+    const shw = Math.max(3, R - 2 + up/2); g.fillStyle = '#8b3c2b'; g.fillRect(ax - shw, feet - 1, shw*2, 2);
+    c.ang = ang*Math.PI*2/ROTN*(c.i % 2 ? -1 : 1);
+  });
+  // konfeti piksel: bentuk 2x1 -> 1x1 -> 1x2 -> 1x1 (frame), posisi selalu bulat
+  if(!HOME.conf.length) for(let i=0;i<42;i++) HOME.conf.push({x:Math.random(), y:Math.random(), v:rnd(10,22), w:rnd(0,6), c:CONF[i % 5], f:rnd(0,480)});
+  for(const q of HOME.conf){ q.y += q.v*dt/AH; if(q.y > 1.03){ q.y = -.03; q.x = Math.random(); }
+    const fr = Math.floor((ms + q.f)/120) & 3, x = Math.round(q.x*AW + Math.sin(ms/700 + q.w)*3), y = Math.round(q.y*AH);
+    g.fillStyle = q.c; if(fr === 0) g.fillRect(x, y, 2, 1); else if(fr === 2) g.fillRect(x, y, 1, 2); else g.fillRect(x, y, 1, 1); }
+  // lapisan UI (di atas karakter)
+  const u2 = artCanvas(HUDB); u2.setTransform(1,0,0,1,0,0); u2.filter = 'none'; u2.clearRect(0, 0, AW, AH);
+  // logo
+  const word = 'DRAW PARTY', gw = ch => ch === ' ' ? 6 : PF[ch][0].length*2 + 1;
+  let lw = 0; for(const ch of word) lw += gw(ch); lw -= 1;
+  let lx = L.cx - (lw >> 1); const ly = Math.max(4, Math.round(AH*.05)), wave = Math.floor(ms/90) % 18;
+  [...word].forEach((ch, k) => { if(ch !== ' '){ const im = logoGlyph(ch, k); u2.drawImage(im, lx - 1, ly - 1 - (wave === k ? 2 : wave === k + 1 || wave === k - 1 ? 1 : 0)); } lx += gw(ch); });
+  // pita "234 MINIGAMES"
+  const rt = '234  MINIGAMES', rw = hW(rt) + 12, rx = L.cx - (rw >> 1), ry = ly + 18;
+  u2.fillStyle = INK; u2.fillRect(rx - 7, ry + 2, rw + 14, 11);
+  u2.fillStyle = '#9e1e74'; u2.fillRect(rx - 6, ry + 3, 6, 9); u2.fillRect(rx + rw, ry + 3, 6, 9);
+  u2.fillStyle = '#510c5d'; u2.fillRect(rx - 1, ry + 3, 1, 9); u2.fillRect(rx + rw, ry + 3, 1, 9);
+  u2.fillStyle = '#271e69'; for(let k=0;k<4;k++){ u2.fillRect(rx - 7 + k, ry + 6 + k - (k > 1 ? 2*(k - 1) : 0), 1, 1); u2.fillRect(rx + rw + 6 - k, ry + 6 + k - (k > 1 ? 2*(k - 1) : 0), 1, 1); }
+  u2.fillStyle = INK; u2.fillRect(rx, ry, rw, 13);
+  u2.fillStyle = '#e6687d'; u2.fillRect(rx + 1, ry + 1, rw - 2, 11);
+  u2.fillStyle = '#ffadaf'; u2.fillRect(rx + 1, ry + 1, rw - 2, 1);
+  u2.fillStyle = '#9e1e74'; u2.fillRect(rx + 1, ry + 10, rw - 2, 2);
+  hText(u2, '234', rx + 6, ry + 3, '#ffc33a', true); hText(u2, 'MINIGAMES', rx + 6 + hW('234  '), ry + 3, '#f2eee3', true);
+  // tombol
+  const pulse = Math.floor(ms/110) % 9 === 0;
+  for(const b of L.btns){
+    const dn = HOME.press === b.id;
+    if(b.id === 'bStars'){
+      const txt = String(save.stars), w = 7 + 4 + hW(txt) + 8; b.w = w;
+      const y = hBox(u2, b.x, b.y, w, b.h, b.th, dn); hText(u2, '★', b.x + 4, y + 5, '#ffc33a'); hText(u2, txt, b.x + 14, y + 5, INK); continue;
+    }
+    const lift = b.big && pulse && !dn ? -1 : 0;
+    const y = hBox(u2, b.x, b.y + lift, b.w, b.h - lift, b.th, dn);
+    const im = b.ic && hImg(b.ic), lab = b.lab ? t(b.lab).toUpperCase() : '';
+    if(!lab){ if(im) u2.drawImage(im, b.x + ((b.w - 12) >> 1), y + ((b.h - 14) >> 1) - 1);
+      if(b.dot && save[b.dot] !== today()){ const f2 = Math.floor(ms/400) & 1; u2.fillStyle = INK; u2.fillRect(b.x + b.w - 7, y - 2, 6, 6); u2.fillStyle = f2 ? '#ef6479' : '#b52c25'; u2.fillRect(b.x + b.w - 6, y - 1, 4, 4); u2.fillStyle = '#ffadaf'; u2.fillRect(b.x + b.w - 6, y - 1, 1, 1); }
+      continue; }
+    if(b.dot && save[b.dot] !== today()){ const f2 = Math.floor(ms/400) & 1; u2.fillStyle = INK; u2.fillRect(b.x + b.w - 5, y - 3, 6, 6); u2.fillStyle = f2 ? '#ffc33a' : '#eb7d10'; u2.fillRect(b.x + b.w - 4, y - 2, 4, 4); u2.fillStyle = '#f2eee3'; u2.fillRect(b.x + b.w - 4, y - 2, 1, 1); }
+    const tw = hW(lab), icw = im && b.w - tw > 30 ? 16 : 0;
+    if(icw) u2.drawImage(im, b.x + 4, y + ((b.h - 14) >> 1) - 1);
+    hText(u2, lab, b.x + icw + ((b.w - icw - tw) >> 1), y + ((b.h - 8) >> 1) - 1, '#f2eee3', true);
+    if(b.big && pulse){ u2.fillStyle = '#f2eee3'; u2.fillRect(b.x + b.w - 5, y + 2, 1, 3); u2.fillRect(b.x + b.w - 6, y + 3, 3, 1); }
   }
-  menuChars.forEach(c => { ctx.beginPath(); ctx.ellipse(c.x, hy + pos[c.i][1]*u + u*9, u*7, u*2, 0, 0, 7); softFill('#110a02', .22); });
-  [...menuChars].sort((a,b) => a.y - b.y).forEach(c => charSpr(Object.assign({}, c, {vx:0}), 10 + c.i, Math.sin(T*4 + c.i*1.3)*.2));
-  // konfeti
-  for(const q of confetti){
-    q.y += q.v*dt; q.r += q.vr*dt; if(q.y > 1.05){ q.y = -.05; q.x = Math.random()*.6; }
-    pushSpr(cachedSpr('cf' + q.c, 6, () => { ctx.fillStyle = q.c; ctx.fillRect(-2*PXC, -1*PXC, 4*PXC, 2*PXC); }), q.x*W, q.y*H + Math.sin(T*2 + q.r)*4, q.r);
-  }
-  quantize(g, HB.width, HB.height);
+  // posisi area sentuh DOM
+  const pk = HOME.key + L.btns.map(b => b.w).join(',');
+  if(HOME.posKey !== pk){ HOME.posKey = pk; for(const b of L.btns){ const e = $(b.id); if(!e) continue;
+    Object.assign(e.style, {left:b.x*PXC + 'px', top:b.y*PXC + 'px', width:b.w*PXC + 'px', height:(b.h + 2)*PXC + 'px'}); } }
+  // susun: latar -> karakter -> UI, semua dikali K
   ctx = sctx; PXW = 1;
-  blit([[HB, 0, 0]]); drawSprites();
+  blit([[HB, 0, 0]]);
+  [...menuChars].sort((a,b) => a.i - b.i).forEach(c => charSpr(Object.assign({}, c, {vx:0}), 10 + c.i, c.ang));
+  drawSprites();
+  blit([[HUDB, 0, 0]], true);
 }
+document.querySelectorAll('#home .hz').forEach(e => {
+  e.addEventListener('pointerdown', () => { HOME.press = e.id; });
+  for(const ev of ['pointerup','pointercancel','pointerleave']) e.addEventListener(ev, () => { if(HOME.press === e.id) HOME.press = null; });
+});
+function renderMenu(dt){ T += dt; homeFrame(dt); }
 refreshHome();
 
 // ---------- Loop ----------
