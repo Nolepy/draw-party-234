@@ -465,7 +465,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v1.4 · sprite pixel miring';
+const VERSION = 'v1.5 · ikon pixel baru';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#2b2b3a', FONT = "'Pixelify Sans',monospace";
@@ -815,13 +815,89 @@ const ICONS = {
     if(d > 6.6 || d < 2.4) return null; if(d > 5.5 || d < 3.4) return '#2b2b3a'; return y < 10 ? '#ffffff' : '#c3cfe0'; }));
 })();
 const PIXICON = {};
-const iconHTML = (n, sz) => { sz = sz || 24; const u = PIXICON[n + '@' + sz]; return u ? `<img class="pxi" src="${u}" alt="" style="width:${sz*PXC}px;height:${sz*PXC}px">` : (ICONS[n] || ''); };
+
+// ===== Set ikon pixel buatan tangan (gaya: outline tebal, bevel terang-gelap, ketebalan 3D) =====
+const ICF = { // [terang, dasar, gelap]
+  Y:['#ffe58a','#f5c542','#c99a2e'], O:['#f0a46a','#e8945a','#c56a3a'], R:['#f28b6b','#e8584a','#b03a3a'],
+  B:['#a3d4f5','#4aa3e8','#2e6eb0'], G:['#b6ec8c','#7ed36a','#4fa84a'], P:['#9a6ad8','#9a6ad8','#634a9e'],
+  K:['#ffd9b8','#f29ac8','#c0588e'], W:['#ffffff','#f5f5f0','#c3cfe0'], S:['#c3cfe0','#8a9bb5','#5d6b85'],
+  N:['#d9a873','#b8784a','#8a5232'], T:['#9fe0d0','#5fa8a0','#3e6a6a'], C:['#fff4dc','#fff4dc','#d9a873'],
+  D:['#2b2b3a','#2b2b3a','#2b2b3a']
+};
+const gen = f => Array.from({length:10}, (_, y) => Array.from({length:10}, (_, x) => f(x, y) || '.').join(''));
+const inStar = (x, y, cx, cy, R, r) => { const px = x + .5 - cx, py = y + .5 - cy, a = Math.atan2(py, px) + Math.PI/2, sec = Math.PI/5;
+  let t = ((a % (2*sec)) + 2*sec) % (2*sec); t = Math.abs(t - sec)/sec; const lim = r + (R - r)*(1 - t); return Math.hypot(px, py) <= lim*1.08; };
+const PIXDEF = {
+  gift: ['..YY..YY..','..Y.YY.Y..','RRRRYYRRRR','RRRRYYRRRR','.RRRYYRRR.','.RRRYYRRR.','.RRRYYRRR.','.RRRYYRRR.','.RRRYYRRR.'],
+  wheel: gen((x, y) => { const dx = x - 4.5, dy = y - 4.5, d = Math.hypot(dx, dy); if(d > 4.9) return; if(d < 1.2) return 'W';
+    const a = Math.atan2(dy, dx); return 'RYGBKO'[Math.floor(((a + Math.PI)/(Math.PI*2))*6) % 6]; }),
+  starbadge: gen((x, y) => inStar(x, y, 5, 5.3, 5.2, 2.2) ? 'Y' : 0),
+  trophy: ['.YYYYYYYY.','YYYYYYYYYY','Y.YYYYYY.Y','.YYYYYYYY.','..YYYYYY..','...YYYY...','....YY....','....YY....','..NNNNNN..','..NNNNNN..'],
+  podium: ['...YYYY...','...YDYY...','...YYYY...','BBBYYYY...','BDBYYYYRRR','BBBYYYYRDR','BBBYYYYRRR','BBBYYYYRRR'],
+  bolt: ['....BBBB..','...BBBB...','..BBBB....','.BBBBBBBB.','....BBBB..','...BBBB...','..BBB.....','.BB.......'],
+  dice: ['.WWWWWWWW.','WDDWWWWWWW','WDDWWWWWWW','WWWWDDWWWW','WWWWDDWWWW','WWWWWWWDDW','WWWWWWWDDW','.WWWWWWWW.'],
+  cup: ['.BB....RR.','..BB..RR..','...BBRR...','....BR....','...YYYY...','..YYYYYY..','..YYDYYY..','..YYYYYY..','...YYYY...'],
+  tsp: ['O........O','OO......OO','OCOOOOOOCO','OOOOOOOOOO','OODOOOODOO','CCCOOOOCCC','CCCCDDCCCC','.CCCCCCCC.','..CCCCCC..'],
+  gear: ['....SS....','.SS.SS.SS.','.SSSSSSSS.','..SSSSSS..','SSSS..SSSS','SSSS..SSSS','..SSSSSS..','.SSSSSSSS.','.SS.SS.SS.','....SS....'],
+  help: ['..YYYYYY..','.YYDDDDYY.','YYDDYYDDYY','YYYYYYDDYY','YYYYYDDYYY','YYYYDDYYYY','YYYYDDYYYY','.YYYYYYYY.','..YYDDYY..','...YYYY...'],
+  back: ['...W......','..WW......','.WWWWWWWW.','WWWWWWWWW.','.WWWWWWWW.','..WW......','...W......'],
+  tcol: ['..SSSSSS..','.S......S.','.BBBBBBBB.','BBBBBBBBBB','.SSSSSSSS.','.SSSSSSSS.','.SSSBSSSS.','..SSBSSS..','....B.....'],
+  bucket: ['..SSSSSS..','.S......S.','.BBBBBBBB.','BBBBBBBBBB','.SSSSSSSS.','.SSSSSSSS.','.SSSBSSSS.','..SSBSSS..','....B.....'],
+  that: ['.....Y....','....KK....','....KKK...','...YYKK...','...KKKKK..','..KKKYYK..','..KKKKKKK.','.YYKKKKKK.','.KKKKKKKKK'],
+  tacc: ['DDDD..DDDD','DBBDDDDBBD','DBBD..DBBD','.DD....DD.'],
+  tfx: ['....R.....','...RR.....','...RRR..R.','..RROR.RR.','..ROOORRR.','.RROYOORR.','.ROOYYOOR.','.ROYYYYOR.','..OYYYYO..','...OOOO...'],
+  tdraw: ['........KK','.......KKK','......SSK.','.....YYS..','....YYY...','...YYY....','..YYY.....','.CCY......','.CC.......','D.........'],
+  pencil: ['........KK','.......KKK','......SSK.','.....RRS..','....RRR...','...RRR....','..RRR.....','.CCR......','.CC.......','D.........'],
+  eraser: ['......KKKK','.....KKKKK','....KKKKK.','...BBKKK..','..BBBBK...','.BBBBB....','BBBBB.....','.BBB......'],
+  note: ['.WWWWWW...','.WDDDDWW..','.WWWWWWWW.','.WDDDDDDW.','.WWWWWWWW.','.WDDDDDDW.','.WWWWWWWW.','.WDDDDWWW.','.WWWWWWWW.'],
+  save: ['BBBBBBBBB.','BBSSSSSBBB','BBSSSDSBBB','BBSSSSSBBB','BBBBBBBBBB','BWWWWWWWWB','BWDDDDDDWB','BWWWWWWWWB','BWDDDDDDWB','BBBBBBBBBB'],
+  trash: ['...SSSS...','SSSSSSSSSS','SSSSSSSSSS','.SSDSSDSS.','.SSDSSDSS.','.SSDSSDSS.','.SSDSSDSS.','.SSSSSSSS.','..SSSSSS..'],
+  guide: gen((x, y) => (x % 3 === 0 || y % 3 === 0) ? 'W' : 'T'),
+  person: ['....YY....','...YYYY...','...YYYY...','....YY....','..BBBBBB..','.BBBBBBBB.','.B.BBBB.B.','...B..B...','...B..B...'],
+  undo: ['..YY......','.YYY......','YYYYYYYYY.','YYYYYYYYYY','.YYY....YY','..YY....YY','........YY','.....YYYYY','.....YYYY.'],
+  check: ['........GG','.......GGG','......GGG.','GG...GGG..','GGG.GGG...','.GGGGG....','..GGG.....','...G......']
+};
+function buildPixIcon(rows){
+  const h0 = rows.length, w0 = Math.max(...rows.map(r => r.length)), W2 = 12, H2 = 14;
+  const ox = 1 + Math.floor((10 - w0)/2), oy = 1 + Math.floor((10 - h0)/2);
+  const grid = Array.from({length:H2}, () => Array(W2).fill(null));
+  const at = (x, y) => { const r = rows[y - oy]; return r && x - ox >= 0 ? (r[x - ox] && r[x - ox] !== '.' ? r[x - ox] : null) : null; };
+  // isi dengan bevel: tepi atas/kiri terang, tepi bawah gelap
+  for(let y=0;y<H2;y++) for(let x=0;x<W2;x++){
+    const c = at(x, y); if(!c) continue; const f = ICF[c];
+    grid[y][x] = !at(x, y - 1) ? f[0] : !at(x, y + 1) ? f[2] : !at(x - 1, y) ? f[0] : f[1];
+  }
+  // ketebalan 3D: 2 piksel di bawah bentuk, warna gelap keluarga warnanya
+  for(let x=0;x<W2;x++) for(let y=H2-1;y>=0;y--){
+    const c = at(x, y); if(!c) continue;
+    for(const k of [1, 2]) if(y + k < H2 && !grid[y + k][x]) grid[y + k][x] = ICF[c][2] === '#2b2b3a' ? '#2b2b3a' : ICF[c][2];
+    break;
+  }
+  for(let y=0;y<H2;y++) for(let x=0;x<W2;x++){ if(!grid[y][x]) continue; const c = at(x, y);
+    if(!c){ const above = y > 0 && grid[y-1][x]; if(!above) grid[y][x] = grid[y][x]; } }
+  // outline gelap di sekeliling bentuk + ketebalan
+  const filled = grid.map(r => r.map(v => !!v));
+  for(let y=0;y<H2;y++) for(let x=0;x<W2;x++){
+    if(filled[y][x]) continue;
+    const nb = [[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy]) => filled[y+dy] && filled[y+dy][x+dx]);
+    if(nb) grid[y][x] = '#2b2b3a';
+  }
+  const c = document.createElement('canvas'); c.width = W2; c.height = H2;
+  const g = c.getContext('2d');
+  for(let y=0;y<H2;y++) for(let x=0;x<W2;x++) if(grid[y][x]){ g.fillStyle = grid[y][x]; g.fillRect(x, y, 1, 1); }
+  return c.toDataURL();
+}
+for(const n in PIXDEF) PIXICON[n + '@px'] = buildPixIcon(PIXDEF[n]);
+const iconHTML = (n, sz) => { sz = sz || 24;
+  if(PIXICON[n + '@px']){ const k = sz <= 16 ? 1 : sz <= 24 ? 2 : 3; return `<img class="pxi" src="${PIXICON[n + '@px']}" alt="" style="width:${12*k*PXC}px!important;height:${14*k*PXC}px!important">`; }
+  const u = PIXICON[n + '@' + sz]; return u ? `<img class="pxi" src="${u}" alt="" style="width:${sz*PXC}px;height:${sz*PXC}px">` : (ICONS[n] || ''); };
 const iconSize = e => e.closest('.badge') ? 32 : (e.matches('.back,.dbig,.rbtn:not(.big),.dtoolbtn') || e.closest('.dhead,.dname')) ? 16 : 24;
 function hydrateIcons(){ document.querySelectorAll('[data-icon]').forEach(e => e.innerHTML = iconHTML(e.dataset.icon, iconSize(e))); }
 hydrateIcons();
 // ubah semua ikon vektor jadi sprite pixel 32x32 yang dikunci ke palet
 (function(){
-  const names = Object.keys(ICONS); let left = names.length;
+  const names = Object.keys(ICONS).filter(n => !PIXDEF[n]); let left = names.length;
+  if(!left) return;
   names.forEach(n => {
     const img = new Image();
     img.onload = () => {
