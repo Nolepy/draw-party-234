@@ -743,7 +743,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v7.0 · kepala hewan';
+const VERSION = 'v7.1 · bentuk hewan & grid sama';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -3098,20 +3098,20 @@ const customCache = new WeakMap();
 function customSpr(src, R, outline, live){
   let m = !live && customCache.get(src); const key = R + (outline ? 'o' : 'n');
   if(m && m.has(key)) return m.get(key);
-  const t32 = document.createElement('canvas'); t32.width = t32.height = 32; const tg = t32.getContext('2d', {willReadFrequently:true});
-  tg.imageSmoothingEnabled = false; tg.drawImage(src, 0, 0, 32, 32);
-  const u = new Uint32Array(tg.getImageData(0, 0, 32, 32).data.buffer);
-  let x0 = 32, y0 = 32, x1 = -1, y1 = -1;
-  for(let y=0;y<32;y++) for(let x=0;x<32;x++) if(u[y*32 + x] >>> 24 > 127){ if(x < x0) x0 = x; if(x > x1) x1 = x; if(y < y0) y0 = y; if(y > y1) y1 = y; }
+  const G = src.__grid || 32, t32 = document.createElement('canvas'); t32.width = t32.height = G; const tg = t32.getContext('2d', {willReadFrequently:true});
+  tg.imageSmoothingEnabled = false; tg.drawImage(src, 0, 0, G, G);
+  const u = new Uint32Array(tg.getImageData(0, 0, G, G).data.buffer);
+  let x0 = G, y0 = G, x1 = -1, y1 = -1;
+  for(let y=0;y<G;y++) for(let x=0;x<G;x++) if(u[y*G + x] >>> 24 > 127){ if(x < x0) x0 = x; if(x > x1) x1 = x; if(y < y0) y0 = y; if(y > y1) y1 = y; }
   if(x1 < 0) return null;
   const bw = x1 - x0 + 1, bh = y1 - y0 + 1, S = Math.max(bw, bh), D = 2*R + 2;
   let tw, th, sample;
-  if(D >= 2*S){ const k = Math.min(3, Math.floor(D/S)); tw = bw*k; th = bh*k; sample = (x, y) => u[(y0 + Math.floor(y/k))*32 + x0 + Math.floor(x/k)]; }
-  else if(D >= S){ tw = bw; th = bh; sample = (x, y) => u[(y0 + y)*32 + x0 + x]; }
+  if(D >= 2*S){ const k = Math.min(3, Math.floor(D/S)); tw = bw*k; th = bh*k; sample = (x, y) => u[(y0 + Math.floor(y/k))*G + x0 + Math.floor(x/k)]; }
+  else if(D >= S){ tw = bw; th = bh; sample = (x, y) => u[(y0 + y)*G + x0 + x]; }
   else { const f = D/S; tw = Math.max(2, Math.round(bw*f)); th = Math.max(2, Math.round(bh*f));
     sample = (x, y) => { const sx0 = x0 + Math.floor(x/f), sx1 = Math.max(sx0 + 1, x0 + Math.floor((x + 1)/f)), sy0 = y0 + Math.floor(y/f), sy1 = Math.max(sy0 + 1, y0 + Math.floor((y + 1)/f));
       const cnt = new Map(); let empty = 0;
-      for(let yy=sy0;yy<sy1 && yy<32;yy++) for(let xx=sx0;xx<sx1 && xx<32;xx++){ const c = u[yy*32 + xx];
+      for(let yy=sy0;yy<sy1 && yy<G;yy++) for(let xx=sx0;xx<sx1 && xx<G;xx++){ const c = u[yy*G + xx];
         if(c >>> 24 < 128){ empty++; continue; } const lum = (c & 255) + ((c >> 8) & 255) + ((c >> 16) & 255); cnt.set(c, (cnt.get(c) || 0) + (lum < 180 ? 1.6 : 1)); }
       let best = 0, bv = empty*.9; for(const [c, v] of cnt) if(v > bv){ bv = v; best = c; } return best; }; }
   let w = tw + 4, h = th + 4; w += w % 2; h += h % 2;
@@ -3132,22 +3132,23 @@ const hexRamp = (hex, dir) => { const i = PALHEX.indexOf(hex); if(i < 0) return 
 // ===== KARAKTER KEPALA HEWAN (gaya ikon kepala piksel: warna asli hewan, garis luar 1 px, mata titik) =====
 // Digambar langsung per piksel seni di ukuran R berapa pun (tetap tajam, piksel sama besar dengan dunia).
 const HEADS = {
-  bunny:{base:'#f2eee3', ears:'long', inner:'#ffadaf', mouth:'w', cheek:true},
-  chick:{base:'#f2eee3', tall:true, comb:true, mouth:'beak'},
-  cat:{base:'#f2eee3', ears:'tri', inner:'#ffadaf', mouth:'w', cheek:true, whisk:true},
-  dog:{base:'#eb7d10', shade:'#b8300e', ears:'flop', earc:'#b8300e', mouth:'smile'},
-  cow:{base:'#f2eee3', ears:'side', earc:'#8b3c2b', horns:true, mouth:'snout', snout:'#ffb182', spot:'#86aaa2'},
-  sheep:{base:'#fcb67a', wool:'#f2eee3', ears:'side', earc:'#fcb67a', mouth:'smile'},
-  fox:{base:'#eb7d10', shade:'#b8300e', ears:'tri', inner:'#f2eee3', tip:'#3f2f30', lower:'#f2eee3', mouth:'smile'},
-  frog:{base:'#5ab230', shade:'#156948', bulge:true, mouth:'wide', cheek:true},
-  bear:{base:'#c5763b', shade:'#8b3c2b', ears:'round', inner:'#fcb67a', muzzle:'#fcb67a', mouth:'smile'},
-  pig:{base:'#ffadaf', shade:'#e6687d', ears:'tri', inner:'#e6687d', mouth:'snout', snout:'#e6687d', nost:'#9e1e74'},
-  panda:{base:'#f2eee3', ears:'round', earc:'#3f2f30', inner:'#3f2f30', patch:'#3f2f30', mouth:'smile'},
-  mouse:{base:'#86aaa2', shade:'#456a71', ears:'big', inner:'#ffadaf', mouth:'w', whisk:true, cheek:true},
+  // shp = bentuk kepala khas tiap hewan (bukan lingkaran): sx/sy = lebar/tinggi relatif, fungsi lebar per baris
+  bunny:{base:'#f2eee3', ears:'long', inner:'#ffadaf', mouth:'w', cheek:true, shp:'bean', sx:.88, sy:.8},
+  chick:{base:'#f2eee3', comb:true, mouth:'beak', shp:'egg', sx:.86, sy:1},
+  cat:{base:'#f2eee3', ears:'tri', inner:'#ffadaf', mouth:'w', cheek:true, whisk:true, shp:'flat', sx:1.06, sy:.74},
+  dog:{base:'#eb7d10', shade:'#b8300e', ears:'flop', earc:'#b8300e', mouth:'smile', shp:'box', sx:.9, sy:.8},
+  cow:{base:'#f2eee3', ears:'side', earc:'#8b3c2b', horns:true, mouth:'snout', snout:'#ffb182', spot:'#86aaa2', shp:'box', sx:.8, sy:.9},
+  sheep:{base:'#fcb67a', wool:'#f2eee3', ears:'side', earc:'#fcb67a', mouth:'smile', shp:'drop', sx:.95, sy:.9},
+  fox:{base:'#eb7d10', shade:'#b8300e', ears:'tri', inner:'#f2eee3', tip:'#3f2f30', lower:'#f2eee3', mouth:'smile', shp:'vee', sx:1.04, sy:.82},
+  frog:{base:'#5ab230', shade:'#156948', bulge:true, mouth:'wide', cheek:true, shp:'flat', sx:1.12, sy:.66},
+  bear:{base:'#c5763b', shade:'#8b3c2b', ears:'round', inner:'#fcb67a', muzzle:'#fcb67a', mouth:'smile', shp:'bean', sx:.98, sy:.86},
+  pig:{base:'#ffadaf', shade:'#e6687d', ears:'tri', inner:'#e6687d', mouth:'snout', snout:'#e6687d', nost:'#9e1e74', shp:'flat', sx:1.04, sy:.8},
+  panda:{base:'#f2eee3', ears:'round', earc:'#3f2f30', inner:'#3f2f30', patch:'#3f2f30', mouth:'smile', shp:'bean', sx:1, sy:.84},
+  mouse:{base:'#86aaa2', shade:'#456a71', ears:'big', inner:'#ffadaf', mouth:'w', whisk:true, cheek:true, shp:'drop', sx:.84, sy:.8},
 };
 const SKIN = '#ffb182', HATSPR = new Map();
 function costumeSpr(q, R, c){
-  const ch = CHARS[q.i], hd = HEADS[ch.sp] || HEADS.bunny;
+  const ch = q.look || CHARS[q.i], hd = HEADS[ch.sp] || HEADS.bunny;
   const sq = q.sq || [0, 0], dw = sq[0], dh = sq[1];
   const S0 = Math.ceil(R*3) + 8, S = S0 + (S0 % 2), cx = S/2, cy = Math.round(S/2 + R*.22);
   if(!c) c = document.createElement('canvas'); if(c.width !== S || c.height !== S){ c.width = S; c.height = S; }
@@ -3161,7 +3162,11 @@ function costumeSpr(q, R, c){
   const tri = (ax, ay, bx, by, qx, qy, h) => { const d = (x1, y1, x2, y2, x, y) => (x - x2)*(y1 - y2) - (x1 - x2)*(y - y2);
     area(Math.min(ax, bx, qx), Math.min(ay, by, qy), Math.max(ax, bx, qx), Math.max(ay, by, qy), (x, y) => { const d1 = d(ax, ay, bx, by, x, y), d2 = d(bx, by, qx, qy, x, y), d3 = d(qx, qy, ax, ay, x, y); return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); }, h); };
   const face = q.fx > .35 ? 1 : q.fx < -.35 ? -1 : 0;
-  const hw = R*1.0 + dw/2, hh = (hd.tall ? R*.98 : R*.84) + dh*.6, top = cy - hh, bot = cy + hh;
+  const hw = R*(hd.sx || 1) + dw/2, hh = R*(hd.sy || .84) + dh*.6, top = cy - hh, bot = cy + hh;
+  // bentuk kepala: lebar relatif per baris (ny -1 atas .. 1 bawah) + kerapatan sudut (n besar = lebih kotak)
+  const SHP = {bean:[ny => 1, 2.2], egg:[ny => .74 + .26*(ny + 1)/2, 2.1], flat:[ny => 1, 'flat'], box:[ny => 1, 3.6],
+    vee:[ny => ny < 0 ? 1 : 1 - .42*ny, 2.4], drop:[ny => .78 + .22*(ny + 1)/2, 2.4]}[hd.shp || 'bean'];
+  const inHead = (x, y, hx, hy) => { const ny = (y - cy)/hy, wk = SHP[0](Math.max(-1, Math.min(1, ny))), n = SHP[1] === 'flat' ? (ny < 0 ? 5 : 2.2) : SHP[1]; return Math.abs((x - cx)/(hx*wk))**n + Math.abs(ny)**n <= 1; };
   const base = hd.base, shade = hd.shade || (base === '#f2eee3' ? '#aca394' : hexRamp(base, 1));
   // --- di belakang kepala: telinga, tanduk, jengger, bulu domba ---
   if(hd.ears === 'long') for(const sd of [-1,1]){ ell(cx + sd*R*.4, top - R*.42, R*.2, R*.62, base); ell(cx + sd*R*.4, top - R*.34, R*.08, R*.46, hd.inner); }
@@ -3174,7 +3179,7 @@ function costumeSpr(q, R, c){
   if(hd.wool){ const n = 10; for(let k=0;k<n;k++){ const a = k/n*Math.PI*2; ell(cx + Math.cos(a)*hw*.95, cy + Math.sin(a)*hh*.95, R*.3, R*.3, hd.wool); } ell(cx, cy, hw*1.02, hh*1.02, hd.wool); }
   // --- kepala ---
   const hx = hd.wool ? hw*.78 : hw, hy = hd.wool ? hh*.8 : hh;
-  area(cx - hx - 1, cy - hy - 1, cx + hx + 1, cy + hy + 1, (x, y) => Math.abs((x - cx)/hx)**2.3 + Math.abs((y - cy)/hy)**2.3 <= 1, base);
+  area(cx - hx - 1, cy - hy - 1, cx + hx + 1, cy + hy + 1, (x, y) => inHead(x, y, hx, hy), base);
   if(hd.wool){ ell(cx, cy - hy*.78, hx*.75, hy*.32, hd.wool); }
   if(hd.lower) area(cx - hx, cy, cx + hx, cy + hy + 1, (x, y) => get(x - .5, y - .5) === col(base) && Math.abs((x - cx)/hx)**2 + Math.abs((y - cy - hy*.55)/(hy*.6))**2 <= 1, hd.lower);
   // pita bayangan di bawah kepala (seperti ikon referensi)
@@ -3238,7 +3243,19 @@ function charCanvas(p, scale, c){
   q.sq = p.alive && p.sq && R >= 6 ? [Math.min(p.sq[0], R >> 2), Math.max(p.sq[1], -(R >> 2))] : null; q.R = R;
   const chc = CHARS[q.i];
   if(chc.skin){ const cs = customSpr(chc.skin, R, chc.outline, chc.skin === dc); if(cs) return cs; }
-  return costumeSpr(q, R, c);
+  return customSpr(headSkin(chc, q.expr || 'normal', q.fx > .35 ? 1 : q.fx < -.35 ? -1 : 0, q.i), R, false);   // sama persis dengan karakter gambar: grid piksel yang sama
+}
+// kepala hewan default digambar di GRID GAMBAR (1 piksel = 1 piksel kanvas gambar 32x32), lalu diskalakan seperti gambar pemain
+const HEADSK = new Map(), HEADK = new Map();
+function headSkin(ch, expr, face, i){
+  const key = ch.sp + '|' + ch.acc + '|' + ch.hat + '|' + expr + '|' + face; let c = HEADSK.get(key); if(c) return c;
+  // ukuran terbesar yang muat di kotak 32x32 (sama dengan kanvas gambar pemain); topi boleh menambah tinggi
+  const bound = cv => { const u = new Uint32Array(cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data.buffer); let x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1;
+    for(let y=0;y<cv.height;y++) for(let x=0;x<cv.width;x++) if(u[y*cv.width + x] >>> 24){ if(x < x0) x0 = x; if(x > x1) x1 = x; if(y < y0) y0 = y; if(y > y1) y1 = y; } return Math.max(x1 - x0 + 1, y1 - y0 + 1); };
+  let RR = HEADK.get(ch.sp);
+  if(!RR){ RR = 9; for(let r = 16; r >= 9; r--){ const t = costumeSpr({i, look:{sp:ch.sp, acc:'none', hat:'none'}, expr:'normal', fx:0}, r, document.createElement('canvas')); if(bound(t) <= 32){ RR = r; break; } } HEADK.set(ch.sp, RR); }
+  c = costumeSpr({i, look:{sp:ch.sp, acc:ch.acc, hat:ch.hat}, expr, fx:face, vx:0, vy:0}, RR, document.createElement('canvas'));
+  c.__grid = c.width; if(HEADSK.size > 200) HEADSK.delete(HEADSK.keys().next().value); HEADSK.set(key, c); return c;
 }
 function drawCharPix(p){                         // untuk pratinjau/kartu: tempel sprite 1:1 di grid
   const c = charCanvas(p, PXW); if(!c) return;
