@@ -371,6 +371,24 @@
   .card::before{left:calc(var(--px)*2)!important}
   .mbtn span{background-image:var(--check)!important;background-size:calc(var(--px)*8) calc(var(--px)*8)!important;image-rendering:pixelated}
   .gtile b,.ico,.pnl,h1,h2,.otitle,.gtitle,.mbtn span,.go,.ptab,.badge b,.wallet,.dhead span,.lbox{text-shadow:calc(var(--px)*1) 0 0 var(--ink),calc(var(--px)*-1) 0 0 var(--ink),0 calc(var(--px)*1) 0 var(--ink),0 calc(var(--px)*-1) 0 var(--ink),calc(var(--px)*1) calc(var(--px)*1) 0 var(--ink),calc(var(--px)*-1) calc(var(--px)*-1) 0 var(--ink),calc(var(--px)*1) calc(var(--px)*-1) 0 var(--ink),calc(var(--px)*-1) calc(var(--px)*1) 0 var(--ink),0 calc(var(--px)*2) 0 var(--ink)!important}
+  /* ===== KONSISTENSI: 1 piksel seni untuk teks, garis, bevel ===== */
+  html body *:not(#zz):not(#zy){font-size:calc(var(--px)*8)!important;letter-spacing:0!important;line-height:1.25}
+  h1,h2,.otitle,.gtitle,.mbtn span,.go,.ptab,.badge b,#champ,.dhead span,.logo h1,.gtile b,.ctab,.wallet{font-weight:700!important}
+  .chip,.go,.mbtn,.ctab,.it,.dbig,.rbtn,.ptab,.back,.sbtn,.dtoolbtn,.dsz,.fopt,.x,.dclose,.hand,.lbox,.wallet,#toast,.gtile .pic,.drawpanel,.dswatch button,
+  #pName,#dName,.list div,.grid4 > div,#quit,.dhead,.dhead i,.dpen,.dswatch,.dface,.dsheet,.dpol,.avwrap,input[type=range],#modal h2,.gtitle,.logo h1,.otitle,.mbtn span{
+    border-width:var(--px)!important;
+    box-shadow:inset 0 var(--px) 0 rgba(255,255,255,.35),inset 0 calc(var(--px)*-2) 0 rgba(0,0,0,.2),0 var(--px) 0 var(--ink)!important}
+  .mbtn span{box-shadow:none!important}
+  .panel,.card,.dpaper,.cl{border-width:var(--px)!important;box-shadow:inset 0 0 0 calc(var(--px)*2) var(--grl),0 var(--px) 0 var(--ink)!important}
+  .avwrap{box-shadow:0 0 0 calc(var(--px)*2) var(--mus),0 0 0 calc(var(--px)*3) var(--ink)!important}
+  .it.sel{box-shadow:0 0 0 calc(var(--px)*2) var(--grd)!important}
+  .gtile b,.ico,.pnl,h1,h2,.otitle,.gtitle,.mbtn span,.go,.ptab,.badge b,.wallet,.dhead span,.lbox{text-shadow:var(--px) 0 0 var(--ink),calc(var(--px)*-1) 0 0 var(--ink),0 var(--px) 0 var(--ink),0 calc(var(--px)*-1) 0 var(--ink)!important}
+  .mbtn{height:calc(var(--px)*20)!important;padding-left:calc(var(--px)*18)!important}
+  .mbtn .ic{left:calc(var(--px)*3)!important;width:calc(var(--px)*12)!important;height:calc(var(--px)*14)!important}
+  .mbtn span{margin:calc(var(--px)*3) 0 calc(var(--px)*3)!important}
+  .ico .pxi{width:calc(var(--px)*12)!important;height:calc(var(--px)*14)!important}
+  .badge{display:flex!important;flex-direction:column;align-items:center;gap:calc(var(--px)*2);width:auto!important;height:auto!important}
+  .badge b{position:static!important;padding:0!important}
 </style>
 </head>
 <body>
@@ -465,7 +483,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v1.6 · palet warna baru';
+const VERSION = 'v1.7 · piksel konsisten';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -483,7 +501,7 @@ function resize(){
   W = innerWidth; H = innerHeight;
   const Wd = Math.round(W*DPR), Hd = Math.round(H*DPR);
   cv.width = Wd; cv.height = Hd; cv.style.width = (Wd/DPR) + 'px'; cv.style.height = (Hd/DPR) + 'px';
-  K = Math.max(2, Math.round(Hd/216));          // ±216 piksel seni tingginya, seperti game pixel HD
+  K = Math.max(2, Math.round(Hd/180));          // ±180 piksel seni tingginya; SEMUA aset memakai 1 piksel seni ini
   PXC = K/DPR;                                  // ukuran 1 piksel seni dalam px CSS
   AW = Math.floor(Wd/K); AH = Math.floor(Hd/K);
   PXS = WH/AH;                                  // satuan dunia per piksel seni
@@ -635,10 +653,10 @@ function buildFloor(th){
   const cracks = (c, n) => { for(let k=0;k<n;k++){ let x = Math.floor(Math.random()*BW), y = Math.floor(Math.random()*BH); for(let j=0;j<6;j++){ P(x, y, c); x += Math.random() < .5 ? 1 : 0; y += Math.random() < .5 ? 1 : -1; } } };
   let band = 'none';
   if(th === 'grass' || th === 'meadow' || th === 'field'){
-    P(0, 0, '#5ab230', BW, BH);
+    P(0, 0, '#156948', BW, BH);
     if(th === 'field') for(let y=0;y<BH;y++) for(let x=0;x<BW;x++) if(Math.floor(x/20) % 2 === 0 && (x+y) % 2 === 0) P(x, y, '#156948');
     if(th === 'meadow'){ for(let x=0;x<BW;x++){ const yc = Math.round(BH*.5 + Math.sin(x/22)*10); P(x, yc-5, '#aca394', 1, 10); if(Math.random() < .3) P(x, yc - 4 + Math.floor(Math.random()*8), '#c5763b'); } }
-    for(let k=0;k<BW*BH/90;k++){ const x = Math.floor(Math.random()*BW), y = Math.floor(Math.random()*BH); P(x, y, '#156948', 1, 2); P(x+2, y, '#156948', 1, 2); P(x+1, y-1, '#156948', 1, 2); }
+    for(let k=0;k<BW*BH/90;k++){ const x = Math.floor(Math.random()*BW), y = Math.floor(Math.random()*BH); P(x, y, '#0e343f', 1, 2); P(x+2, y, '#0e343f', 1, 2); P(x+1, y-1, '#0e343f', 1, 2); }
     if(th !== 'field') for(let k=0;k<BW*BH/700;k++){ const x = Math.floor(Math.random()*BW), y = Math.floor(Math.random()*BH), c = ['#ffc33a','#ffadaf','#f2eee3','#aca394'][k%4]; P(x-1, y, c); P(x+1, y, c); P(x, y-1, c); P(x, y+1, c); P(x, y, '#ffc33a'); }
     band = th === 'field' ? 'none' : 'bush';
   } else if(th === 'dungeon'){
@@ -885,7 +903,7 @@ function buildPixIcon(rows){
 }
 for(const n in PIXDEF) PIXICON[n + '@px'] = buildPixIcon(PIXDEF[n]);
 const iconHTML = (n, sz) => { sz = sz || 24;
-  if(PIXICON[n + '@px']){ const k = sz <= 16 ? 1 : sz <= 24 ? 2 : 3; return `<img class="pxi" src="${PIXICON[n + '@px']}" alt="" style="width:${12*k*PXC}px!important;height:${14*k*PXC}px!important">`; }
+  if(PIXICON[n + '@px']){ const k = 1; return `<img class="pxi" src="${PIXICON[n + '@px']}" alt="" style="width:${12*k*PXC}px!important;height:${14*k*PXC}px!important">`; }
   const u = PIXICON[n + '@' + sz]; return u ? `<img class="pxi" src="${u}" alt="" style="width:${sz*PXC}px;height:${sz*PXC}px">` : (ICONS[n] || ''); };
 const iconSize = e => e.closest('.badge') ? 32 : (e.matches('.back,.dbig,.rbtn:not(.big),.dtoolbtn') || e.closest('.dhead,.dname')) ? 16 : 24;
 function hydrateIcons(){ document.querySelectorAll('[data-icon]').forEach(e => e.innerHTML = iconHTML(e.dataset.icon, iconSize(e))); }
@@ -1140,7 +1158,7 @@ function previewChar(canvas, i, over, opt){
   const w = L, r = w*(opt && opt.r || .27);
   const p = {i, x:w/2, y:w*.56, vx:0, vy:0, m:r*r, alive:true, fall:0, fallMax:1, fx:0, fy:.3, seed:i*1.7, expr:'happy', dashFx:0};
   if(opt && opt.fx){ const tmp = []; p.vx = -200; for(let k=0;k<7;k++){ p.x = w/2 + 20; trail(p, opt.fx, tmp); } tmp.forEach((q,k) => { q.x += -k*9 - 18; q.y += rnd(-10, 10); q.life = q.max*(1 - k/9); }); const kp = parts; parts = tmp; drawParts(true); parts = kp; p.vx = 0; p.x = w/2 + 20; }
-  drawChar(p);
+  drawCharPix(p);
   quantize(g, canvas.width, canvas.height, true); fitCss(canvas);
   for(const k in keep) c[k] = keep[k];
   ctx = keepCtx; PXW = 1;
@@ -1205,7 +1223,7 @@ function renderAvatar(dt){
   parts = avParts;
   if(fxk !== 'none'){ p.fxT = (renderAvatar.ft || 0) - dt; if(p.fxT <= 0){ p.fxT = .06; trail(p, fxk); } renderAvatar.ft = p.fxT; }
   updateParts(dt); drawParts(true); avParts = parts;
-  drawChar(p);
+  drawCharPix(p);
   quantize(g, cvs.width, cvs.height, true); fitCss(cvs);
   parts = kp; ctx = keepCtx; PXW = 1;
 }
@@ -1277,7 +1295,7 @@ function renderDrawPreview(){
   const draw1 = (cvs, eyes, bg, r, L) => {
     const g = pxCanvas(cvs, L, L, 4); ctx = g; PXW = 4; c.eyes = eyes;
     g.fillStyle = bg; g.fillRect(0, 0, L, L);
-    drawChar({i:cP, x:L/2, y:L*.56, vx:0, vy:0, m:(L*r)**2, alive:true, fall:0, fallMax:1, fx:0, fy:.3, seed:cP*1.7, expr:'normal', dashFx:0});
+    drawCharPix({i:cP, x:L/2, y:L*.56, vx:0, vy:0, m:(L*r)**2, alive:true, fall:0, fallMax:1, fx:0, fy:.3, seed:cP*1.7, expr:'normal', dashFx:0});
     quantize(g, cvs.width, cvs.height, true); fitCss(cvs);
   };
   if(!$('dPol').classList.contains('hidden')) draw1($('dprev'), dEyesOn, '#e3f4ee', .3, 240);
@@ -1957,24 +1975,24 @@ function makeThumbs(){
   const out = {}, keepCtx = ctx, keepMode = mode;
   const mk = (i, x, y, r, expr, fx, fy) => ({i, x, y, vx:0, vy:0, m:r*r, alive:true, fall:0, fallMax:1, fx:fx || 0, fy:fy || .3, seed:i*1.7, expr, dashFx:0});
   const D = {
-    eat(){ mode = 'eat'; for(let i=0;i<14;i++) drawFood({x:rnd(20,380), y:rnd(20,240), col:CONF[i%5], v:1, ph:0}); drawChar(mk(1, 95, 95, 34, 'scared', -1, 0)); drawChar(mk(0, 245, 150, 78, 'dash', -1, -.4)); },
-    sumo(){ ctx.beginPath(); ctx.arc(200, 330, 270, 0, 7); ctx.fillStyle = '#f2eee3'; ctx.fill(); inkStroke(7); drawChar(mk(0, 140, 160, 62, 'dash', 1, 0)); drawChar(mk(3, 270, 145, 62, 'scared', -1, 0)); star4(205, 120, 30, .3); ctx.fillStyle = '#e3f4ee'; ctx.fill(); inkStroke(3); },
-    food(){ mode = 'food'; drawFood({x:280, y:90, v:3, ph:0}); drawFood({x:320, y:190, v:1, ph:1}); drawFood({x:240, y:200, v:1, ph:2}); drawFood({x:70, y:60, v:1, ph:3}); drawChar(mk(2, 140, 150, 66, 'happy', 1, 0)); },
-    bomb(){ drawChar(mk(1, 200, 165, 64, 'scared', 0, .3)); drawBomb(200, 64, 30, .2); drawChar(mk(0, 70, 190, 40, 'happy', 1, 0)); },
+    eat(){ mode = 'eat'; for(let i=0;i<14;i++) drawFood({x:rnd(20,380), y:rnd(20,240), col:CONF[i%5], v:1, ph:0}); drawCharPix(mk(1, 95, 95, 34, 'scared', -1, 0)); drawCharPix(mk(0, 245, 150, 78, 'dash', -1, -.4)); },
+    sumo(){ ctx.beginPath(); ctx.arc(200, 330, 270, 0, 7); ctx.fillStyle = '#f2eee3'; ctx.fill(); inkStroke(7); drawCharPix(mk(0, 140, 160, 62, 'dash', 1, 0)); drawCharPix(mk(3, 270, 145, 62, 'scared', -1, 0)); star4(205, 120, 30, .3); ctx.fillStyle = '#e3f4ee'; ctx.fill(); inkStroke(3); },
+    food(){ mode = 'food'; drawFood({x:280, y:90, v:3, ph:0}); drawFood({x:320, y:190, v:1, ph:1}); drawFood({x:240, y:200, v:1, ph:2}); drawFood({x:70, y:60, v:1, ph:3}); drawCharPix(mk(2, 140, 150, 66, 'happy', 1, 0)); },
+    bomb(){ drawCharPix(mk(1, 200, 165, 64, 'scared', 0, .3)); drawBomb(200, 64, 30, .2); drawCharPix(mk(0, 70, 190, 40, 'happy', 1, 0)); },
     soccer(){ mode = 'soccer'; ctx.strokeStyle = '#e3f4ee'; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(200, 0); ctx.lineTo(200, 260); ctx.stroke(); ctx.beginPath(); ctx.arc(200, 130, 60, 0, 7); ctx.stroke();
-      ctx.beginPath(); ctx.rect(355, 60, 45, 140); ctx.fillStyle = 'rgba(255,255,255,.8)'; ctx.fill(); inkStroke(4); drawBall(280, 150, 30, .4); drawChar(mk(3, 140, 140, 60, 'dash', 1, 0)); },
+      ctx.beginPath(); ctx.rect(355, 60, 45, 140); ctx.fillStyle = 'rgba(255,255,255,.8)'; ctx.fill(); inkStroke(4); drawBall(280, 150, 30, .4); drawCharPix(mk(3, 140, 140, 60, 'dash', 1, 0)); },
     crown(){ ctx.beginPath(); ctx.arc(200, 140, 110, 0, 7); softFill('#ffc33a', .5); ctx.setLineDash([16,10]); inkStroke(5); ctx.setLineDash([]);
-      drawChar(mk(2, 200, 160, 62, 'happy', 0, .3)); drawCrownIcon(200, 72, 30); },
+      drawCharPix(mk(2, 200, 160, 62, 'happy', 0, .3)); drawCrownIcon(200, 72, 30); },
     snow(){ ctx.globalAlpha = .35; ctx.fillStyle = '#f2eee3'; ctx.fillRect(0, 0, 400, 260); ctx.globalAlpha = 1; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(300, 120, 70, 120, 12) : ctx.rect(300, 120, 70, 120); ctx.fillStyle = '#e3f4ee'; ctx.fill(); inkStroke(4);
-      drawChar(mk(0, 120, 150, 62, 'dash', 1, -.2)); for(const [x,y] of [[215,120],[265,105]]){ ctx.beginPath(); ctx.arc(x, y, 13, 0, 7); ctx.fillStyle = '#e3f4ee'; ctx.fill(); inkStroke(3); }
+      drawCharPix(mk(0, 120, 150, 62, 'dash', 1, -.2)); for(const [x,y] of [[215,120],[265,105]]){ ctx.beginPath(); ctx.arc(x, y, 13, 0, 7); ctx.fillStyle = '#e3f4ee'; ctx.fill(); inkStroke(3); }
       for(let i=0;i<10;i++){ star4(rnd(10,390), rnd(10,100), 6, rnd(0,3)); ctx.fillStyle = '#e3f4ee'; ctx.fill(); } },
     meteor(){ hatchCircle(270, 190, 60, 'rgba(181,74,51,.55)', 14); ctx.save(); ctx.setLineDash([10,8]); ctx.beginPath(); ctx.arc(270, 190, 60, 0, 7); ctx.strokeStyle = '#b8300e'; ctx.lineWidth = 4; ctx.stroke(); ctx.restore();
-      drawRock(300, 70, 34); drawChar(mk(1, 110, 160, 58, 'scared', 1, -.3)); },
+      drawRock(300, 70, 34); drawCharPix(mk(1, 110, 160, 58, 'scared', 1, -.3)); },
     paint(){ const cols = ['#d5734c','#0a98d6','#1db578','#ffc33a']; for(let r=0;r<6;r++) for(let c=0;c<9;c++){ if(Math.random() < .25) continue; ctx.fillStyle = cols[(r > 2 ? 2 : 0) + (c > 4 ? 1 : 0)]; ctx.globalAlpha = .7; ctx.fillRect(c*45 + 2, r*45 + 2, 41, 41); }
-      ctx.globalAlpha = 1; drawChar(mk(3, 200, 140, 64, 'happy', 0, .3)); },
+      ctx.globalAlpha = 1; drawCharPix(mk(3, 200, 140, 64, 'happy', 0, .3)); },
     random(){ ctx.save(); ctx.translate(200, 130); ctx.rotate(-.15); ctx.beginPath(); ctx.roundRect ? ctx.roundRect(-70, -70, 140, 140, 24) : ctx.rect(-70, -70, 140, 140); ctx.fillStyle = '#e3f4ee'; ctx.fill(); inkStroke(6);
       ctx.font = fontT(110); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#ffadaf'; ctx.lineWidth = 6; ctx.strokeStyle = INK; ctx.strokeText('?', 0, 8); ctx.fillText('?', 0, 8); ctx.restore();
-      [[50,60],[350,60],[50,205],[350,205]].forEach(([x,y],i) => drawChar(mk(i, x, y, 30, 'happy', 0, .3))); }
+      [[50,60],[350,60],[50,205],[350,205]].forEach(([x,y],i) => drawCharPix(mk(i, x, y, 30, 'happy', 0, .3))); }
   };
   for(const k of Object.keys(D)){
     const c = document.createElement('canvas'); ctx = pxCanvas(c, 400, 260, 6.25); PXW = 6.25;
@@ -1990,6 +2008,7 @@ function makeThumbs(){
 
 // ---------- Gambar karakter ----------
 function wobbly(x, y, r, seed, amp){
+  if(!amp){ ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); return; }
   const TB = Math.floor(T*8)/8;   // garis 'bergetar' seperti animasi gambar tangan
   ctx.beginPath();
   const N = 30;
@@ -2000,7 +2019,10 @@ function wobbly(x, y, r, seed, amp){
   }
   ctx.closePath();
 }
-function inkStroke(w){ ctx.lineWidth = Math.max(w, PXW*2); ctx.strokeStyle = INK; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); }
+let AUTOOL = false;
+function inkStroke(w){
+  if(AUTOOL){ if(ctx.__f) return; ctx.lineWidth = PXW*1.3; ctx.strokeStyle = INK; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); return; }
+  ctx.lineWidth = PXW*2; ctx.strokeStyle = INK; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); }
 
 function accessoryBack(ch, r){
   const lw = Math.max(2, r*.06);
@@ -2098,8 +2120,7 @@ function drawChar(p, spr){
   if(!spr) charShadow(p);
   ctx.save();
   ctx.translate(p.x, p.y);
-  ctx.rotate(ang); ctx.scale(1+st, 1-st); ctx.rotate(-ang + spin);
-  ctx.scale(1-bob, 1+bob);
+  if(!spr){ ctx.rotate(ang); ctx.scale(1+st, 1-st); ctx.rotate(-ang + spin); ctx.scale(1-bob, 1+bob); }
   speciesBack(ch, r);
   accessoryBack(ch, r);
   const skin = ch.skin;
@@ -2115,7 +2136,7 @@ function drawChar(p, spr){
   ctx.restore();
   wobbly(0, 0, r, p.seed, 0); inkStroke(Math.max(3, r*.09));
   accessoryFront(ch, r);
-  if(!skin || ch.eyes){ drawFace(p, r, ch); speciesTop(p, ch, r); }
+  if(!skin || ch.eyes){ if(!spr) drawFace(p, r, ch); speciesTop(p, ch, r); }
   accessoryFace(p, ch, r);
   drawHat(ch.hat, r);
   ctx.restore();
@@ -2351,16 +2372,69 @@ function blit(list, keep){
 // piksel-pikselnya ikut miring bersama dengan ukuran tetap K piksel layar.
 const SPR = [], sprCache = new Map(), sprPool = [];
 let SPRMODE = false, SPRSCALE = 3, SPRMAP = (x, y) => [x, y];
-function makeSpr(c, halfW, scale, fn){
-  const size = Math.max(2, Math.ceil(halfW*2/scale) + 2);
+function makeSpr(c, halfW, scale, fn, post){
+  let size = Math.max(4, Math.ceil(halfW*2/scale) + 4); size += size % 2;      // genap: pusat tepat di sudut piksel -> simetris
   if(c.width !== size || c.height !== size){ c.width = size; c.height = size; }
   const g = c.getContext('2d', {willReadFrequently:true});
-  g.setTransform(1,0,0,1,0,0); g.clearRect(0, 0, size, size);
+  if(!g.__p){ const fb = g.fill.bind(g), bp = g.beginPath.bind(g); g.fill = (...a) => { g.__f = true; fb(...a); }; g.beginPath = () => { g.__f = false; bp(); }; g.__p = 1; }
+  g.setTransform(1,0,0,1,0,0); g.filter = 'none'; g.clearRect(0, 0, size, size);
   g.setTransform(1/scale, 0, 0, 1/scale, size/2, size/2); g.imageSmoothingEnabled = false; g.filter = NOAA;
-  const kc = ctx, kw = PXW, km = SPRMODE; ctx = g; PXW = scale; SPRMODE = false;
+  const kc = ctx, kw = PXW, km = SPRMODE, ka = AUTOOL; ctx = g; PXW = scale; SPRMODE = false; AUTOOL = true;
   fn(); quantize(g, size, size);
-  ctx = kc; PXW = kw; SPRMODE = km;
+  ctx = kc; PXW = kw; SPRMODE = km; AUTOOL = ka;
+  g.setTransform(1,0,0,1,0,0); g.filter = 'none';
+  autoOutline(g, size, size);
+  if(post) post(g, size);
   return c;
+}
+function autoOutline(g, w, h){                 // outline tepat 1 piksel di sekeliling siluet
+  const id = g.getImageData(0, 0, w, h), d = id.data, op = new Uint8Array(w*h);
+  for(let i=0;i<w*h;i++) op[i] = d[i*4+3] > 0 ? 1 : 0;
+  const ir = parseInt(INK.slice(1,3),16), ig = parseInt(INK.slice(3,5),16), ib = parseInt(INK.slice(5,7),16);
+  for(let y=0;y<h;y++) for(let x=0;x<w;x++){
+    const i = y*w + x; if(op[i]) continue;
+    if((x > 0 && op[i-1]) || (x < w-1 && op[i+1]) || (y > 0 && op[i-w]) || (y < h-1 && op[i+w])){ const o = i*4; d[o] = ir; d[o+1] = ig; d[o+2] = ib; d[o+3] = 255; }
+  }
+  g.putImageData(id, 0, 0);
+}
+// wajah digambar piksel per piksel, dicerminkan kiri-kanan
+function pixFace(g, size, q, R){
+  const ch = CHARS[q.i], e = q.expr, c = size/2, P = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w || 1, h || 1); };
+  const frog = ch.sp === 'frog' && !ch.skin;
+  const dx = Math.round((q.fx || 0)*R*.14), dy = Math.round((q.fy || 0)*R*.1);
+  const ew = Math.max(1, Math.round(R*.16)), eh = Math.max(2, Math.round(R*.24));
+  const ex = frog ? Math.round(R*.42) : Math.max(1, Math.round(R*.22)), ey = frog ? -Math.round(R*.7) : -Math.round(R*.2);
+  const eyeY = c + ey + dy;
+  for(const side of [-1, 1]){
+    const x = side < 0 ? c - ex - ew + dx : c + ex + dx;          // posisi cermin
+    if(e === 'blink') P(x, eyeY + eh - 1, ew, 1, INK);
+    else if(e === 'happy'){ P(x - (side < 0 ? 0 : 0), eyeY + eh - 2, ew, 1, INK); P(x - 1, eyeY + eh - 1, 1, 1, INK); P(x + ew, eyeY + eh - 1, 1, 1, INK); }
+    else if(e === 'dead'){ for(let k=0;k<3;k++){ P(x - 1 + k, eyeY + k, 1, 1, INK); P(x + 1 - k, eyeY + k, 1, 1, INK); } }
+    else if(e === 'dash'){ const sx = side < 0 ? x : x + ew - 1; P(sx, eyeY, 1, 1, INK); P(sx - side, eyeY + 1, 1, 1, INK); P(sx, eyeY + 2, 1, 1, INK); }
+    else if(e === 'scared'){ P(x - 1, eyeY - 1, ew + 2, eh + 2, INK); P(x, eyeY, ew, eh, '#f2eee3'); P(x + (ew > 1 ? (side < 0 ? 1 : 0) : 0), eyeY + (eh >> 1), 1, 1, INK); }
+    else { P(x, eyeY, ew, eh, INK); if(ew > 1) P(side < 0 ? x : x + ew - 1, eyeY, 1, 1, '#f2eee3'); else if(eh > 2) P(x, eyeY, 1, 1, '#f2eee3'); }
+  }
+  const my = c + (frog ? Math.round(R*.12) : Math.round(R*.3)) + dy, mx = c + dx;
+  if(frog && (e === 'normal' || e === 'blink' || e === 'happy')){ const hw = Math.round(R*.42); P(mx - hw, my, 1, 1, INK); P(mx + hw - 1, my, 1, 1, INK); P(mx - hw + 1, my + 1, hw*2 - 2, 1, INK); return; }
+  if(e === 'happy'){ P(mx - 2, my, 4, 1, INK); P(mx - 1, my + 1, 2, 1, INK); }
+  else if(e === 'dash' || e === 'scared'){ P(mx - 1, my, 2, 2, INK); }
+  else if(e === 'dead'){ P(mx - 2, my, 1, 1, INK); P(mx - 1, my + 1, 1, 1, INK); P(mx, my, 1, 1, INK); P(mx + 1, my + 1, 1, 1, INK); }
+  else { P(mx - 2, my, 1, 1, INK); P(mx - 1, my + 1, 2, 1, INK); P(mx + 1, my, 1, 1, INK); }
+}
+// sprite karakter: jari-jari bulat dalam piksel seni, tanpa squash/napas (yang membuat ukuran bergetar 1px)
+function charCanvas(p, scale, c){
+  let R = Math.max(3, Math.round(rad(p)/scale));
+  if(!p.alive){ if(p.fall <= 0) return null; R = Math.round(R*p.fall/p.fallMax); if(R < 2) return null; }
+  const q = Object.assign({}, p, {x:0, y:0, m:(R*scale)**2, alive:true});
+  if(!p.alive) q.expr = 'dead';
+  return makeSpr(c || document.createElement('canvas'), R*scale*1.95, scale, () => drawChar(q, true), (g, size) => { if(!CHARS[q.i].skin || CHARS[q.i].eyes) pixFace(g, size, q, R); });
+}
+function drawCharPix(p){                         // untuk pratinjau/kartu: tempel sprite 1:1 di grid
+  const c = charCanvas(p, PXW); if(!c) return;
+  const kt = ctx.getTransform(); ctx.save();
+  const ox = Math.round(p.x/PXW - c.width/2), oy = Math.round(p.y/PXW - c.height/2);
+  ctx.setTransform(1,0,0,1,0,0); const f = ctx.filter; ctx.filter = 'none';
+  ctx.drawImage(c, ox, oy); ctx.filter = f; ctx.setTransform(kt); ctx.restore();
 }
 function cachedSpr(key, halfW, fn){
   const k = key + '|' + SPRSCALE.toFixed(3);
@@ -2388,7 +2462,7 @@ function charSpr(p, slot, extraAng){
   let r = rad(p), k = 1;
   if(!p.alive){ if(p.fall <= 0) return; k = p.fall/p.fallMax; if(r*k < 1) return; }
   const c = sprPool[slot] || (sprPool[slot] = document.createElement('canvas'));
-  makeSpr(c, r*k*1.95, SPRSCALE, () => drawChar(Object.assign({}, p, {x:0, y:0}), true));
+  if(!charCanvas(p, SPRSCALE, c)) return;
   const lean = p.alive ? clamp(p.vx/1400, -.22, .22) : (1-k)*7;
   pushSpr(c, p.x, p.y, lean + (extraAng || 0));
 }
@@ -2512,9 +2586,9 @@ function pxDisc(x, y, r, fill, _u, cut, cutCol, ring){
     }
   }
 }
-function pxText(txt, x, y, size, col, align){ drawPixText(txt, x, y, Math.max(1, Math.round(size/PXC/9)), col, align || 'center', true); }
+function pxText(txt, x, y, size, col, align){ drawPixText(txt, x, y, 1, col, align || 'center', true); }
 function tag(x, y, text, col, size, align, title){
-  const sc = title && size >= 16 ? 2 : 1, w = snapA(pixWidth(text, sc) + 8*PXC), h = (7*sc + 6)*PXC;
+  const sc = 1, w = snapA(pixWidth(text, sc) + 8*PXC), h = (7*sc + 6)*PXC;
   const x0 = align === 'left' ? x : align === 'right' ? x - w : x - w/2;
   pxBox(x0, y - h/2, w, h, title ? '#18657a' : '#f2eee3');
   if(title){ ctx.fillStyle = '#1db578'; ctx.fillRect(snapA(x0) + PXC, snapA(y - h/2) + PXC, w - 2*PXC, PXC); }
@@ -2526,7 +2600,7 @@ function hudPops(){
     if(q.type !== 'text') continue;
     const k = q.life/q.max; if(k < .15) continue;
     const sx = snapA(OX + q.x*S), sy = snapA(OY + q.y*S - (1-k)*10), sz = q.sz > 28 ? 16 : 8;
-    const sc = sz > 8 ? 2 : 1, w = snapA(pixWidth(q.txt, sc) + 8*PXC), h = (7*sc + 6)*PXC;
+    const sc = 1, w = snapA(pixWidth(q.txt, sc) + 8*PXC), h = (7*sc + 6)*PXC;
     pxBox(sx - snapA(w/2), sy - snapA(h/2), w, h, '#e3f4ee');
     ctx.fillStyle = INK; ctx.fillRect(sx - PXC, sy + snapA(h/2), 3*PXC, PXC); ctx.fillRect(sx, sy + snapA(h/2) + PXC, PXC, PXC);
     drawPixText(q.txt, sx, sy + PXC*.5, sc, q.col, 'center');
@@ -2634,7 +2708,7 @@ function renderMenu(dt){
   // konfeti
   for(const q of confetti){
     q.y += q.v*dt; q.r += q.vr*dt; if(q.y > 1.05){ q.y = -.05; q.x = Math.random()*.6; }
-    pushSpr(cachedSpr('cf' + q.c, 8, () => { ctx.fillStyle = INK; ctx.fillRect(-4*PXC, -3*PXC, 8*PXC, 6*PXC); ctx.fillStyle = q.c; ctx.fillRect(-3*PXC, -2*PXC, 6*PXC, 4*PXC); }), q.x*W, q.y*H + Math.sin(T*2 + q.r)*4, q.r);
+    pushSpr(cachedSpr('cf' + q.c, 6, () => { ctx.fillStyle = q.c; ctx.fillRect(-2*PXC, -1*PXC, 4*PXC, 2*PXC); }), q.x*W, q.y*H + Math.sin(T*2 + q.r)*4, q.r);
   }
   quantize(g, HB.width, HB.height);
   ctx = sctx; PXW = 1;
