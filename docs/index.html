@@ -523,7 +523,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v2.6 · piksel bersih gameplay';
+const VERSION = 'v2.7 · outline maks 2px';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -2059,7 +2059,7 @@ function drawBall(x, y, r, rot, spr){
   if(!spr){ ctx.beginPath(); ctx.ellipse(r*.15, r*.95, r*.85, r*.25, 0, 0, 7); softFill('#110a02', .22); }
   ctx.rotate(rot || 0);
   ctx.beginPath(); ctx.arc(0, 0, r, 0, 7); ctx.fillStyle = '#f2eee3'; ctx.fill();
-  const pent = (cx, cy, s) => { const pts = []; for(let i=0;i<5;i++){ const a = -Math.PI/2 + i*Math.PI*2/5; pts.push([cx + Math.cos(a)*s, cy + Math.sin(a)*s]); } fillPoly(clampPoly(pts, r), INK); };
+  const pent = (cx, cy, s) => { const pts = []; for(let i=0;i<5;i++){ const a = -Math.PI/2 + i*Math.PI*2/5; pts.push([cx + Math.cos(a)*s, cy + Math.sin(a)*s]); } fillPoly(clampPoly(pts, r), '#3f2f30'); };
   pent(0, 0, r*.38); for(let i=0;i<5;i++){ const a = -Math.PI/2 + i*Math.PI*2/5; pent(Math.cos(a)*r*.95, Math.sin(a)*r*.95, r*.3); }
   ctx.beginPath(); ctx.arc(0, 0, r, 0, 7); inkStroke(Math.max(2.5, r*.12));
   ctx.restore();
@@ -2633,6 +2633,7 @@ function makeSpr(c, halfW, scale, fn, post){
   ctx = kc; PXW = kw; SPRMODE = km; AUTOOL = ka;
   g.setTransform(1,0,0,1,0,0); g.filter = 'none';
   autoOutline(g, size, size);
+  thinOutline(g, size, size, 2);
   if(post) post(g, size);
   const b = c.__base || (c.__base = document.createElement('canvas'));
   b.width = size; b.height = size; b.getContext('2d').drawImage(c, 0, 0);
@@ -2702,6 +2703,7 @@ function cleanRot(u, n){
   u.set(tmp);
   for(let i=0;i<N;i++) if(!op(i) && nb(i).some(op)) tmp[i] = INKU;                 // outline 1 px baru
   u.set(tmp);
+  thinU(u, n, n, 2);
   if(n >= 12) shadeEdges(u, n, n);
 }
 function autoOutline(g, w, h){                 // outline tepat 1 piksel di sekeliling siluet
@@ -2714,6 +2716,21 @@ function autoOutline(g, w, h){                 // outline tepat 1 piksel di seke
   }
   g.putImageData(id, 0, 0);
 }
+// ===== TEBAL OUTLINE MAKSIMAL 2 PIKSEL =====
+// Piksel tinta yang tersambung ke tepi luar dan berjarak > max dari area kosong diganti warna isi di sebelahnya.
+function thinU(u, w, h, max){
+  const N = w*h, D = new Int16Array(N).fill(-1), q = [];
+  for(let i=0;i<N;i++) if(!(u[i] >>> 24)){ D[i] = 0; q.push(i); }
+  for(let k=0;k<q.length;k++){ const i = q[k], x = i % w;
+    const ns = [x > 0 ? i-1 : -1, x < w-1 ? i+1 : -1, i >= w ? i-w : -1, i < N-w ? i+w : -1];
+    for(const j of ns) if(j >= 0 && D[j] < 0 && u[j] === INKU){ D[j] = D[i] + 1; q.push(j); } }
+  const deep = []; for(let i=0;i<N;i++) if(D[i] > max) deep.push(i);
+  deep.sort((a, b) => D[b] - D[a]);
+  for(const i of deep){ const x = i % w;
+    for(const j of [x > 0 ? i-1 : -1, x < w-1 ? i+1 : -1, i >= w ? i-w : -1, i < N-w ? i+w : -1])
+      if(j >= 0 && (u[j] >>> 24) && u[j] !== INKU){ u[i] = u[j]; break; } }
+}
+function thinOutline(g, w, h, max){ const id = g.getImageData(0, 0, w, h); thinU(new Uint32Array(id.data.buffer), w, h, max || 2); g.putImageData(id, 0, 0); }
 // wajah digambar piksel per piksel, dicerminkan kiri-kanan
 function pixFace(g, size, q, R){
   const ch = CHARS[q.i], e = q.expr, c = size/2, P = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w || 1, h || 1); };
