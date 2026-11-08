@@ -515,7 +515,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v2.1 · kepala hewan + gambar bebas';
+const VERSION = 'v2.2 · main sendiri vs bot';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -979,7 +979,7 @@ const L = {
   d_eat:'makan & membesar', d_sumo:'dorong keluar ring', d_food:'kumpulkan terbanyak', d_combo:'3 mode bergantian',
   trophies:'Trofi', ranks:'Peringkat', hGift:'HADIAH', hSpin:'PUTAR RODA', quick:'MAIN CEPAT', pick:'PILIH GAME', tour:'TURNAMEN', chars:'KARAKTER',
   menu:'✕ Menu', again:'MAIN LAGI', home:'MENU', rot:'Putar HP ke mode landscape 📱↔️',
-  pl:'pemain', howMany:'Berapa pemain?', quickT:'⚡ Main Cepat', quickS:'3 ronde dengan mini game acak. Langsung main!',
+  pl:'pemain', solo:'1 pemain vs 3 bot', howMany:'Berapa pemain?', quickT:'⚡ Main Cepat', quickS:'3 ronde dengan mini game acak. Langsung main!',
   tourT:'🏆 Turnamen', tourS:'6 ronde, 6 mini game berbeda. Ronde terbanyak jadi juara!',
   pickT:'Pilih Game', modeL:'✎ Mode', npL:'✎ Jumlah pemain', start:'MULAI!',
   charsT:'Karakter', acc0:'Telinga kucing', acc1:'Rambut ahoge', acc2:'Tunas daun', acc3:'Pita manis', soon:'Kostum & karakter baru segera hadir ✎',
@@ -1007,7 +1007,7 @@ const L = {
   d_eat:'eat & grow', d_sumo:'push them out', d_food:'collect the most', d_combo:'3 modes in turn',
   trophies:'Trophies', ranks:'Leaders', hGift:'DAILY GIFT', hSpin:'LUCKY SPIN', quick:'QUICK GAME', pick:'PICK GAME', tour:'TOURNAMENT', chars:'CHARACTERS',
   menu:'✕ Menu', again:'PLAY AGAIN', home:'MENU', rot:'Rotate your phone to landscape 📱↔️',
-  pl:'players', howMany:'How many players?', quickT:'⚡ Quick Game', quickS:'3 rounds of random mini games. Jump right in!',
+  pl:'players', solo:'1 player vs 3 bots', howMany:'How many players?', quickT:'⚡ Quick Game', quickS:'3 rounds of random mini games. Jump right in!',
   tourT:'🏆 Tournament', tourS:'6 rounds, 6 different mini games. Most rounds wins!',
   pickT:'Pick a Game', modeL:'✎ Mode', npL:'✎ Players', start:'START!',
   charsT:'Characters', acc0:'Cat ears', acc1:'Ahoge hair', acc2:'Leaf sprout', acc3:'Sweet bow', soon:'New costumes & characters coming soon ✎',
@@ -1146,11 +1146,11 @@ function refreshHome(){
 }
 
 let lastLaunch = null;
-function launch(gen, n){ lastLaunch = {gen, n}; closeModal(); startMatch(gen(), n); }
+function launch(gen, n, hum){ lastLaunch = {gen, n, hum}; closeModal(); startMatch(gen(), n, hum); }
 function askPlayers(title, sub, gen){
   openModal(`<h2>${title}</h2><div class="hint">${sub}</div><h3>${t('howMany')}</h3><div class="row">
-    ${[2,3,4].map(n => `<button class="chip big" data-pn="${n}">${n} ${t('pl')}</button>`).join('')}</div>`);
-  $('mbody').querySelectorAll('[data-pn]').forEach(b => b.onclick = () => { goFull(); launch(gen, +b.dataset.pn); });
+    ${[1,2,3,4].map(n => `<button class="chip big ${n === 1 ? 'sel' : ''}" data-pn="${n}">${n === 1 ? '🤖 ' + t('solo') : n + ' ' + t('pl')}</button>`).join('')}</div>`);
+  $('mbody').querySelectorAll('[data-pn]').forEach(b => b.onclick = () => { goFull(); const n = +b.dataset.pn; n === 1 ? launch(gen, 4, 1) : launch(gen, n); });
 }
 const MODE_KEYS = [['eat','🍡'],['sumo','🤼'],['food','🍙'],['combo','🎲']];
 function showPick(){
@@ -1427,7 +1427,7 @@ $('spinBtn').onclick = () => {
   };
 };
 
-$('again').onclick = () => lastLaunch && launch(lastLaunch.gen, lastLaunch.n);
+$('again').onclick = () => lastLaunch && launch(lastLaunch.gen, lastLaunch.n, lastLaunch.hum);
 $('tomenu').onclick = toMenu;
 $('quit').onclick = toMenu;
 
@@ -1446,9 +1446,9 @@ function toMenu(){
   $('home').classList.remove('hidden'); $('end').classList.add('hidden'); $('quit').classList.add('hidden');
   refreshHome();
 }
-function startMatch(order, n){
+function startMatch(order, n, hum){
   lockWorld = true;
-  match = {order, idx:0, wins:new Array(n).fill(0), n};
+  match = {order, idx:0, wins:new Array(n).fill(0), n, hum: hum || n};
   resetInput();
   $('home').classList.add('hidden'); $('games').classList.add('hidden'); $('end').classList.add('hidden'); $('quit').classList.remove('hidden');
   startRound();
@@ -1474,7 +1474,7 @@ function startRound(){
     const sp = spawnPos(i, match.n);
     const fx = CX - sp.x, fy = CY - sp.y, fl = Math.hypot(fx,fy) || 1;
     players.push({i, x:sp.x, y:sp.y, vx:0, vy:0, m: mode === 'eat' ? 900 : (mode === 'paint' || mode === 'soccer') ? 1300 : 1600, hp:3, score:0, alive:true, fall:0, fallMax:.6,
-      cx:0, cy:0, fx:fx/fl, fy:fy/fl, dashCd:0, dashMax:1, dashFx:0, seed:rnd(0,9), blink:rnd(1,3), scared:false, won:false, expr:'normal'});
+      cx:0, cy:0, fx:fx/fl, fy:fy/fl, dashCd:0, dashMax:1, dashFx:0, seed:rnd(0,9), blink:rnd(1,3), scared:false, won:false, expr:'normal', bot: i >= match.hum, bt:rnd(.3,.8)});
   }
   food = []; parts = [];
   if(mode === 'eat') for(let i=0;i<100;i++) food.push(newFood());
@@ -1494,10 +1494,13 @@ const JR = () => Math.max(42, Math.min(W,H)*.11) * SIZE[save.size];   // radius 
 const BR = () => Math.max(32, Math.min(W,H)*.085) * SIZE[save.size];  // radius tombol dash
 function btnPos(z){
   const m = BR() + 14;
+  if(solo()) return [{x:W-m,y:H-m},{x:m,y:H-m},{x:m,y:m},{x:W-m,y:m}][z];   // tombol DASH di kanan bawah, bot di pojok lain
   if(save.dashPos === 'in') return [{x:W/2-m,y:H-m},{x:W/2+m,y:H-m},{x:W/2-m,y:m+58},{x:W/2+m,y:m+58}][z];
   return [{x:m,y:H-m},{x:W-m,y:H-m},{x:m,y:m},{x:W-m,y:m}][z];
 }
+const solo = () => match && match.hum === 1;
 function zoneOf(x, y){
+  if(solo()) return 0;                       // 1 pemain: seluruh layar untuk joystick
   const n = match ? match.n : 2;
   if(n === 2) return x < W/2 ? 0 : 1;
   const z = y < H/2 ? (x < W/2 ? 2 : 3) : (x < W/2 ? 0 : 1);
@@ -1565,6 +1568,85 @@ function readCtrl(p){
     const x = (keys[k[1]]?1:0) - (keys[k[0]]?1:0), y = (keys[k[3]]?1:0) - (keys[k[2]]?1:0);
     if(x || y){ const l = Math.hypot(x,y); p.cx = x/l; p.cy = y/l; }
   }
+}
+// ===== BOT =====
+// Bot "berpikir" tiap 0.12-0.25 dtk (reaksi manusiawi), lalu menahan arah itu. Strategi berbeda per mini game.
+function botCtrl(p, dt){
+  p.bt -= dt; if(p.bt > 0) return;
+  p.bt = rnd(.12, .25);
+  const R = rad(p), others = players.filter(o => o.alive && o !== p);
+  const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  const near = (list, f) => { let best = null, bd = 1e9; for(const o of list){ const d = f ? f(o) : dist(p, o); if(d < bd){ bd = d; best = o; } } return best; };
+  let vx = 0, vy = 0, wantDash = false;
+  const to = (x, y, w) => { const dx = x - p.x, dy = y - p.y, d = Math.hypot(dx, dy) || 1; w = w ?? 1; vx += dx/d*w; vy += dy/d*w; return d; };
+  const away = (x, y, w) => { const dx = p.x - x, dy = p.y - y, d = Math.hypot(dx, dy) || 1; vx += dx/d*w; vy += dy/d*w; };
+  const walls = () => { const m = 90; if(p.x < m) vx += (m - p.x)/m*1.5; if(p.x > WW - m) vx -= (p.x - WW + m)/m*1.5; if(p.y < m) vy += (m - p.y)/m*1.5; if(p.y > WH - m) vy -= (p.y - WH + m)/m*1.5; };
+  const wander = () => { if(!p.wt || dist(p, p.wt) < 50 || Math.random() < .02) p.wt = {x:rnd(120, WW - 120), y:rnd(100, WH - 100)}; to(p.wt.x, p.wt.y, .8); };
+  if(mode === 'eat'){
+    const threat = others.filter(o => rad(o) > R*1.1 && dist(p, o) < R + rad(o) + 170);
+    const prey = near(others.filter(o => R > rad(o)*1.12 && dist(p, o) < 300));
+    if(threat.length){ for(const o of threat) away(o.x, o.y, 1.4); walls(); }
+    else if(prey){ const d = to(prey.x + prey.vx*.2, prey.y + prey.vy*.2); wantDash = d < R + rad(prey) + 80 && Math.random() < .5; }
+    else { const f = near(food); if(f) to(f.x, f.y); }
+  } else if(mode === 'sumo'){
+    const dc = Math.hypot(p.x - CX, p.y - CY), o = near(others);
+    if(dc > arenaR - R*2.4) to(CX, CY, 1.6);
+    if(o){ const d = to(o.x, o.y, .8); const od = Math.hypot(o.x - CX, o.y - CY); wantDash = d < 190 && od > dc*.8 && Math.random() < .45; }
+  } else if(mode === 'food'){
+    const f = near(food, f => dist(p, f)/(f.v > 1 ? 2.2 : 1)); if(f){ const d = to(f.x, f.y); wantDash = d > 220 && Math.random() < .08; }
+  } else if(mode === 'bomb'){
+    const h = players[X.h];
+    if(h === p){ const o = near(others); if(o){ const d = to(o.x + o.vx*.25, o.y + o.vy*.25, 1.2); wantDash = d < 190 && X.imm <= 0 && Math.random() < .6; } }
+    else if(h && h.alive){ const d = dist(p, h); if(d < 340){ away(h.x, h.y, 1.3); walls(); wantDash = d < 130 && Math.random() < .35; } else wander(); }
+  } else if(mode === 'soccer'){
+    if(X.pause > 0){ p.cx = p.cy = 0; return; }
+    const B = X.ball, team = p.i % 2, gx = team === 0 ? WW + 40 : -40, ownX = team === 0 ? 60 : WW - 60;
+    const mates = players.filter(o => o.alive && o.i % 2 === team), striker = near(mates, o => dist(o, B)) === p;
+    if(striker){
+      const ux = gx - B.x, uy = CY - B.y, ul = Math.hypot(ux, uy) || 1, bx = B.x - ux/ul*(R + B.r + 20), by = B.y - uy/ul*(R + B.r + 20);
+      const behind = (team === 0 ? p.x < B.x - 10 : p.x > B.x + 10);
+      if(!behind || Math.hypot(p.x - bx, p.y - by) > 45){ to(bx, by + (Math.abs(p.y - B.y) < R + B.r && !behind ? (p.y < B.y ? -60 : 60) : 0), 1); }
+      else { const d = to(B.x, B.y, 1); wantDash = d < R + B.r + 60 && Math.random() < .5; }
+    } else { to(ownX + (team === 0 ? 220 : -220), clamp(B.y, CY - 120, CY + 120), .9); }
+  } else if(mode === 'crown'){
+    p.agg = p.agg ?? rnd(.25, 1);                                   // kepribadian: berani rebut vs sabar menunggu
+    if(!p.crT || elapsed > p.crT){ p.crT = elapsed + rnd(1.5, 3); p.crWait = Math.random() > p.agg; }
+    const z = X.next && X.mt < 1.6 ? X.next : X.z, dz = Math.hypot(p.x - z.x, p.y - z.y);
+    const inside = others.filter(o => Math.hypot(o.x - z.x, o.y - z.y) < z.r + 20), rival = near(inside);
+    if(inside.length >= 1 && p.crWait){ const a = Math.atan2(p.y - z.y, p.x - z.x); to(z.x + Math.cos(a)*(z.r + 70), z.y + Math.sin(a)*(z.r + 70), .9); }
+    else if(rival){ const d = to(rival.x, rival.y, 1);
+      if(d < 200 && canDash(p) && Math.random() < .3 + .4*p.agg){ const l = d || 1; p.cx = (rival.x - p.x)/l; p.cy = (rival.y - p.y)/l; dash(p); } }
+    else { const d = to(z.x, z.y, 1); if(d < z.r*.4){ vx *= .3; vy *= .3; } }
+  } else if(mode === 'snow'){
+    const o = near(others);
+    if(o){
+      const d = dist(p, o); if(d > 330) to(o.x, o.y, .9); else if(d < 210) away(o.x, o.y, .9);
+      p.strafe = p.strafe || (Math.random() < .5 ? 1 : -1); if(Math.random() < .05) p.strafe *= -1;
+      const ux = (o.x - p.x)/(d || 1), uy = (o.y - p.y)/(d || 1); vx += -uy*p.strafe*.7; vy += ux*p.strafe*.7;
+      for(const b of X.balls){ if(b.o === p.i) continue; const rx = p.x - b.x, ry = p.y - b.y, bl = Math.hypot(b.vx, b.vy) || 1;
+        if(Math.hypot(rx, ry) < 200 && (rx*b.vx + ry*b.vy)/bl > 0){ vx += -b.vy/bl*1.6; vy += b.vx/bl*1.6; } }
+      walls();
+      if(canDash(p) && d < 520 && Math.random() < .55){                // bidik posisi lawan berikutnya lalu lempar
+        const tx = o.x + o.vx*d/720, ty = o.y + o.vy*d/720, tl = Math.hypot(tx - p.x, ty - p.y) || 1;
+        p.cx = (tx - p.x)/tl; p.cy = (ty - p.y)/tl; dash(p);
+      }
+    }
+  } else if(mode === 'meteor'){
+    let danger = false;
+    for(const m of X.mets){ const d = Math.hypot(p.x - m.x, p.y - m.y); if(d < m.r + R + 50){ away(m.x, m.y, 2.2*(1.2 - m.t/m.max)); danger = true; wantDash = wantDash || (m.t < .45 && d < m.r + R && Math.random() < .7); } }
+    walls(); if(!danger) wander();
+  } else if(mode === 'paint'){
+    if(!p.pt || Math.random() < .08 || X.grid[p.pt.k] === p.i){
+      let best = null, bd = 1e9;
+      for(let k=0;k<14;k++){ const c = Math.floor(rnd(0, X.cols)), r = Math.floor(rnd(0, X.rows)), kk = r*X.cols + c; if(X.grid[kk] === p.i) continue;
+        const x = (c + .5)*X.cell, y = (r + .5)*X.cell, d = Math.hypot(x - p.x, y - p.y)*(X.grid[kk] >= 0 ? .8 : 1); if(d < bd){ bd = d; best = {x, y, k:kk}; } }
+      p.pt = best;
+    }
+    if(p.pt) to(p.pt.x, p.pt.y); walls(); wantDash = Math.random() < .06;
+  } else wander();
+  const l = Math.hypot(vx, vy);
+  if(l > .05){ const k = Math.min(1, l)*.92/l; p.cx = vx*k; p.cy = vy*k; } else { p.cx = p.cy = 0; }
+  if(wantDash && canDash(p)) dash(p);
 }
 const canDash = p => p.alive && p.dashCd <= 0 && !(mode === 'eat' && p.m < 400);
 function dash(p){
@@ -1662,7 +1744,7 @@ function update(dt){
 
   for(const p of players){
     if(!p.alive) continue;
-    readCtrl(p);
+    if(p.bot) botCtrl(p, dt); else readCtrl(p);
     const cl = Math.hypot(p.cx,p.cy);
     if(cl > .2){ p.fx = p.cx/cl; p.fy = p.cy/cl; }
     const {ms,k} = params(p);
@@ -2829,13 +2911,19 @@ function hudPops(){
 function hud(){
   // garis pembagi area (pensil)
   ctx.fillStyle = '#110a02';
-  for(let y=snapA(70); y<H; y+=6*PXC) ctx.fillRect(snapA(W/2), y, PXC, 3*PXC);
-  if(match.n > 2) for(let x=0; x<W; x+=6*PXC) ctx.fillRect(x, snapA(H/2), 3*PXC, PXC);
+  if(!solo()){ for(let y=snapA(70); y<H; y+=6*PXC) ctx.fillRect(snapA(W/2), y, PXC, 3*PXC);
+  if(match.n > 2) for(let x=0; x<W; x+=6*PXC) ctx.fillRect(x, snapA(H/2), 3*PXC, PXC); }
   hudPops();
 
   const R = BR();
   for(const p of players){
-    const ch = CHARS[p.i], b = btnPos(p.i), top = p.i >= 2, pad = pads[p.i];
+    const ch = CHARS[p.i], b = btnPos(p.i), top = p.i >= 2 && !solo(), pad = pads[p.i];
+    if(p.bot){                                // bot: cukup label di pojoknya
+      const dir = b.x < W/2 ? 1 : -1;
+      ctx.save(); ctx.translate(snapA(b.x - dir*R*.9), snapA(b.y)); if(top) ctx.rotate(Math.PI);
+      tag(0, b.y < H/2 ? -R*.3 : R*.45, `BOT ${ch.n} ${'★'.repeat(match.wins[p.i]) || '·'} ${liveText(p)}`, ch.d, 13, dir > 0 ? 'left' : 'right');
+      ctx.restore(); continue;
+    }
     // joystick
     if(pad.id !== null){
       const jr = JR();
@@ -2853,7 +2941,7 @@ function hud(){
     ctx.fillStyle = '#f2eee3'; ctx.fillRect(-snapA(R*.55), -snapA(R*.6), 3*PXC, 2*PXC);
     drawPixText(mode === 'snow' ? '❄' : 'DASH', 0, PXC*.5, 1, INK, 'center');
     // label pemain
-    const dir = ((p.i === 0 || p.i === 3) ? 1 : -1) * (save.dashPos === 'in' ? -1 : 1);
+    const dir = solo() ? -1 : ((p.i === 0 || p.i === 3) ? 1 : -1) * (save.dashPos === 'in' ? -1 : 1);
     const live = liveText(p);
     tag(dir*(R+10), R*.45, `${ch.n} ${'★'.repeat(match.wins[p.i]) || '·'} ${live}`, ch.d, 13, dir > 0 ? 'left' : 'right');
     ctx.restore();
