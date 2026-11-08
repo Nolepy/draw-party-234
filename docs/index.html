@@ -523,7 +523,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v2.7 · outline maks 2px';
+const VERSION = 'v3.0 · karakter kostum';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -2633,7 +2633,7 @@ function makeSpr(c, halfW, scale, fn, post){
   ctx = kc; PXW = kw; SPRMODE = km; AUTOOL = ka;
   g.setTransform(1,0,0,1,0,0); g.filter = 'none';
   autoOutline(g, size, size);
-  thinOutline(g, size, size, 2);
+  thinOutline(g, size, size, 1);
   if(post) post(g, size);
   const b = c.__base || (c.__base = document.createElement('canvas'));
   b.width = size; b.height = size; b.getContext('2d').drawImage(c, 0, 0);
@@ -2703,7 +2703,7 @@ function cleanRot(u, n){
   u.set(tmp);
   for(let i=0;i<N;i++) if(!op(i) && nb(i).some(op)) tmp[i] = INKU;                 // outline 1 px baru
   u.set(tmp);
-  thinU(u, n, n, 2);
+  thinU(u, n, n, 1);
   if(n >= 12) shadeEdges(u, n, n);
 }
 function autoOutline(g, w, h){                 // outline tepat 1 piksel di sekeliling siluet
@@ -2788,6 +2788,122 @@ function customSpr(src, R, outline, live){
   if(!live){ if(!m){ m = new Map(); customCache.set(src, m); } if(m.size > 40) m.clear(); m.set(key, c); }
   return c;
 }
+// ===== KARAKTER KOSTUM (gaya chibi berkostum hewan) =====
+// Digambar langsung per piksel seni di ukuran berapa pun (tetap tajam). Satu outline luar 1 px;
+// pemisah di dalam (lengan, kaki, perut, tepi tudung) memakai warna lebih gelap, bukan garis hitam.
+const hexRamp = (hex, dir) => { const i = PALHEX.indexOf(hex); if(i < 0) return hex;
+  for(const r of RAMPS){ const k = r.indexOf(i); if(k >= 0){ const j = k + dir; if(j >= 0 && j < r.length) return PALHEX[r[j]]; } } return hex; };
+const COSTUME = {
+  fox:{ears:'tri', inner:'#f2eee3', belly:'#f2eee3', tail:'fluff'},
+  cat:{ears:'tri', inner:'#ffadaf', tail:'thin', ah:1.18},
+  frog:{ears:'frog', belly:'light'},
+  chick:{ears:'tuft', beak:true, belly:'light', arms:'wing'},
+  bear:{ears:'round', inner:'light', belly:'light', tail:'nub'},
+  dog:{ears:'flop', belly:'#f2eee3', tail:'nub', snout:'dog'},
+  bunny:{ears:'long', inner:'#ffadaf', belly:'#f2eee3', tail:'puff'},
+  mouse:{ears:'big', inner:'#ffadaf', tail:'thin'},
+  pig:{ears:'pig', snout:'pig', tail:'curl', belly:'light'},
+  panda:{ears:'round', panda:true, belly:'#f2eee3'},
+  fish:{ears:'fin', arms:'fin', tail:'fishtail', belly:'scale'},
+  owl:{ears:'owltuft', beak:true, belly:'light', arms:'wing'},
+  blob:{ears:'pom'},
+};
+const SKIN = '#ffb182', SKIN_D = '#fcb67a', HAIR = '#8b3c2b', HATSPR = new Map();
+function costumeSpr(q, R, c){
+  const ch = CHARS[q.i], cs = COSTUME[ch.sp] || COSTUME.blob;
+  const base = ch.pat === 'gold' ? '#ffc33a' : ch.c, dark = ch.d, light = hexRamp(base, -1) === base ? '#f2eee3' : hexRamp(base, -1);
+  const body = cs.panda ? '#f2eee3' : base, bodyD = cs.panda ? '#aca394' : dark, limb = cs.panda ? dark : base;
+  const sq = q.sq || [0, 0], dw = sq[0], dh = sq[1];
+  const S0 = Math.ceil(R*3.6) + 6, S = S0 + (S0 % 2), cx = S/2, cy = Math.round(S/2 + R*.3);
+  if(!c) c = document.createElement('canvas'); if(c.width !== S || c.height !== S){ c.width = S; c.height = S; }
+  const g = c.getContext('2d', {willReadFrequently:true}); g.setTransform(1,0,0,1,0,0); g.filter = 'none'; g.clearRect(0, 0, S, S);
+  const id = g.createImageData(S, S), u = new Uint32Array(id.data.buffer);
+  const U = {}; const col = h => U[h] || (U[h] = hexU(h));
+  const set = (x, y, h) => { x |= 0; y |= 0; if(x >= 0 && y >= 0 && x < S && y < S) u[y*S + x] = col(h); };
+  const get = (x, y) => (x >= 0 && y >= 0 && x < S && y < S) ? u[y*S + x] : 0;
+  const area = (x0, y0, x1, y1, test, h) => { for(let y = Math.floor(y0); y <= Math.ceil(y1); y++) for(let x = Math.floor(x0); x <= Math.ceil(x1); x++) if(test(x + .5, y + .5)) set(x, y, h); };
+  const ell = (ex, ey, rx, ry, h, n) => { n = n || 2; area(ex - rx - 1, ey - ry - 1, ex + rx + 1, ey + ry + 1, (x, y) => Math.abs((x - ex)/rx)**n + Math.abs((y - ey)/ry)**n <= 1, h); };
+  const tri = (ax, ay, bx, by, qx, qy, h) => { const d = (x1, y1, x2, y2, x, y) => (x - x2)*(y1 - y2) - (x1 - x2)*(y - y2);
+    area(Math.min(ax, bx, qx), Math.min(ay, by, qy), Math.max(ax, bx, qx), Math.max(ay, by, qy), (x, y) => { const d1 = d(ax, ay, bx, by, x, y), d2 = d(bx, by, qx, qy, x, y), d3 = d(qx, qy, ax, ay, x, y); return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); }, h); };
+  const inner = cs.inner === 'light' ? light : cs.inner;
+  const face = q.fx > .35 ? 1 : q.fx < -.35 ? -1 : 0, tailSide = face >= 0 ? -1 : 1;
+  const Rv = R + dh, bw = R*.9 + dw/2, top = cy - Rv, bot = cy + R*.72;
+  const moving = Math.hypot(q.vx || 0, q.vy || 0) > 80, step = moving ? Math.floor(performance.now()/130) % 2 : -1;
+  // --- ekor (di belakang badan) ---
+  const tx = cx + tailSide*bw*.95, ty = cy + R*.4;
+  if(cs.tail === 'fluff'){ ell(tx + tailSide*R*.35, ty - R*.1, R*.42, R*.3, base); ell(tx + tailSide*R*.62, ty - R*.18, R*.18, R*.16, '#f2eee3'); }
+  if(cs.tail === 'thin'){ for(let k=0;k<Math.round(R*.8);k++) set(tx + tailSide*k, ty - Math.round(Math.sin(k/R*3)*R*.25) - (k > R*.5 ? k - R*.5 : 0), dark); }
+  if(cs.tail === 'nub') ell(tx + tailSide*R*.1, ty, R*.16, R*.14, base);
+  if(cs.tail === 'puff') ell(tx + tailSide*R*.12, ty, R*.2, R*.2, '#f2eee3');
+  if(cs.tail === 'curl'){ for(let k=0;k<6;k++){ const a = k*1.1; set(tx + tailSide*(R*.18 + Math.cos(a)*R*.14), ty + Math.sin(a)*R*.14, '#ffadaf'); } }
+  if(cs.tail === 'fishtail') tri(tx, ty, tx + tailSide*R*.7, ty - R*.45, tx + tailSide*R*.7, ty + R*.35, light);
+  // --- telinga / hiasan kepala (di belakang tudung) ---
+  const ex = R*.55, ey = top + R*.25, ah = cs.ah || 1.3;
+  if(cs.ears === 'tri') for(const sd of [-1,1]){ const ay = top - R*(ah - .85);
+    tri(cx + sd*R*.12, top + R*.45, cx + sd*R*.95, top + R*.5, cx + sd*R*.72, ay, base);
+    tri(cx + sd*R*.38, top + R*.4, cx + sd*R*.8, top + R*.42, cx + sd*R*.7, ay + R*.3, inner); }
+  if(cs.ears === 'round' || cs.ears === 'big'){ const er = cs.ears === 'big' ? R*.38 : R*.28; for(const sd of [-1,1]){ ell(cx + sd*R*.62, top + R*.15, er, er, cs.panda ? dark : base); ell(cx + sd*R*.62, top + R*.18, er*.5, er*.5, cs.panda ? dark : inner || light); } }
+  if(cs.ears === 'long') for(const sd of [-1,1]){ ell(cx + sd*R*.32, top - R*.45, R*.17, R*.6, base); ell(cx + sd*R*.32, top - R*.38, R*.07, R*.42, inner); }
+  if(cs.ears === 'flop') for(const sd of [-1,1]) ell(cx + sd*(bw + R*.02), cy - R*.35, R*.2, R*.42, dark);
+  if(cs.ears === 'pig') for(const sd of [-1,1]) tri(cx + sd*R*.25, top + R*.25, cx + sd*R*.75, top + R*.35, cx + sd*R*.75, top - R*.2, base);
+  if(cs.ears === 'frog') for(const sd of [-1,1]){ ell(cx + sd*R*.46, top + R*.08, R*.27, R*.25, base); ell(cx + sd*R*.46, top + R*.06, R*.16, R*.15, '#f2eee3'); const px = Math.round(cx + sd*R*.46) - (sd < 0 ? 1 : 0), py = Math.round(top + R*.06); set(px, py, INK); if(R >= 12) set(px, py + 1, INK); }
+  if(cs.ears === 'tuft') for(const k of [-1,0,1]) for(let j=0;j<Math.max(2, R*.35);j++) set(cx + k*2 - (k < 0 ? 1 : 0), top - j + Math.abs(k), base);
+  if(cs.ears === 'owltuft') for(const sd of [-1,1]) tri(cx + sd*R*.35, top + R*.2, cx + sd*R*.85, top + R*.35, cx + sd*R*.85, top - R*.35, dark);
+  if(cs.ears === 'fin') tri(cx - R*.45, top + R*.2, cx + R*.45, top + R*.2, cx + R*.1, top - R*.5, light);
+  if(cs.ears === 'pom') ell(cx, top - R*.05, R*.2, R*.2, light);
+  // --- badan + tudung (satu siluet) ---
+  area(cx - bw - 1, top - 1, cx + bw + 1, bot + 1, (x, y) => { const nx = (x - cx)/bw, ny = (y - (top + bot)/2)/((bot - top)/2); return Math.abs(nx)**3 + Math.abs(ny)**2.6 <= 1; }, body);
+  // kaki (dua, dengan celah; melangkah bergantian saat jalan)
+  const fw = Math.max(2, Math.round(R*.4)), fh = Math.max(2, Math.round(R*.3)), gap = Math.max(1, Math.round(R*.1));
+  for(const sd of [-1,1]){ const lift = (step === 0 && sd < 0) || (step === 1 && sd > 0) ? 1 : 0;
+    const x0 = sd < 0 ? Math.round(cx - gap/2 - fw) : Math.round(cx + gap/2), y0 = Math.round(bot - fh*.4) - lift;
+    for(let y = y0; y < y0 + fh; y++) for(let x = x0; x < x0 + fw; x++) set(x, y, y >= y0 + fh - 1 ? bodyD : limb); }
+  // lengan
+  for(const sd of [-1,1]){ const ax = cx + sd*(bw - R*.05), ay = cy + R*.15;
+    if(cs.arms === 'wing') tri(ax, ay - R*.25, ax + sd*R*.32, ay + R*.15, ax, ay + R*.3, limb === body ? hexRamp(body, 1) : limb);
+    else if(cs.arms === 'fin') tri(ax, ay - R*.2, ax + sd*R*.4, ay + R*.25, ax, ay + R*.25, light);
+    else { ell(ax, ay, R*.2, R*.3, limb); for(let y = Math.round(ay - R*.25); y <= ay + R*.25; y++) if(get(Math.round(ax - sd*R*.2), y) === col(limb) || get(Math.round(ax - sd*R*.2), y) === col(body)) set(ax - sd*R*.2, y, bodyD); } }
+  // perut
+  if(cs.belly){ const bc = cs.belly === 'light' ? light : cs.belly === 'scale' ? light : cs.belly;
+    ell(cx, cy + R*.42, R*.4, R*.24, bc);
+    if(cs.belly === 'scale') for(let k=-1;k<=1;k++){ set(cx + k*R*.25 - 1, cy + R*.42, base); set(cx + k*R*.25, cy + R*.42 + 1, base); } }
+  // lubang wajah: tepi tudung gelap, kulit, poni
+  const wx = cx + face, wy = cy - R*.28, whw = Math.max(2.2, R*.52), whh = Math.max(1.8, R*.36);
+  const inWin = (x, y, k) => Math.abs((x - wx)/(whw + k))**4 + Math.abs((y - wy)/(whh + k))**4 <= 1;
+  area(wx - whw - 2, wy - whh - 2, wx + whw + 2, wy + whh + 2, (x, y) => inWin(x, y, 1) && !inWin(x, y, 0), bodyD);
+  area(wx - whw - 1, wy - whh - 1, wx + whw + 1, wy + whh + 1, (x, y) => inWin(x, y, 0), SKIN);
+  const wt = Math.round(wy - whh);
+  if(R >= 7) for(let x = Math.round(wx - whw); x <= wx + whw; x++){ if(get(x, wt) === col(SKIN)) set(x, wt, HAIR); if((x + face) % 3 && get(x, wt + 1) === col(SKIN)) set(x, wt + 1, HAIR); }
+  // moncong / paruh di tudung
+  if(cs.snout === 'pig'){ ell(cx, top + R*.28, R*.2, R*.13, '#ffadaf'); set(cx - 2, top + R*.28, dark); set(cx + 1, top + R*.28, dark); }
+  if(cs.beak) tri(cx - R*.14, top + R*.22, cx + R*.14, top + R*.22, cx, top + R*.42, '#eb7d10');
+  if(ch.acc === 'bow'){ tri(cx + R*.35, top + R*.1, cx + R*.6, top - R*.08, cx + R*.6, top + R*.28, '#ef6479'); tri(cx + R*.85, top + R*.1, cx + R*.6, top - R*.08, cx + R*.6, top + R*.28, '#ef6479'); }
+  // kilap kiri-atas tudung
+  for(let k=0;k<2;k++) if(get(Math.round(cx - bw*.55) + k, Math.round(top + R*.18)) === col(body)) set(Math.round(cx - bw*.55) + k, Math.round(top + R*.18), cs.panda ? '#e3f4ee' : light);
+  // --- wajah ---
+  const e = q.expr || 'normal', eyY = Math.round(wy + whh*.15), ed = Math.max(1, Math.round(whw*.42)), mY = eyY + Math.max(2, Math.round(whh*.55));
+  for(const sd of [-1,1]){ const x = Math.round(wx) + (sd < 0 ? -ed - 1 : ed);
+    if(e === 'dead'){ set(x - 1, eyY - 1, INK); set(x + 1, eyY - 1, INK); set(x, eyY, INK); set(x - 1, eyY + 1, INK); set(x + 1, eyY + 1, INK); }
+    else if(e === 'blink'){ set(x, eyY + 1, INK); set(x + sd*-1 + (sd < 0 ? 1 : 0), eyY + 1, INK); }
+    else if(e === 'happy'){ set(x - 1, eyY + 1, INK); set(x, eyY, INK); set(x + 1, eyY + 1, INK); }
+    else { set(x, eyY, INK); set(x, eyY + 1, INK); if(R >= 12) { set(x + (sd < 0 ? -1 : 1)*0, eyY - 1, INK); } if(e === 'scared') set(x + sd, eyY - 1, INK); }
+    if(R >= 8 && e !== 'dead') set(x + sd*2, eyY + 2, '#ef6479');
+  }
+  if(e === 'scared' || e === 'dead'){ set(wx, mY, HAIR); set(wx - 1, mY, HAIR); }
+  else if(e === 'happy'){ set(wx - 1, mY - 1, HAIR); set(wx, mY - 1, HAIR); set(wx - 1, mY, '#ef6479'); set(wx, mY, '#ef6479'); }
+  else { set(wx - 1, mY - 1, HAIR); set(wx, mY - 1, HAIR); }
+  if(ch.acc === 'glasses' && e !== 'dead') for(const sd of [-1,1]){ const x = Math.round(wx) + (sd < 0 ? -ed - 2 : ed - 1); for(let k=0;k<3;k++){ set(x + k, eyY - 1, INK); set(x + k, eyY + 2, INK); } set(x, eyY, INK); set(x, eyY + 1, INK); set(x + 2, eyY, INK); set(x + 2, eyY + 1, INK); }
+  if(ch.acc === 'mustache'){ for(let k=-2;k<2;k++) set(wx + k, mY - 2, '#3f2f30'); set(wx - 3, mY - 1, '#3f2f30'); set(wx + 2, mY - 1, '#3f2f30'); }
+  g.putImageData(id, 0, 0);
+  autoOutline(g, S, S);
+  const id2 = g.getImageData(0, 0, S, S), u2 = new Uint32Array(id2.data.buffer); if(S >= 12) shadeEdges(u2, S, S); g.putImageData(id2, 0, 0);
+  // topi toko: sprite sendiri, ditempel di atas tudung
+  if(ch.hat && ch.hat !== 'none'){ const hr = Math.round(R*.8), hk = ch.hat + hr; let hs = HATSPR.get(hk);
+    if(!hs){ hs = makeSpr(document.createElement('canvas'), hr*2.1, 1, () => drawHat(ch.hat, hr)); HATSPR.set(hk, hs); }
+    if(hs) g.drawImage(hs, Math.round(cx - hs.width/2), Math.round(top + R*.65 - hs.height/2)); }
+  const b = c.__base || (c.__base = document.createElement('canvas')); b.width = S; b.height = S; b.getContext('2d').drawImage(c, 0, 0); c.__rot = null;
+  return c;
+}
 // sprite karakter: jari-jari bulat dalam piksel seni, tanpa squash/napas (yang membuat ukuran bergetar 1px)
 function charCanvas(p, scale, c){
   let R = Math.max(3, Math.round(rad(p)/scale));
@@ -2797,7 +2913,7 @@ function charCanvas(p, scale, c){
   q.sq = p.alive && p.sq && R >= 6 ? [Math.min(p.sq[0], R >> 2), Math.max(p.sq[1], -(R >> 2))] : null; q.R = R;
   const chc = CHARS[q.i];
   if(chc.skin){ const cs = customSpr(chc.skin, R, chc.outline, chc.skin === dc); if(cs) return cs; }
-  return makeSpr(c || document.createElement('canvas'), R*scale*1.95, scale, () => drawChar(q, true), (g, size) => { if(!CHARS[q.i].skin || CHARS[q.i].eyes) pixFace(g, size, q, R); });
+  return costumeSpr(q, R, c);
 }
 function drawCharPix(p){                         // untuk pratinjau/kartu: tempel sprite 1:1 di grid
   const c = charCanvas(p, PXW); if(!c) return;
@@ -3207,7 +3323,7 @@ function homeFrame(dt, bare){
     g.fillStyle = on ? '#ffc33a' : '#8b3c2b'; g.fillRect(x, L.stTop + 4, 2, 2); if(on){ g.fillStyle = '#f2eee3'; g.fillRect(x, L.stTop + 4, 1, 1); } }
   // karakter menari bergiliran di panggung: [ms, naik(px), miring(step)]
   const HOP = [[90,-2,0],[70,-5,1],[90,-7,1],[70,-5,0],[70,-2,-1],[60,0,-1]], HOPT = HOP.reduce((a,f) => a + f[0], 0), PER = 1500;
-  const spc = Math.min(38, Math.floor(L.stW/4.2)), R = Math.max(8, Math.min(15, Math.round(spc*.42))), feet = L.stTop + 9;
+  const spc = Math.min(38, Math.floor(L.stW/4.2)), R = Math.max(8, Math.min(13, Math.round(spc*.36))), feet = L.stTop + 9;
   SPRSCALE = PXC; SPRMAP = (x, y) => [x/PXC, y/PXC];
   menuChars.forEach(c => {
     const tm = (ms + (3 - c.i)*PER/4) % PER; let up = 0, ang = 0;
