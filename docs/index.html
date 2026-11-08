@@ -202,7 +202,7 @@
   #tab{font-size:15px;line-height:1.7}
   /* ===== Gaya pixel ===== */
   *{border-radius:0!important}
-  canvas,img{image-rendering:pixelated;image-rendering:crisp-edges}
+  canvas,img{image-rendering:pixelated}
   svg{shape-rendering:crispEdges}
   body,button,input{font-family:'Pixelify Sans',monospace}
   h1,h2,.otitle,.gtitle,.logo h1,.badge b,.gtile b,.ptab{-webkit-text-stroke:0!important;font-weight:700!important;
@@ -425,7 +425,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v1.0 · UI pixel HD + kepala hewan';
+const VERSION = 'v1.1 · pixel lebih tajam & bersih';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#2b2b3a', FONT = "'Pixelify Sans',monospace";
@@ -466,13 +466,33 @@ for(let k=0;k<32768;k++){
   }
   LUT[k] = best;
 }
+let QB = null, EB = null;
 function quantize(g, w, h){
   if(!w || !h) return;
-  const id = g.getImageData(0, 0, w, h), d = id.data;
-  for(let i=0;i<d.length;i+=4){
-    if(d[i+3] < 110){ d[i+3] = 0; continue; }
-    const k = LUT[((d[i] >> 3) << 10) | ((d[i+1] >> 3) << 5) | (d[i+2] >> 3)]*3;
-    d[i] = PALRGB[k]; d[i+1] = PALRGB[k+1]; d[i+2] = PALRGB[k+2]; d[i+3] = 255;
+  const id = g.getImageData(0, 0, w, h), d = id.data, n = w*h, TH = 650;
+  if(!QB || QB.length < n){ QB = new Uint8Array(n); EB = new Uint32Array(n); }
+  // 1) kunci tiap piksel ke warna palet terdekat & catat seberapa "campuran" warnanya
+  for(let i=0, o=0; i<n; i++, o+=4){
+    if(d[o+3] < 128){ QB[i] = 255; continue; }
+    const k = LUT[((d[o] >> 3) << 10) | ((d[o+1] >> 3) << 5) | (d[o+2] >> 3)];
+    QB[i] = k;
+    const dr = d[o] - PALRGB[k*3], dg = d[o+1] - PALRGB[k*3+1], db = d[o+2] - PALRGB[k*3+2];
+    EB[i] = dr*dr + dg*dg + db*db;
+  }
+  // 2) piksel tepi hasil anti-aliasing diganti warna murni tetangga yang paling mirip
+  for(let y=0; y<h; y++) for(let x=0; x<w; x++){
+    const i = y*w + x, o = i*4;
+    let k = QB[i];
+    if(k === 255){ d[o+3] = 0; continue; }
+    if(EB[i] > TH){
+      let bd = 1e9;
+      for(let dy=-1; dy<=1; dy++){ const yy = y + dy; if(yy < 0 || yy >= h) continue;
+        for(let dx=-1; dx<=1; dx++){ const xx = x + dx; if((!dx && !dy) || xx < 0 || xx >= w) continue;
+          const j = yy*w + xx, c = QB[j]; if(c === 255 || EB[j] > TH) continue;
+          const dr = d[o] - PALRGB[c*3], dg = d[o+1] - PALRGB[c*3+1], db = d[o+2] - PALRGB[c*3+2], dd = dr*dr + dg*dg + db*db;
+          if(dd < bd){ bd = dd; k = c; } } }
+    }
+    d[o] = PALRGB[k*3]; d[o+1] = PALRGB[k*3+1]; d[o+2] = PALRGB[k*3+2]; d[o+3] = 255;
   }
   g.putImageData(id, 0, 0);
 }
@@ -1822,7 +1842,7 @@ function wobbly(x, y, r, seed, amp){
   }
   ctx.closePath();
 }
-function inkStroke(w){ ctx.lineWidth = Math.max(w, PXW); ctx.strokeStyle = INK; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); }
+function inkStroke(w){ ctx.lineWidth = Math.max(w, PXW*2); ctx.strokeStyle = INK; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); }
 
 function accessoryBack(ch, r){
   const lw = Math.max(2, r*.06);
@@ -1878,10 +1898,14 @@ function drawFace(p, r, ch){
     } else if(e === 'blink'){
       ctx.moveTo(cx-ew, cy+eh*.1); ctx.quadraticCurveTo(cx, cy+eh*.5, cx+ew, cy+eh*.1); inkStroke(lw);
     } else {
-      const big = e === 'scared' ? 1.2 : 1;
-      ctx.ellipse(cx, cy, ew*big, eh*big, 0, 0, 7); ctx.fillStyle = '#fff'; ctx.fill(); inkStroke(lw*.85);
-      const pr = e === 'scared' ? ew*.28 : ew*.5;
-      ctx.beginPath(); ctx.arc(cx + p.fx*ew*.38, cy + p.fy*eh*.32, pr, 0, 7); ctx.fillStyle = INK; ctx.fill();
+      if(e === 'scared'){
+        ctx.ellipse(cx, cy, ew*1.15, eh*1.15, 0, 0, 7); ctx.fillStyle = '#fff'; ctx.fill(); inkStroke(lw*.85);
+        ctx.beginPath(); ctx.arc(cx + p.fx*ew*.3, cy + p.fy*eh*.3, ew*.35, 0, 7); ctx.fillStyle = INK; ctx.fill();
+      } else {
+        ctx.ellipse(cx + p.fx*ew*.2, cy + p.fy*eh*.15, ew*.78, eh*.92, 0, 0, 7); ctx.fillStyle = INK; ctx.fill();
+        const hs = Math.max(PXW*1.5, ew*.42);
+        ctx.fillStyle = '#fff'; ctx.fillRect(cx + p.fx*ew*.2 - ew*.45, cy + p.fy*eh*.15 - eh*.6, hs, hs);
+      }
     }
   }
   const my = gy + r*.25;
@@ -2267,7 +2291,7 @@ function drawTrophy(x, y, h){
 const HB = document.createElement('canvas');
 function renderMenu(dt){
   T += dt;
-  const g = pxCanvas(HB, W, H, 3); ctx = g; PXW = 3;
+  const g = pxCanvas(HB, W, H, 2); ctx = g; PXW = 2;
   ctx.drawImage(bg, 0, 0, W, H);
   const hx = W*.3, hy = H*.53, u = Math.min(W*.46, H*.9)/100;
   // sinar di belakang trofi
