@@ -582,6 +582,62 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ctab.mback{background:#c9d4e6!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items > .mpick,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items > .drawpanel{grid-column:1 / -1!important;width:100%!important;box-sizing:border-box}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items:has(> .mpick){display:block!important}
+  /* v6.3: tombol lebih ringkas; layar yang isinya sedikit tidak boleh perlu scroll */
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .chip,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ctab,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ptab,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .wallet,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .lbox,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .fopt{padding:calc(var(--px)*2) calc(var(--px)*5)!important;min-height:calc(var(--px)*12)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .go{padding:calc(var(--px)*3) calc(var(--px)*8)!important;min-height:calc(var(--px)*14)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .arw{width:calc(var(--px)*12)!important;min-width:calc(var(--px)*12)!important;min-height:calc(var(--px)*12)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ptab{min-width:calc(var(--px)*15)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ctabs{flex-wrap:nowrap!important;gap:calc(var(--px)*3)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ctab:not(.on){padding:calc(var(--px)*2) calc(var(--px)*3)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .cr{gap:calc(var(--px)*3)!important;padding:calc(var(--px)*3) calc(var(--px)*5) calc(var(--px)*4)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .cl{padding-top:calc(var(--px)*18)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .cl .back,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) #games .back{width:calc(var(--px)*14)!important;height:calc(var(--px)*12)!important;min-width:0!important;min-height:0!important;padding:0!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items:has(> .mpick){overflow:hidden!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mpick{gap:calc(var(--px)*4)!important;padding:0!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard{padding:calc(var(--px)*4)!important;gap:calc(var(--px)*2)!important;justify-content:flex-start}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard canvas{width:calc(var(--px)*30)!important;height:calc(var(--px)*30)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard b{white-space:nowrap}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard em{top:calc(var(--px)*2)!important;right:calc(var(--px)*2)!important;padding:calc(var(--px)*1) calc(var(--px)*2)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .avwrap,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .pnl,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) #pName{max-width:calc(var(--px)*84)!important}
+  @media (pointer:coarse){ html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .chip,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ctab,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ptab,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .go,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .fopt,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .arw,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .back,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .x,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) #mx{min-height:40px!important} html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .arw,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ctab:not(.on){min-width:40px!important} }
+  /* v6.3b: tanpa scroll untuk layar berisi sedikit */
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ocols{grid-template-columns:1fr 1fr!important;gap:calc(var(--px)*3) calc(var(--px)*6)!important;align-items:center}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ocol{display:contents!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ocol:first-child > .vrow:nth-child(1){grid-column:1;grid-row:1}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ocol:first-child > .vrow:nth-child(2){grid-column:2;grid-row:1}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ocol:first-child > .langsel{grid-column:1;grid-row:2}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ocol:last-child > .orow:nth-child(3){grid-column:2;grid-row:2}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ocol:last-child > .orow:nth-child(4){grid-column:1 / -1;grid-row:3}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ocol:last-child > .olabel{grid-column:1 / -1;grid-row:4;text-align:left!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ocol:last-child > .hands{grid-column:1 / -1;grid-row:5}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .vrow{min-height:calc(var(--px)*12)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .orow > span{min-width:0!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .hand{flex-direction:row!important;justify-content:center!important;gap:calc(var(--px)*4)!important;padding:calc(var(--px)*2) calc(var(--px)*4)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .hand svg{height:calc(var(--px)*12)!important;max-height:calc(var(--px)*12)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .hand em{top:calc(var(--px)*1)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .card .hint:last-child{font-size:calc(var(--px)*8);opacity:.7}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel{grid-template-columns:calc(var(--px)*42) 1fr!important;padding:calc(var(--px)*4)!important;gap:calc(var(--px)*3) calc(var(--px)*5)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel canvas{grid-row:1 / span 6!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel h2,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .hint,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .go,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .tog,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .chip{grid-column:2!important;justify-self:start}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .go{justify-self:stretch}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .tog{display:flex!important;align-items:center;gap:calc(var(--px)*3);margin:0!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dhead{display:none!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dname{padding-left:calc(var(--px)*16)!important;min-height:calc(var(--px)*12)}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dclose{top:calc(var(--px)*4)!important;left:calc(var(--px)*4)!important;width:calc(var(--px)*12)!important;height:calc(var(--px)*12)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dface canvas{max-height:calc(var(--px)*16)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dface .fopt{padding:calc(var(--px)*1) calc(var(--px)*2)!important;min-height:0!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dpaper{gap:calc(var(--px)*3)!important;padding:calc(var(--px)*4)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dpen,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dswatch,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dface{padding:calc(var(--px)*2)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dbig{min-height:calc(var(--px)*13)!important;padding:calc(var(--px)*1)!important}
+  /* pengaturan v6.3c */
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .srow{display:flex;flex-wrap:wrap;align-items:center;gap:calc(var(--px)*3) calc(var(--px)*8);margin:0}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .srow.s2 > .vrow{flex:1 1 calc(var(--px)*80);min-width:0}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .srow > .orow{flex:1 1 auto;flex-wrap:nowrap!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .srow.sfoot{justify-content:space-between}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .srow.sfoot .hint{opacity:.7}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .zbox{flex:0 0 auto!important;min-width:calc(var(--px)*34)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .go{white-space:normal!important;text-align:center!important;line-height:1.25!important;flex-wrap:wrap!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items > .drawpanel{padding:calc(var(--px)*3)!important;gap:calc(var(--px)*2) calc(var(--px)*5)!important}
 /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
   #home#home{touch-action:none}
   #home#home .hz:not(#zz){position:absolute;opacity:0;padding:0;margin:0;border:0!important;box-shadow:none!important;background:none!important;transform:none!important;min-width:0;min-height:0}
@@ -671,7 +727,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v6.2 · pilih gaya karakter';
+const VERSION = 'v6.3 · ringkas';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -1167,8 +1223,8 @@ const L = {
   d_random:'game acak tiap ronde', goal:'GOL!', gamesT:'PILIH GAME', help6:'🎮 Ada 9 mini game — lihat semuanya di PILIH GAME.',
   pname:'Nama Pemain', tabSp:'HEWAN', tabCol:'WARNA', tabHat:'TOPI', tabAcc:'AKSESORI', tabFx:'EFEK', tabDraw:'GAMBAR',
   buy:'Beli?', bought:'Terbeli! ✔', noStars:'Bintang kurang! Menang ronde untuk dapat ⭐',
-  drawT:'Buat karaktermu dari nol!', drawS:'Bentuk, warna, dan wajah semuanya kamu gambar sendiri. Bagian kosong jadi transparan.', autoOl:'Outline otomatis', drawGo:'✏️ MULAI MENGGAMBAR', drawEdit:'✏️ UBAH GAMBAR',
-  useSkin:'Pakai gambar', modeT:'Mau pakai karakter apa?', modeA:'KOSTUM HEWAN', modeAS:'Pilih hewan, warna, topi, aksesori & efek', modeD:'GAMBAR SENDIRI', modeDS:'Gambar karaktermu sendiri dari nol', inUse:'DIPAKAI', modeBack:'GANTI GAYA', noDraw:'Belum ada gambar', eyes:'Mata otomatis', delSkin:'🗑 Hapus gambar', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
+  drawT:'Karakter gambarmu', drawS:'Bagian kosong jadi transparan.', autoOl:'Outline otomatis', drawGo:'✏️ MULAI GAMBAR', drawEdit:'✏️ UBAH',
+  useSkin:'Pakai gambar', modeT:'Mau pakai karakter apa?', modeA:'KOSTUM HEWAN', modeAS:'Hewan, warna, topi & lainnya', modeD:'GAMBAR SENDIRI', modeDS:'Gambar dari nol', inUse:'DIPAKAI', modeBack:'GANTI GAYA', noDraw:'Belum ada gambar', eyes:'Mata otomatis', delSkin:'🗑 Hapus gambar', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
   drawHint:'Gambar bebas, lingkaran hanya panduan ukuran', drawHero:'Pixel Jagoanmu!', faceL:'Outline', previewL:'Pratinjau', pen:'Pena', eraser:'Hapus', fillbg:'Isi latar',
   pts:'poin', safe:'aman', fell:'jatuh!', round:'Ronde', win:' menang!', draw:'Seri!', drawW:'Seri: ', champ:' juara!', allDraw:'Semua seri!'},
  en: {lang:'English', flag:'EN', c0:'Red', c1:'Blue', c2:'Green', c3:'Yellow',
@@ -1195,8 +1251,8 @@ const L = {
   d_random:'random game each round', goal:'GOAL!', gamesT:'PICK A GAME', help6:'🎮 9 mini games — see them all in PICK GAME.',
   pname:'Player Name', tabSp:'ANIMAL', tabCol:'COLOR', tabHat:'HATS', tabAcc:'EXTRAS', tabFx:'EFFECTS', tabDraw:'DRAW',
   buy:'Buy?', bought:'Bought! ✔', noStars:'Not enough stars! Win rounds to earn ⭐',
-  drawT:'Create your character from scratch!', drawS:'Draw the shape, colors and face yourself. Empty pixels stay transparent.', autoOl:'Auto outline', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT DRAWING',
-  useSkin:'Use drawing', modeT:'Which character do you want?', modeA:'ANIMAL COSTUME', modeAS:'Pick animal, color, hat, accessory & effect', modeD:'DRAW YOUR OWN', modeDS:'Draw your own character from scratch', inUse:'IN USE', modeBack:'CHANGE STYLE', noDraw:'No drawing yet', eyes:'Auto eyes', delSkin:'🗑 Delete drawing', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
+  drawT:'Your drawn character', drawS:'Empty pixels stay transparent.', autoOl:'Auto outline', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT',
+  useSkin:'Use drawing', modeT:'Which character do you want?', modeA:'ANIMAL COSTUME', modeAS:'Animal, color, hat & more', modeD:'DRAW YOUR OWN', modeDS:'Draw from scratch', inUse:'IN USE', modeBack:'CHANGE STYLE', noDraw:'No drawing yet', eyes:'Auto eyes', delSkin:'🗑 Delete drawing', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
   drawHint:'Draw freely, the circle is just a size guide', drawHero:'Pixel your Hero!', faceL:'Outline', previewL:'Preview', pen:'Pen', eraser:'Eraser', fillbg:'Fill bg',
   pts:'pts', safe:'safe', fell:'out!', round:'Round', win:' wins!', draw:'Draw!', drawW:'Draw: ', champ:' is champion!', allDraw:'All draw!'}
 };
@@ -1376,7 +1432,7 @@ function renderChars(){
   const c = save.cust[cP];
   if(cMode === 'draw') cTab = 'draw'; else if(cTab === 'draw') cTab = 'sp';
   const backBtn = cMode ? `<button class="ctab mback" id="mBack" title="${t('modeBack')}" aria-label="${t('modeBack')}"><i>${iconHTML('back', 16)}</i>${cMode === 'draw' ? t('modeBack') : ''}</button>` : '';
-  $('ctabs').innerHTML = !cMode ? '' : backBtn + (cMode === 'animal' ? CATS.filter(x => x[0] !== 'draw').map(([k,ic,lab]) => `<button class="ctab ${k === cTab ? 'on' : ''}" data-c="${k}"><i>${iconHTML(ic, 16)}</i>${t(lab)}</button>`).join('') : '');
+  $('ctabs').innerHTML = !cMode ? '' : backBtn + (cMode === 'animal' ? CATS.filter(x => x[0] !== 'draw').map(([k,ic,lab]) => `<button class="ctab ${k === cTab ? 'on' : ''}" data-c="${k}" title="${t(lab)}" aria-label="${t(lab)}"><i>${iconHTML(ic, 16)}</i>${k === cTab ? t(lab) : ''}</button>`).join('') : '');
   $('ctabs').querySelectorAll('.ctab[data-c]').forEach(b => b.onclick = () => { cTab = b.dataset.c; pending = null; renderChars(); });
   if($('mBack')) $('mBack').onclick = () => { cMode = null; pending = null; renderChars(); };
   $('pName').value = save.cust[cP].name; $('pName').placeholder = t('c'+cP);
@@ -1399,7 +1455,7 @@ function renderChars(){
     return;
   }
   if(cTab === 'draw'){
-    box.innerHTML = `<div class="drawpanel"><canvas id="dpv" width="240" height="240"></canvas><div class="dcol"><h2>${t('drawT')}</h2><div class="hint" style="text-align:left">${t('drawS')}</div>
+    box.innerHTML = `<div class="drawpanel"><canvas id="dpv" width="240" height="240"></canvas><div class="dcol"><h2>${t('drawT')}</h2>${c.skin ? '' : `<div class="hint" style="text-align:left">${t('drawS')}</div>`}
       <button class="go" id="dOpen">${c.skin ? t('drawEdit') : t('drawGo')}</button>
       ${c.skin ? `<label class="tog"><input type="checkbox" id="tEyes" ${c.outline !== false ? 'checked' : ''}> ${t('autoOl')}</label><button class="chip" id="dDel">${t('delSkin')}</button>` : ''}</div></div>`;
     previewChar($('dpv'), cP, {}, {r:.3, L:240, bg:'#e3f4ee'});
@@ -1562,18 +1618,14 @@ function showSettings(confirmReset){
   const L2 = LANGS.indexOf(save.lang);
   openModal(`<div class="crown">${G('<path d="M14 78 8 30l24 22 18-36 18 36 24-22-6 48z" fill="#ffc33a"/><circle cx="50" cy="62" r="7" fill="#d5734c"/>')}</div>
   <h2 class="otitle">${t('setT')}</h2>
-  <div class="ocols"><div class="ocol">
-    <label class="vrow"><i>${SPK}</i><input type="range" id="vSfx" min="0" max="100" value="${Math.round(save.sfx*100)}"></label>
-    <label class="vrow"><i>${NOTE}</i><input type="range" id="vMus" min="0" max="100" value="${Math.round(save.music*100)}"></label>
-    <div class="langsel"><button class="arw" id="lPrev">◀</button><div class="lbox"><span>${t('flag')}</span>${t('lang')}</div><button class="arw" id="lNext">▶</button></div>
-  </div><div class="ocol">
-    <div class="olabel">${t('dashL')}</div>
-    <div class="hands">${['out','in'].map(k => `<div class="hand ${save.dashPos === k ? 'on' : ''}" data-d="${k}">${handSvg(k)}<b>${t(k === 'out' ? 'dOut' : 'dIn')}</b>${save.dashPos === k ? '<em>✔</em>' : ''}</div>`).join('')}</div>
-    <div class="orow"><span>${t('vib')}</span><button class="chip ${save.vib ? 'sel' : ''}" data-v="1">${t('on')}</button><button class="chip ${save.vib ? '' : 'sel'}" data-v="0">${t('off')}</button></div>
-    <div class="orow"><span>${t('size')}</span>${[0,1,2].map(i => `<button class="chip ${save.size === i ? 'sel' : ''}" data-s="${i}">${t('s'+i)}</button>`).join('')}</div>
-  </div></div>
-  <div class="orow" style="justify-content:center"><button class="go small" id="rst">${confirmReset ? t('resetQ') : t('reset')}</button></div>
-  <div class="hint">${VERSION}</div>`, 'blue');
+  <div class="srow s2"><label class="vrow"><i>${SPK}</i><input type="range" id="vSfx" min="0" max="100" value="${Math.round(save.sfx*100)}"></label>
+    <label class="vrow"><i>${NOTE}</i><input type="range" id="vMus" min="0" max="100" value="${Math.round(save.music*100)}"></label></div>
+  <div class="langsel"><button class="arw" id="lPrev">◀</button><div class="lbox"><span>${t('flag')}</span>${t('lang')}</div><button class="arw" id="lNext">▶</button></div>
+  <div class="srow"><div class="orow"><span>${t('vib')}</span><button class="chip ${save.vib ? 'sel' : ''}" data-v="${save.vib ? 0 : 1}">${save.vib ? t('on') : t('off')}</button></div>
+    <div class="orow"><span>${t('size')}</span><button class="arw" id="zPrev">◀</button><div class="lbox zbox">${t('s' + save.size)}</div><button class="arw" id="zNext">▶</button></div></div>
+  <div class="olabel">${t('dashL')}</div>
+  <div class="hands">${['out','in'].map(k => `<div class="hand ${save.dashPos === k ? 'on' : ''}" data-d="${k}">${handSvg(k)}<b>${t(k === 'out' ? 'dOut' : 'dIn')}</b>${save.dashPos === k ? '<em>✔</em>' : ''}</div>`).join('')}</div>
+  <div class="srow sfoot"><button class="go small" id="rst">${confirmReset ? t('resetQ') : t('reset')}</button><div class="hint">${VERSION}</div></div>`, 'blue');
   const fill = el => el.style.setProperty('--v', el.value + '%');
   [['vSfx','sfx'],['vMus','music']].forEach(([id,key]) => {
     const el = $(id); fill(el);
@@ -1584,7 +1636,8 @@ function showSettings(confirmReset){
   $('lPrev').onclick = () => setLang(-1); $('lNext').onclick = () => setLang(1);
   $('mbody').querySelectorAll('[data-d]').forEach(b => b.onclick = () => { save.dashPos = b.dataset.d; persist(); showSettings(); });
   $('mbody').querySelectorAll('[data-v]').forEach(b => b.onclick = () => { save.vib = b.dataset.v === '1'; persist(); if(save.vib) buzz(30); showSettings(); });
-  $('mbody').querySelectorAll('[data-s]').forEach(b => b.onclick = () => { save.size = +b.dataset.s; persist(); showSettings(); });
+  const setSize = d => { save.size = (save.size + d + 3) % 3; persist(); showSettings(); };
+  $('zPrev').onclick = () => setSize(-1); $('zNext').onclick = () => setSize(1);
   $('rst').onclick = () => {
     if(!confirmReset) return showSettings(true);
     Object.assign(save, {stars:0, wins:[0,0,0,0], trophies:[0,0,0,0], matches:0}); persist(); refreshHome(); showSettings(); toast(t('resetDone'));
