@@ -433,6 +433,7 @@
   html body:not(#zz):not(#zy) .dcv{background:repeating-conic-gradient(#e3f4ee 0 25%,#aca394 0 50%) 0 0/calc(100%/16) calc(100%/16)!important;image-rendering:pixelated}
   html body:not(#zz):not(#zy) .dring{box-shadow:none!important;border:var(--px) dashed rgba(17,10,2,.35)!important}
   html body:not(#zz):not(#zy) #dTool.on,html body:not(#zz):not(#zy) #dFill.on{outline:calc(var(--px)*2) solid #ffc33a;outline-offset:0}
+  html body:not(#zz):not(#zy) #quit{opacity:1!important;top:calc(var(--px)*2)!important;padding:0 calc(var(--px)*5)!important;height:calc(var(--px)*12)!important;line-height:1!important}
   /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
   #home#home{touch-action:none}
   #home#home .hz:not(#zz){position:absolute;opacity:0;padding:0;margin:0;border:0!important;box-shadow:none!important;background:none!important;transform:none!important;min-width:0;min-height:0}
@@ -522,7 +523,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v2.5 · semua ukuran layar';
+const VERSION = 'v2.6 · piksel bersih gameplay';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -2083,6 +2084,29 @@ function drawHeart(x, y, s, on){
   ctx.beginPath(); ctx.moveTo(x, y + s*.8); ctx.bezierCurveTo(x - s*1.4, y - s*.1, x - s*.6, y - s*1.1, x, y - s*.35); ctx.bezierCurveTo(x + s*.6, y - s*1.1, x + s*1.4, y - s*.1, x, y + s*.8);
   ctx.fillStyle = on ? '#d5734c' : '#f2eee3'; ctx.fill(); inkStroke(2);
 }
+// ===== LINGKARAN & AREA PIKSEL MURNI (tanpa garis vektor / transparansi) =====
+// Digambar langsung per piksel seni: garis tepat 1-2 px, putus-putus rapi, "tembus pandang" pakai pola dither.
+function artRing(x, y, r, col, thick, dash, off){
+  const cx = Math.round(x/PXS), cy = Math.round(y/PXS), R = Math.round(r/PXS), t = thick || 1, P = PXS;
+  if(R < 2) return; ctx.fillStyle = col;
+  for(let dy=-R-1; dy<=R+1; dy++) for(let dx=-R-1; dx<=R+1; dx++){
+    const d = Math.hypot(dx, dy); if(d > R + .5 || d <= R - t + .5) continue;
+    if(dash){ const sArc = Math.floor((Math.atan2(dy, dx) + Math.PI)*R + (off || 0)); if(((sArc % (dash[0] + dash[1])) + dash[0] + dash[1]) % (dash[0] + dash[1]) >= dash[0]) continue; }
+    ctx.fillRect((cx + dx)*P, (cy + dy)*P, P, P);
+  }
+}
+function artDisc(x, y, r, col, pat){
+  const cx = Math.round(x/PXS), cy = Math.round(y/PXS), R = Math.round(r/PXS), P = PXS;
+  if(R < 1) return; ctx.fillStyle = col;
+  for(let dy=-R; dy<=R; dy++) for(let dx=-R; dx<=R; dx++){
+    if(Math.hypot(dx, dy) > R - .5) continue;
+    const ax = cx + dx, ay = cy + dy;
+    if(pat === 'checker' && (ax + ay) & 1) continue;
+    if(pat === 'sparse' && ((ax & 1) || (ay & 1))) continue;
+    if(pat === 'hatch' && ((ax + ay) % 6 + 6) % 6 > 1) continue;
+    ctx.fillRect(ax*P, ay*P, P, P);
+  }
+}
 function hatchCircle(x, y, r, col){
   ctx.beginPath(); ctx.arc(x, y, r, 0, 7); softFill(/38,35,34/.test(col) ? '#110a02' : '#b52c25', .3);
 }
@@ -2108,11 +2132,11 @@ function drawFloorExtra(){
   }
   if(mode === 'crown'){
     const z = X.z, col = X.owner >= 0 ? CHARS[X.owner].c : X.owner === -2 ? '#d5734c' : '#ffc33a';
-    ctx.beginPath(); ctx.arc(z.x, z.y, z.r, 0, 7); ctx.fillStyle = col; ctx.globalAlpha = .3; ctx.fill(); ctx.globalAlpha = 1;
-    if(X.owner === -2) hatchCircle(z.x, z.y, z.r, 'rgba(181,74,51,.45)', 18);
-    ctx.save(); ctx.setLineDash([16,10]); ctx.lineDashOffset = -T*40; ctx.beginPath(); ctx.arc(z.x, z.y, z.r, 0, 7); inkStroke(5); ctx.restore();
+    artDisc(z.x, z.y, z.r, col, 'checker');
+    if(X.owner === -2) artDisc(z.x, z.y, z.r, '#b52c25', 'hatch');
+    artRing(z.x, z.y, z.r, INK, 2, [5,3], -Math.floor(T*12));
     if(X.owner < 0) drawCrownIcon(z.x, z.y + Math.sin(T*3)*4, 26);
-    if(X.next && Math.sin(T*14) > -.3){ ctx.save(); ctx.setLineDash([8,10]); ctx.beginPath(); ctx.arc(X.next.x, X.next.y, z.r, 0, 7); ctx.globalAlpha = .6; inkStroke(3); ctx.restore(); }
+    if(X.next && Math.floor(T*6) % 2 === 0) artRing(X.next.x, X.next.y, z.r, INK, 1, [3,3], 0);
   }
   if(mode === 'snow'){
     for(const f of X.forts){
@@ -2122,13 +2146,13 @@ function drawFloorExtra(){
     }
   }
   if(mode === 'meteor'){
-    for(const c of X.craters){ ctx.globalAlpha = Math.min(1, c.life/2)*.8; ctx.beginPath(); ctx.ellipse(c.x, c.y, c.r, c.r*.75, 0, 0, 7); ctx.fillStyle = '#aca394'; ctx.fill(); inkStroke(2.5); hatchCircle(c.x, c.y, c.r*.7, 'rgba(38,35,34,.3)', 10); ctx.globalAlpha = 1; }
+    for(const c of X.craters){ const solid = c.life > 1.2 || Math.floor(T*8) % 2;   // kawah memudar = berkedip, bukan transparan
+      if(!solid) continue; artDisc(c.x, c.y, c.r*.8, '#aca394'); artDisc(c.x, c.y, c.r*.55, '#6f5e57', 'checker'); artRing(c.x, c.y, c.r*.8, INK, 1); }
     for(const m of X.mets){
       const k = 1 - m.t/m.max;
-      ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, 7); softFill('#ef6479', .2);
-      hatchCircle(m.x, m.y, m.r, 'rgba(181,74,51,.45)', 14);
-      ctx.beginPath(); ctx.arc(m.x, m.y, m.r*k, 0, 7); softFill('#b52c25', .45);
-      ctx.save(); ctx.setLineDash([10,8]); ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, 7); ctx.strokeStyle = '#b8300e'; ctx.lineWidth = 3; ctx.stroke(); ctx.restore();
+      artDisc(m.x, m.y, m.r, '#ef6479', 'sparse');
+      artDisc(m.x, m.y, m.r*k, '#b52c25', 'checker');
+      artRing(m.x, m.y, m.r, '#b8300e', 1, [4,3], Math.floor(T*10));
     }
   }
 }
@@ -2538,8 +2562,8 @@ function drawArena(){
   if(mode === 'sumo'){
     ctx.beginPath(); ctx.arc(CX, CY + 16, arenaR, 0, 7); ctx.fillStyle = '#c5763b'; ctx.fill(); inkStroke(8);
     wobbly(CX, CY, arenaR, 1.3, .006); ctx.fillStyle = '#f2eee3'; ctx.fill();
-    ctx.setLineDash([16,12]); ctx.beginPath(); ctx.arc(CX, CY, Math.max(10, arenaR-16), 0, 7); ctx.lineWidth = 8; ctx.strokeStyle = '#c5763b'; ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.fillRect(CX-50, CY-14, 8, 28); ctx.fillRect(CX+42, CY-14, 8, 28);
+    artRing(CX, CY, Math.max(10, arenaR-16), '#c5763b', 2, [5,4], 0);
+    ctx.fillStyle = '#f2eee3'; ctx.fillRect(CX-50, CY-14, 8, 28); ctx.fillRect(CX+42, CY-14, 8, 28);
     wobbly(CX, CY, arenaR, 1.3, .006); inkStroke(8);
   } else {
   }
@@ -2554,12 +2578,17 @@ function drawParts(trailPass){
   for(const q of parts){
     if(!!q.trail !== !!trailPass) continue;
     const k = q.life/q.max;
-    if(q.type === 'heart'){ ctx.globalAlpha = k; drawHeart(q.x, q.y, q.sz, true); ctx.globalAlpha = 1; continue; }
-    if(q.type === 'bubble'){ ctx.globalAlpha = k; ctx.beginPath(); ctx.arc(q.x, q.y, q.sz*(1.5 - k*.5), 0, 7); softFill('#49e2dd', .5); inkStroke(1.5); ctx.globalAlpha = 1; continue; }
-    if(q.type === 'dot'){ ctx.globalAlpha = k*.8; ctx.beginPath(); ctx.arc(q.x, q.y, q.sz*k, 0, 7); ctx.fillStyle = q.col; ctx.fill(); ctx.globalAlpha = 1; continue; }
+    // pixel art tidak memudar lewat transparansi: penuh, lalu berkedip saat hampir habis
+    if(k < .3 && q.type !== 'spark' && (Math.floor(T*16) & 1)) continue;
+    if(q.type === 'heart'){ drawHeart(q.x, q.y, q.sz, true); continue; }
+    if(q.type === 'bubble'){ const R = q.sz*(1.5 - k*.5); artDisc(q.x, q.y, R, '#49e2dd', 'checker'); artRing(q.x, q.y, R, INK, 1); continue; }
+    if(q.type === 'dot'){ artDisc(q.x, q.y, Math.max(PXS, q.sz*(k > .5 ? 1 : .6)), q.col); continue; }
     if(q.type === 'spark' && SPRMODE){ sparkSpr(q); continue; }
-    if(q.type === 'spark'){ star4(q.x, q.y, q.sz*k, q.rot + T*4); ctx.fillStyle = q.col; ctx.fill(); ctx.globalAlpha = k; inkStroke(1.5); ctx.globalAlpha = 1; }
-    else if(q.type === 'line'){ ctx.globalAlpha = k; ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(q.x - q.dx*q.len, q.y - q.dy*q.len); inkStroke(3); ctx.globalAlpha = 1; }
+    if(q.type === 'spark'){ star4(q.x, q.y, q.sz*k, q.rot + T*4); ctx.fillStyle = q.col; ctx.fill(); inkStroke(1.5); }
+    else if(q.type === 'line'){ const L = q.len*(k > .5 ? 1 : .55), P = PXS;   // garis kecepatan: 1 piksel, ujung dikunci ke grid
+      const x0 = Math.round(q.x/P), y0 = Math.round(q.y/P), x1 = Math.round((q.x - q.dx*L)/P), y1 = Math.round((q.y - q.dy*L)/P);
+      const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)); ctx.fillStyle = INK;
+      for(let i=0;i<=n;i++){ const t2 = n ? i/n : 0; ctx.fillRect(Math.round(x0 + (x1 - x0)*t2)*P, Math.round(y0 + (y1 - y0)*t2)*P, P, P); } }
     else if(q.type === 'text' && false){
       const sc = 1 + Math.max(0, (k-.8))*2.5;
       ctx.save(); ctx.translate(q.x, q.y); ctx.scale(sc, sc); ctx.rotate(-.06); ctx.globalAlpha = Math.min(1, k*2);
@@ -2973,8 +3002,9 @@ function hud(){
   }
   // judul ronde & waktu
   const tm = MODES[mode].time ? '  ⏱ ' + Math.max(0, Math.ceil(tLeft)) : '';
-  tag(W/2, 44, `${MODES[mode].name}${tm}${mode === 'soccer' ? '   ' + X.goals[0] + ' : ' + X.goals[1] : ''}`, INK, 15, 'center', true);
-  pxText(`${t('round')} ${Math.min(match.idx+1, match.order.length)}/${match.order.length}`, W/2, 68, 12, '#f2eee3');
+  const qb = $('quit').getBoundingClientRect(), ty = snapA(qb.bottom + PXC*10);   // judul di bawah tombol Menu, tidak tertumpuk
+  tag(W/2, ty, `${MODES[mode].name}${tm}${mode === 'soccer' ? '   ' + X.goals[0] + ' : ' + X.goals[1] : ''}`, INK, 15, 'center', true);
+  pxText(`${t('round')} ${Math.min(match.idx+1, match.order.length)}/${match.order.length}`, W/2, ty + PXC*14, 12, '#f2eee3');
 
   if(state === 'count'){
     const n = Math.ceil(tCount);
