@@ -569,6 +569,19 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dpol{position:static!important;grid-column:2;grid-row:1;width:calc(var(--px)*46)!important;padding:calc(var(--px)*3)!important;display:flex!important;flex-direction:column!important;gap:calc(var(--px)*2)!important;align-items:center!important;margin:0!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dpol canvas{width:100%!important;height:auto!important;aspect-ratio:1}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .dbar{grid-column:1 / -1;grid-row:2}
+  /* langkah pilih gaya karakter */
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mpick{display:grid!important;grid-template-columns:1fr 1fr;gap:calc(var(--px)*6);padding:calc(var(--px)*2);align-items:stretch}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mtitle{grid-column:1 / -1;text-align:center;margin:0!important;color:#2c3354!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard{position:relative;display:flex;flex-direction:column;align-items:center;gap:calc(var(--px)*3);padding:calc(var(--px)*6) calc(var(--px)*5);background:#eef1f6;border:var(--p1) solid #2c3354;box-shadow:inset var(--p1) var(--p1) 0 #fff,inset calc(var(--p1)*-1) calc(var(--p1)*-1) 0 #a9b3c7,0 var(--p1) 0 #2c3354;font:inherit;color:#2c3354;cursor:pointer;min-width:0}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard.on{background:#bcd7f5}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard canvas{width:calc(var(--px)*38)!important;height:calc(var(--px)*38)!important;border:var(--p1) solid #2c3354;image-rendering:pixelated;background:#f7f9fc}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard b{font-size:calc(var(--px)*8);line-height:1.2;color:#2c3354}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard small{font-size:calc(var(--px)*8);line-height:1.35;color:#6b7594;text-align:center}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard em{position:absolute;top:calc(var(--px)*3);right:calc(var(--px)*3);font-style:normal;background:#5ab230;color:#fff;padding:calc(var(--px)*1) calc(var(--px)*3);border:var(--p1) solid #2c3354;font-size:calc(var(--px)*8);line-height:1}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard:active{box-shadow:inset var(--p1) var(--p1) 0 #a9b3c7,inset calc(var(--p1)*-1) calc(var(--p1)*-1) 0 #fff}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ctab.mback{background:#c9d4e6!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items > .mpick,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items > .drawpanel{grid-column:1 / -1!important;width:100%!important;box-sizing:border-box}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items:has(> .mpick){display:block!important}
 /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
   #home#home{touch-action:none}
   #home#home .hz:not(#zz){position:absolute;opacity:0;padding:0;margin:0;border:0!important;box-shadow:none!important;background:none!important;transform:none!important;min-width:0;min-height:0}
@@ -658,7 +671,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v6.1 · tata letak rapi';
+const VERSION = 'v6.2 · pilih gaya karakter';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -1155,7 +1168,7 @@ const L = {
   pname:'Nama Pemain', tabSp:'HEWAN', tabCol:'WARNA', tabHat:'TOPI', tabAcc:'AKSESORI', tabFx:'EFEK', tabDraw:'GAMBAR',
   buy:'Beli?', bought:'Terbeli! ✔', noStars:'Bintang kurang! Menang ronde untuk dapat ⭐',
   drawT:'Buat karaktermu dari nol!', drawS:'Bentuk, warna, dan wajah semuanya kamu gambar sendiri. Bagian kosong jadi transparan.', autoOl:'Outline otomatis', drawGo:'✏️ MULAI MENGGAMBAR', drawEdit:'✏️ UBAH GAMBAR',
-  useSkin:'Pakai gambar', eyes:'Mata otomatis', delSkin:'🗑 Hapus gambar', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
+  useSkin:'Pakai gambar', modeT:'Mau pakai karakter apa?', modeA:'KOSTUM HEWAN', modeAS:'Pilih hewan, warna, topi, aksesori & efek', modeD:'GAMBAR SENDIRI', modeDS:'Gambar karaktermu sendiri dari nol', inUse:'DIPAKAI', modeBack:'GANTI GAYA', noDraw:'Belum ada gambar', eyes:'Mata otomatis', delSkin:'🗑 Hapus gambar', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
   drawHint:'Gambar bebas, lingkaran hanya panduan ukuran', drawHero:'Pixel Jagoanmu!', faceL:'Outline', previewL:'Pratinjau', pen:'Pena', eraser:'Hapus', fillbg:'Isi latar',
   pts:'poin', safe:'aman', fell:'jatuh!', round:'Ronde', win:' menang!', draw:'Seri!', drawW:'Seri: ', champ:' juara!', allDraw:'Semua seri!'},
  en: {lang:'English', flag:'EN', c0:'Red', c1:'Blue', c2:'Green', c3:'Yellow',
@@ -1183,7 +1196,7 @@ const L = {
   pname:'Player Name', tabSp:'ANIMAL', tabCol:'COLOR', tabHat:'HATS', tabAcc:'EXTRAS', tabFx:'EFFECTS', tabDraw:'DRAW',
   buy:'Buy?', bought:'Bought! ✔', noStars:'Not enough stars! Win rounds to earn ⭐',
   drawT:'Create your character from scratch!', drawS:'Draw the shape, colors and face yourself. Empty pixels stay transparent.', autoOl:'Auto outline', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT DRAWING',
-  useSkin:'Use drawing', eyes:'Auto eyes', delSkin:'🗑 Delete drawing', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
+  useSkin:'Use drawing', modeT:'Which character do you want?', modeA:'ANIMAL COSTUME', modeAS:'Pick animal, color, hat, accessory & effect', modeD:'DRAW YOUR OWN', modeDS:'Draw your own character from scratch', inUse:'IN USE', modeBack:'CHANGE STYLE', noDraw:'No drawing yet', eyes:'Auto eyes', delSkin:'🗑 Delete drawing', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
   drawHint:'Draw freely, the circle is just a size guide', drawHero:'Pixel your Hero!', faceL:'Outline', previewL:'Preview', pen:'Pen', eraser:'Eraser', fillbg:'Fill bg',
   pts:'pts', safe:'safe', fell:'out!', round:'Round', win:' wins!', draw:'Draw!', drawW:'Draw: ', champ:' is champion!', allDraw:'All draw!'}
 };
@@ -1337,10 +1350,10 @@ function showGames(){
 $('gBack').onclick = () => $('games').classList.add('hidden');
 
 // ---------- Layar KARAKTER ----------
-let cP = 0, cTab = 'sp', pending = null;
+let cP = 0, cTab = 'sp', pending = null, cMode = null;   // cMode: null = layar pilih gaya, 'animal' = kostum hewan, 'draw' = gambar sendiri
 const CATS = [['sp','tsp','tabSp',SPECIES],['col','tcol','tabCol',PAL],['hat','that','tabHat',HATS],['acc','tacc','tabAcc',ACCS],['fx','tfx','tabFx',FXS],['draw','tdraw','tabDraw',null]];
 const isOwned = (cat, it) => it.p === 0 || save.owned.includes(cat + ':' + it.id);
-function showChars(){ $('chars').classList.remove('hidden'); renderChars(); }
+function showChars(){ cMode = null; $('chars').classList.remove('hidden'); renderChars(); }
 $('cBack').onclick = () => { $('chars').classList.add('hidden'); refreshHome(); };
 $('pName').addEventListener('input', () => { save.cust[cP].name = $('pName').value.trim().slice(0,10); persist(); });
 $('pName').addEventListener('keydown', e => { if(e.key === 'Enter') $('pName').blur(); });
@@ -1359,23 +1372,41 @@ function previewChar(canvas, i, over, opt){
 }
 function renderChars(){
   $('ptabs').innerHTML = [0,1,2,3].map(i => `<button class="ptab ${i === cP ? 'on' : ''}" data-p="${i}" style="background:${CHARS[i].c}">${i+1}P</button>`).join('') + `<div class="wallet">⭐ ${save.stars}</div>`;
-  $('ptabs').querySelectorAll('.ptab').forEach(b => b.onclick = () => { cP = +b.dataset.p; pending = null; renderChars(); });
-  $('ctabs').innerHTML = CATS.map(([k,ic,lab]) => `<button class="ctab ${k === cTab ? 'on' : ''}" data-c="${k}"><i>${iconHTML(ic, 16)}</i>${t(lab)}</button>`).join('');
-  $('ctabs').querySelectorAll('.ctab').forEach(b => b.onclick = () => { cTab = b.dataset.c; pending = null; renderChars(); });
+  $('ptabs').querySelectorAll('.ptab').forEach(b => b.onclick = () => { cP = +b.dataset.p; pending = null; cMode = null; renderChars(); });
+  const c = save.cust[cP];
+  if(cMode === 'draw') cTab = 'draw'; else if(cTab === 'draw') cTab = 'sp';
+  const backBtn = cMode ? `<button class="ctab mback" id="mBack" title="${t('modeBack')}" aria-label="${t('modeBack')}"><i>${iconHTML('back', 16)}</i>${cMode === 'draw' ? t('modeBack') : ''}</button>` : '';
+  $('ctabs').innerHTML = !cMode ? '' : backBtn + (cMode === 'animal' ? CATS.filter(x => x[0] !== 'draw').map(([k,ic,lab]) => `<button class="ctab ${k === cTab ? 'on' : ''}" data-c="${k}"><i>${iconHTML(ic, 16)}</i>${t(lab)}</button>`).join('') : '');
+  $('ctabs').querySelectorAll('.ctab[data-c]').forEach(b => b.onclick = () => { cTab = b.dataset.c; pending = null; renderChars(); });
+  if($('mBack')) $('mBack').onclick = () => { cMode = null; pending = null; renderChars(); };
   $('pName').value = save.cust[cP].name; $('pName').placeholder = t('c'+cP);
   applyLang();
   const box = $('items'); box.innerHTML = ''; box.scrollTop = 0;
-  const c = save.cust[cP];
+  if(!cMode){                                    // langkah 1: pilih gaya karakter dulu
+    const useD = !!(c.useSkin && c.skin);
+    box.innerHTML = `<div class="mpick"><h3 class="mtitle">${t('modeT')}</h3>
+      <button class="mcard ${useD ? '' : 'on'}" data-m="animal"><canvas id="mpA" width="160" height="160"></canvas><b>${t('modeA')}</b><small>${t('modeAS')}</small>${useD ? '' : `<em>${t('inUse')}</em>`}</button>
+      <button class="mcard ${useD ? 'on' : ''}" data-m="draw"><canvas id="mpD" width="160" height="160"></canvas><b>${t('modeD')}</b><small>${c.skin ? t('modeDS') : t('noDraw')}</small>${useD ? `<em>${t('inUse')}</em>` : ''}</button></div>`;
+    previewChar($('mpA'), cP, {useSkin:false}, {r:.3, L:160, bg:'#f7f9fc'});
+    if(c.skin) previewChar($('mpD'), cP, {useSkin:true}, {r:.3, L:160, bg:'#f7f9fc'});
+    else { const g = $('mpD').getContext('2d'); $('mpD').width = 80; $('mpD').height = 80; fitCss($('mpD')); g.fillStyle = '#f7f9fc'; g.fillRect(0,0,80,80); g.fillStyle = '#a9b3c7'; for(let k=0;k<80;k+=4){ g.fillRect(k,10,2,1); g.fillRect(k,69,2,1); g.fillRect(10,k,1,2); g.fillRect(69,k,1,2); } const ic = new Image(); ic.onload = () => g.drawImage(ic, 29, 29); ic.src = PIXICON['tdraw@px']; }
+    box.querySelectorAll('.mcard').forEach(b => b.onclick = () => {
+      cMode = b.dataset.m; pending = null;
+      if(cMode === 'animal'){ c.useSkin = false; if(cTab === 'draw') cTab = 'sp'; }
+      else if(c.skin) c.useSkin = true;
+      persist(); thumbCache = null; renderChars(); if(cMode === 'draw' && !c.skin) openDraw();
+    });
+    return;
+  }
   if(cTab === 'draw'){
     box.innerHTML = `<div class="drawpanel"><canvas id="dpv" width="240" height="240"></canvas><div class="dcol"><h2>${t('drawT')}</h2><div class="hint" style="text-align:left">${t('drawS')}</div>
       <button class="go" id="dOpen">${c.skin ? t('drawEdit') : t('drawGo')}</button>
-      ${c.skin ? `<label class="tog"><input type="checkbox" id="tSkin" ${c.useSkin ? 'checked' : ''}> ${t('useSkin')}</label><label class="tog"><input type="checkbox" id="tEyes" ${c.outline !== false ? 'checked' : ''}> ${t('autoOl')}</label><button class="chip" id="dDel">${t('delSkin')}</button>` : ''}</div></div>`;
+      ${c.skin ? `<label class="tog"><input type="checkbox" id="tEyes" ${c.outline !== false ? 'checked' : ''}> ${t('autoOl')}</label><button class="chip" id="dDel">${t('delSkin')}</button>` : ''}</div></div>`;
     previewChar($('dpv'), cP, {}, {r:.3, L:240, bg:'#e3f4ee'});
     $('dOpen').onclick = openDraw;
     if(c.skin){
-      $('tSkin').onchange = e => { c.useSkin = e.target.checked; persist(); renderChars(); };
       $('tEyes').onchange = e => { c.outline = e.target.checked; persist(); renderChars(); };
-      $('dDel').onclick = () => { c.skin = ''; c.useSkin = false; persist(); loadSkin(cP); thumbCache = null; renderChars(); };
+      $('dDel').onclick = () => { c.skin = ''; c.useSkin = false; persist(); loadSkin(cP); thumbCache = null; cMode = null; renderChars(); };
     }
     return;
   }
