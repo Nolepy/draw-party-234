@@ -444,7 +444,27 @@
   html body:not(#zz):not(#zy) .hint,html body:not(#zz):not(#zy) .list,html body:not(#zz):not(#zy) p{line-height:1.3!important}
   html body:not(#zz):not(#zy) .go:active,html body:not(#zz):not(#zy) .chip:active,html body:not(#zz):not(#zy) .ctab:active,html body:not(#zz):not(#zy) .ptab:active{animation:dpPop .16s steps(2)}
   @keyframes dpPop{0%{transform:translateY(calc(var(--px)*2))}50%{transform:translateY(calc(var(--px)*1))}100%{transform:translateY(0)}}
-  /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
+  /* ===== UI GELAP NETRAL (dunia berwarna, UI tenang) ===== */
+  html body:not(#zz):not(#zy):not(#zx) .card,html body:not(#zz):not(#zy):not(#zx) .panel,html body:not(#zz):not(#zy):not(#zx) .cl,html body:not(#zz):not(#zy):not(#zx) .dpaper,html body:not(#zz):not(#zy):not(#zx) .dsheet,html body:not(#zz):not(#zy):not(#zx) .dpol{background:#26364b!important;color:#f2eee3!important;
+    box-shadow:inset 0 0 0 var(--p1) #456a71,inset 0 calc(var(--p1)*2) 0 #86aaa2,0 calc(var(--p1)*3) 0 #110a02!important}
+  html body:not(#zz):not(#zy):not(#zx) .card *,html body:not(#zz):not(#zy):not(#zx) .cl *,html body:not(#zz):not(#zy):not(#zx) .dpaper *,html body:not(#zz):not(#zy):not(#zx) .hint,html body:not(#zz):not(#zy):not(#zx) h3,html body:not(#zz):not(#zy):not(#zx) .tog,html body:not(#zz):not(#zy):not(#zx) .orow span,html body:not(#zz):not(#zy):not(#zx) .list,html body:not(#zz):not(#zy):not(#zx) #tab,html body:not(#zz):not(#zy):not(#zx) .olabel{color:#f2eee3}
+  html body:not(#zz):not(#zy):not(#zx) h2,html body:not(#zz):not(#zy):not(#zx) .gtitle,html body:not(#zz):not(#zy):not(#zx) .otitle,html body:not(#zz):not(#zy):not(#zx) .dhead span{background:none!important;border:0!important;box-shadow:none!important;color:#f2eee3!important;padding:calc(var(--p1)*2) 0!important}
+  html body:not(#zz):not(#zy):not(#zx) .pnl{background:#456a71!important}
+  html body:not(#zz):not(#zy):not(#zx) .chip,html body:not(#zz):not(#zy):not(#zx) .ptab:not(.on){background:#456a71!important;color:#f2eee3!important;box-shadow:inset 0 var(--p1) 0 #86aaa2,inset 0 calc(var(--p1)*-2) 0 #26364b,0 calc(var(--p1)*2) 0 #110a02,0 calc(var(--p1)*3) 0 #110a02!important}
+  html body:not(#zz):not(#zy):not(#zx) .chip *,html body:not(#zz):not(#zy):not(#zx) .ptab:not(.on) *{color:#f2eee3!important}
+  html body:not(#zz):not(#zy):not(#zx) .chip.sel,html body:not(#zz):not(#zy):not(#zx) .chip.on{background:#ffc33a!important;color:#110a02!important;box-shadow:inset 0 var(--p1) 0 #f2eee3,inset 0 calc(var(--p1)*-2) 0 #eb7d10,0 calc(var(--p1)*2) 0 #b8300e,0 calc(var(--p1)*3) 0 #110a02!important}
+  html body:not(#zz):not(#zy):not(#zx) .chip.sel *,html body:not(#zz):not(#zy):not(#zx) .chip.on *{color:#110a02!important}
+  html body:not(#zz):not(#zy):not(#zx) .it{background:#456a71!important;box-shadow:inset 0 var(--p1) 0 #86aaa2,0 calc(var(--p1)*2) 0 #26364b,0 calc(var(--p1)*3) 0 #110a02!important}
+  html body:not(#zz):not(#zy):not(#zx) .it.sel{background:#5ab230!important;box-shadow:inset 0 var(--p1) 0 #d5e848,0 calc(var(--p1)*2) 0 #156948,0 calc(var(--p1)*3) 0 #110a02!important}
+  html body:not(#zz):not(#zy):not(#zx) .avwrap{box-shadow:inset 0 0 0 var(--p1) #86aaa2,0 calc(var(--p1)*2) 0 #110a02!important}
+  html body:not(#zz):not(#zy):not(#zx) .overlay{background:rgba(17,10,2,.55)!important}
+  html body:not(#zz):not(#zy):not(#zx) .lbox{background:#456a71!important}
+    html body:not(#zz):not(#zy):not(#zx) .list div,html body:not(#zz):not(#zy):not(#zx) .grid4 > div{background:#456a71!important;color:#f2eee3!important;box-shadow:inset 0 var(--p1) 0 #86aaa2,0 calc(var(--p1)*2) 0 #110a02!important}
+  html body:not(#zz):not(#zy):not(#zx) .card h3,html body:not(#zz):not(#zy):not(#zx) .hint{color:#c2cdb9!important}
+  html body:not(#zz):not(#zy):not(#zx) .drawpanel{background:#26364b!important;color:#f2eee3!important}
+  html body:not(#zz):not(#zy):not(#zx) .drawpanel *{color:#f2eee3}
+  html body:not(#zz):not(#zy):not(#zx) #chars,html body:not(#zz):not(#zy):not(#zx) #games{background-color:#26364b!important}
+/* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
   #home#home{touch-action:none}
   #home#home .hz:not(#zz){position:absolute;opacity:0;padding:0;margin:0;border:0!important;box-shadow:none!important;background:none!important;transform:none!important;min-width:0;min-height:0}
   #home#home .hz .dot{display:none}
@@ -533,7 +553,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v4.1 · nyaman di HP';
+const VERSION = 'v5.0 · piksel tegas + UI gelap';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -551,7 +571,7 @@ function resize(){
   W = innerWidth; H = innerHeight;
   const Wd = Math.round(W*DPR), Hd = Math.round(H*DPR);
   cv.width = Wd; cv.height = Hd; cv.style.width = (Wd/DPR) + 'px'; cv.style.height = (Hd/DPR) + 'px';
-  K = Math.max(1, Math.min(Math.round(Hd/360), Math.floor(Wd/640)));   // ±360 piksel seni tingginya, lebar minimal 640; SEMUA aset memakai 1 piksel seni ini
+  K = Math.max(1, Math.min(Math.round(Hd/270), Math.floor(Wd/480)));   // ±270 piksel seni tingginya (piksel tegas & besar), lebar minimal 480; SEMUA aset memakai 1 piksel seni ini
   PXC = K/DPR;                                  // ukuran 1 piksel seni dalam px CSS
   AW = Math.floor(Wd/K); AH = Math.floor(Hd/K);
   PXS = WH/AH;                                  // satuan dunia per piksel seni
@@ -1430,7 +1450,7 @@ $('spinBtn').onclick = () => {
   openModal(`<h2>${t('spinT')}</h2><canvas id="whc" style="display:block;margin:0 auto;image-rendering:pixelated"></canvas>
     <button class="go" id="spinGo" ${used ? 'disabled style="opacity:.5"' : ''}>${used ? t('spinUsed') : t('spin')}</button>`);
   // roda digambar per piksel: sektor dihitung ulang tiap frame (bukan diputar), label selalu tegak
-  const cv2 = $('whc'), WR = 76, WD = WR*2 + 4, WT = 14; cv2.width = WD; cv2.height = WD + WT; fitCss(cv2);
+  const cv2 = $('whc'), WR = AH < 320 ? 54 : 76, WD = WR*2 + 4, WT = 14; cv2.width = WD; cv2.height = WD + WT; fitCss(cv2);
   const wg = cv2.getContext('2d'), CU = cols.map(hexU);
   const drawWheel = deg => {
     const id = wg.createImageData(WD, WD + WT), u = new Uint32Array(id.data.buffer), c0 = WD/2, cy0 = WT + WD/2;
@@ -2266,7 +2286,9 @@ function wobbly(x, y, r, seed, amp){
   ctx.closePath();
 }
 let AUTOOL = false;
+let SELOUT = false;
 function inkStroke(w){
+  if(SELOUT){ const f = typeof ctx.fillStyle === 'string' ? ctx.fillStyle : ''; ctx.lineWidth = PXW*2; ctx.strokeStyle = PALHEX.includes(f) ? hexRamp(hexRamp(f, 1), 1) : '#3f2f30'; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); return; }
   if(AUTOOL){ if(ctx.__f) return; ctx.lineWidth = PXW*1.3; ctx.strokeStyle = INK; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); return; }
   ctx.lineWidth = PXW*2; ctx.strokeStyle = INK; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke(); }
 
@@ -2605,7 +2627,7 @@ function drawArena(){
     g.fillStyle = '#110a02'; g.fillRect(0, 0, WW, WH);
     if(paperKey !== th + Math.ceil(WW/PXS)) buildFloor(th);
     g.drawImage(paper, 0, 0, paper.width*PXS, paper.height*PXS);
-    drawArenaStatic();
+    SELOUT = true; drawArenaStatic(); SELOUT = false;   // lingkungan: outline warna gelap sendiri (sel-out), karakter tetap hitam
     quantize(g, ARENA.width, ARENA.height);
     ARD = new Uint32Array(g.getImageData(0, 0, ARENA.width, ARENA.height).data.buffer);
     ctx = kc; PXW = kw;
@@ -3174,12 +3196,14 @@ function pxDisc(x, y, r, fill, _u, cut, cutCol, ring){
   }
 }
 function pxText(txt, x, y, size, col, align){ drawPixText(txt, x, y, 1, col, align || 'center', true); }
-function tag(x, y, text, col, size, align, title){
+function tag(x, y, text, col, size, align, title, bot){
   const sc = 1, w = snapA(pixWidth(text, sc) + 14*PXC), h = (FH + 10)*PXC;
   const x0 = align === 'left' ? x : align === 'right' ? x - w : x - w/2;
-  pxBox(x0, y - h/2, w, h, title ? '#18657a' : '#f2eee3');
-  if(title){ ctx.fillStyle = '#1db578'; ctx.fillRect(snapA(x0) + PXC, snapA(y - h/2) + PXC, w - 2*PXC, PXC); }
-  drawPixText(text, x0 + w/2, y + PXC*.5, sc, title ? '#f2eee3' : col, 'center', title);
+  pxBox(x0, y - h/2, w, h, '#26364b');                      // UI gelap netral: panel slate, teks krem
+  ctx.fillStyle = '#456a71'; ctx.fillRect(snapA(x0) + PXC, snapA(y - h/2) + PXC, w - 2*PXC, PXC);
+  if(!title){ const pc = CHARS.find(c => c.d === col); ctx.fillStyle = pc ? pc.c : col; ctx.fillRect(snapA(x0) + PXC, snapA(y - h/2) + PXC, 3*PXC, h - 2*PXC);
+    if(bot){ ctx.fillStyle = '#26364b'; for(let k=1;k<h/PXC-2;k+=3) ctx.fillRect(snapA(x0) + 2*PXC, snapA(y - h/2) + (1+k)*PXC, PXC, PXC); } }  // strip warna pemain; bot = strip bertitik
+  drawPixText(text, x0 + w/2 + (title ? 0 : PXC), y + PXC*.5, sc, '#f2eee3', 'center', true);
 }
 function bigText(txt, y, size, col){ pxText(txt, W/2, y, size, col); }
 function hudPops(){
@@ -3207,7 +3231,7 @@ function hud(){
     if(p.bot){                                // bot: cukup label di pojoknya
       const dir = b.x < W/2 ? 1 : -1;
       ctx.save(); ctx.translate(snapA(b.x - dir*R*.9), snapA(b.y)); if(top) ctx.rotate(Math.PI);
-      tag(0, b.y < H/2 ? -R*.3 : R*.45, `BOT ${ch.n} ${'★'.repeat(match.wins[p.i]) || '·'} ${liveText(p)}`, ch.d, 13, dir > 0 ? 'left' : 'right');
+      tag(0, b.y < H/2 ? -R*.3 : R*.45, `${ch.n} ${'★'.repeat(match.wins[p.i]) || '·'} ${liveText(p)}`, ch.d, 13, dir > 0 ? 'left' : 'right', false, true);
       ctx.restore(); continue;
     }
     // joystick
@@ -3237,6 +3261,14 @@ function hud(){
   const qb = $('quit').getBoundingClientRect(), ty = snapA(qb.bottom + PXC*18);   // judul di bawah tombol Menu, tidak tertumpuk
   tag(W/2, ty, `${MODES[mode].name}${tm}${mode === 'soccer' ? '   ' + X.goals[0] + ' : ' + X.goals[1] : ''}`, INK, 15, 'center', true);
   pxText(`${t('round')} ${Math.min(match.idx+1, match.order.length)}/${match.order.length}`, W/2, ty + PXC*28, 12, '#f2eee3');
+  if(MODES[mode].time){                             // bar waktu bersegmen: 10 kotak, mudah dibaca sekilas
+    const N = 10, sw = 7, sh = 4, gp = 2, tot = N*sw + (N - 1)*gp, fr = Math.max(0, tLeft)/MODES[mode].time, on = Math.ceil(fr*N);
+    const x0 = snapA(W/2 - tot*PXC/2), y0 = snapA(ty + PXC*44);
+    ctx.fillStyle = INK; ctx.fillRect(x0 - PXC, y0 - PXC, (tot + 2)*PXC, (sh + 2)*PXC);
+    for(let k=0;k<N;k++){ const c = k >= on ? '#26364b' : on <= 3 && Math.floor(T*6) % 2 ? '#ef6479' : on <= 3 ? '#b52c25' : '#ffc33a';
+      ctx.fillStyle = c; ctx.fillRect(x0 + k*(sw + gp)*PXC, y0, sw*PXC, sh*PXC);
+      if(k < on){ ctx.fillStyle = on <= 3 ? '#ffadaf' : '#f2eee3'; ctx.fillRect(x0 + k*(sw + gp)*PXC, y0, sw*PXC, PXC); } }
+  }
 
   if(state === 'count'){
     const n = Math.ceil(tCount);
@@ -3308,36 +3340,61 @@ function hBox(g, x, y, w, h, th, down){
   g.fillStyle = th.dark; g.fillRect(x + 2, y + h - 5, w - 4, 3); g.fillRect(x + w - 4, y + 3, 2, h - 7);
   return y;
 }
+const HCOL2 = {
+  slate:{base:'#456a71', light:'#86aaa2', dark:'#26364b', depth:'#110a02'},
+  pur:{base:'#9e1e74', light:'#e6687d', dark:'#510c5d', depth:'#271e69'},
+  org:{base:'#eb7d10', light:'#ffc33a', dark:'#b8300e', depth:'#6c0b1c'},
+};
 function homeLayout(){
   const key = AW + 'x' + AH + save.lang + ':' + PXC; if(HOME.key === key) return HOME.L; HOME.key = key;
-  // tata letak menyesuaikan rasio layar: HP lebar (19.5:9) sampai jendela laptop yang hampir kotak
-  const m = 6*U, ib = 24*U;          // ikon atas >= 48 piksel seni (~52 px CSS di HP), di atas minimum 44 px
-  let bw = Math.max(70*U, Math.min(112*U, Math.floor(AW*.28)));
-  if(AW - 2*(bw + m*2) < 96*U) bw = Math.max(62*U, Math.floor((AW - 96*U)/2) - m*2);
-  const L = {m, bw, cx:AW >> 1};
+  // zona: sumber daya & ikon di atas, logo + panggung di tengah, bar tab kategori di bawah (MAIN di kanan)
+  const m = 6, ib = Math.max(FH + 16, Math.ceil(46/PXC)), BH = ib, gap = 4;
+  const L = {m, cx:AW >> 1, ib, BH};
   let lw = 0; for(const ch of 'DRAW PARTY') lw += logoW(ch);
-  const iconsL = AW - m - ib*4 - 9*U, starsR = m + 52*U;
-  L.ly = (L.cx - (lw >> 1) - 10*U < starsR || L.cx + (lw >> 1) + 10*U > iconsL) ? m + ib + 7*U : Math.max(4*U, Math.round(AH*.05));
+  const iconsL = AW - m - ib*4 - gap*3, starsR = m + 60;
+  L.ly = (L.cx - (lw >> 1) - 8 < starsR || L.cx + (lw >> 1) + 8 > iconsL) ? m + ib + 8 : m;
   L.logoB = L.ly + 31*U;
-  L.stTop = Math.max(Math.round(AH*.76), L.logoB + 34*U);
-  L.stW = Math.max(60*U, AW - 2*(bw + m*2)); L.stX = L.cx - (L.stW >> 1);
-  const y0 = Math.max(Math.round(AH*.31), L.ly > 20*U ? m + ib + 10*U : 0);
-  let big = 28*U, sm = 22*U, gap = 7*U;
-  if(y0 + big + sm*2 + gap*2 + 3*U > AH - m){ big = 24*U; sm = 18*U; gap = 5*U; }
-  L.btns = [
-    {id:'hQuick', x:m, y:y0, w:bw, h:big, th:HCOL.yel, ic:'bolt', lab:'quick', big:true},
-    {id:'hPick', x:m, y:y0 + big + gap, w:bw, h:sm, th:HCOL.blu, ic:'dice', lab:'pick'},
-    {id:'hTour', x:m, y:y0 + big + sm + gap*2, w:bw, h:sm, th:HCOL.pnk, ic:'cup', lab:'tour'},
-    {id:'hChars', x:AW - m - bw, y:y0, w:bw, h:big, th:HCOL.grn, ic:'tsp', lab:'chars', big:true},
-    {id:'giftBtn', x:AW - m - bw, y:y0 + big + gap, w:bw, h:sm, th:HCOL.pnk, ic:'gift', lab:'hGift', dot:'gift'},
-    {id:'spinBtn', x:AW - m - bw, y:y0 + big + sm + gap*2, w:bw, h:sm, th:HCOL.blu, ic:'wheel', lab:'hSpin', dot:'spin'},
-    {id:'bStars', x:m, y:m, w:0, h:ib, th:HCOL.crm, ic:'', lab:'stars'},
-    {id:'bTro', x:AW - m - ib*4 - 9*U, y:m, w:ib, h:ib, th:HCOL.yel, ic:'trophy'},
-    {id:'bRank', x:AW - m - ib*3 - 6*U, y:m, w:ib, h:ib, th:HCOL.pnk, ic:'podium'},
-    {id:'bSet', x:AW - m - ib*2 - 3*U, y:m, w:ib, h:ib, th:HCOL.crm, ic:'gear'},
-    {id:'bHelp', x:AW - m - ib, y:m, w:ib, h:ib, th:HCOL.blu, ic:'help'},
+  L.barY = AH - m - BH - 4;
+  L.stTop = L.barY - 34;
+  L.stW = Math.min(AW - 2*m, Math.max(200, Math.round(AW*.5))); L.stX = L.cx - (L.stW >> 1);
+  // bar tab: lebar mengikuti teks; kalau tidak muat, tab paling kanan jadi ikon saja
+  const SL = Math.floor((BH - 1)/4);
+  const sec = [
+    {id:'hChars', th:HCOL.grn, ic:'tsp', lab:'chars'},
+    {id:'hPick', th:HCOL.blu, ic:'dice', lab:'pick'},
+    {id:'hTour', th:HCOL2.pur, ic:'cup', lab:'tour'},
+    {id:'giftBtn', th:HCOL.pnk, ic:'gift', lab:'hGift', dot:'gift'},
+    {id:'spinBtn', th:HCOL2.org, ic:'wheel', lab:'hSpin', dot:'spin'},
+  ];
+  const main = {id:'hQuick', th:HCOL.yel, ic:'bolt', lab:'quick', big:true};
+  const full = b => 8 + 22 + 6 + hW(t(b.lab).toUpperCase()) + 10 + SL, icon = () => BH + SL + 2;
+  sec.forEach(b => b.w = full(b)); main.w = full(main) + 12;
+  const avail = AW - 2*m, total = () => sec.reduce((a, b) => a + b.w + gap, 0) + main.w + gap*2;
+  for(let k = sec.length - 1; k >= 0 && total() > avail; k--){ sec[k].w = icon(); sec[k].iconOnly = true; }
+  let x = m; for(const b of sec){ Object.assign(b, {x, y:L.barY, h:BH, tab:true}); x += b.w + gap; }
+  Object.assign(main, {x:AW - m - main.w, y:L.barY, h:BH, tab:true});
+  L.btns = [...sec, main,
+    {id:'bStars', x:m, y:m, w:0, h:ib, th:HCOL2.slate, ic:'', lab:'stars'},
+    {id:'bTro', x:AW - m - ib*4 - gap*3, y:m, w:ib, h:ib, th:HCOL2.slate, ic:'trophy'},
+    {id:'bRank', x:AW - m - ib*3 - gap*2, y:m, w:ib, h:ib, th:HCOL2.slate, ic:'podium'},
+    {id:'bSet', x:AW - m - ib*2 - gap, y:m, w:ib, h:ib, th:HCOL2.slate, ic:'gear'},
+    {id:'bHelp', x:AW - m - ib, y:m, w:ib, h:ib, th:HCOL2.slate, ic:'help'},
   ];
   HOME.L = L; HOME.posKey = ''; return L;
+}
+// tab miring (jajaran genjang): outline 1px, kilap atas, gelap bawah, ketebalan 4px
+function hTab(g, x, y, w, h, th, down){
+  const D = 4, SL = Math.floor((h - 1)/4), oy = down ? D : 0, bw = w - SL;
+  const row = (r, yy, l, rr, col) => { g.fillStyle = col; g.fillRect(l, yy, rr - l, 1); };
+  if(!down) for(let r=0;r<=D;r++){ const o = 0, yy = y + h + r; row(r, yy, x + o + (r === D ? 1 : 0), x + o + bw - (r === D ? 1 : 0), r === D ? INK : th.depth); g.fillStyle = INK; g.fillRect(x + o, yy, 1, 1); g.fillRect(x + o + bw - 1, yy, 1, 1); }
+  y += oy;
+  for(let r=0;r<h;r++){ const o = Math.floor((h - 1 - r)/4), l = x + o, rr = l + bw, yy = y + r;
+    if(r === 0 || r === h - 1){ row(r, yy, l + 1, rr - 1, INK); continue; }
+    g.fillStyle = INK; g.fillRect(l, yy, 1, 1); g.fillRect(rr - 1, yy, 1, 1);
+    row(r, yy, l + 1, rr - 1, r <= 2 ? th.light : r >= h - 4 ? th.dark : th.base);
+    if(r > 2 && r < h - 4){ g.fillStyle = th.dark; g.fillRect(rr - 3, yy, 2, 1); }
+  }
+  return y;
 }
 // latar: pita warna + sinar berputar & lampu sorot dengan dithering (bukan transparansi)
 function homeBg(L, step, bare){
@@ -3422,7 +3479,7 @@ function homeFrame(dt, bare){
     g.fillStyle = on ? '#ffc33a' : '#8b3c2b'; g.fillRect(x, L.stTop + 7, 4, 4); if(on){ g.fillStyle = '#f2eee3'; g.fillRect(x, L.stTop + 7, 2, 1); g.fillRect(x, L.stTop + 8, 1, 1); } }
   // karakter menari bergiliran di panggung: [ms, naik(px), miring(step)]
   const HOP = [[90,-4,0],[70,-10,1],[90,-14,1],[70,-10,0],[70,-4,-1],[60,0,-1]], HOPT = HOP.reduce((a,f) => a + f[0], 0), PER = 1500;
-  const spc = Math.min(38*U, Math.floor(L.stW/4.2)), R = Math.max(8*U, Math.min(13*U, Math.round(spc*.36))), feet = L.stTop + 9*U;
+  const spc = Math.min(38*U, Math.floor(L.stW/4.2)), R = Math.max(12, Math.min(22, Math.round(spc*.34))), feet = L.stTop + 9*U;
   SPRSCALE = PXC; SPRMAP = (x, y) => [x/PXC, y/PXC];
   menuChars.forEach(c => {
     const tm = (ms + (3 - c.i)*PER/4) % PER; let up = 0, ang = 0;
@@ -3469,19 +3526,18 @@ function homeUI(L, ms){
   for(const b of L.btns){
     const dn = HOME.press === b.id;
     if(b.id === 'bStars'){
-      const txt = String(save.stars), w = 14 + 8 + hW(txt) + 16; b.w = w;
-      const y = hBox(u2, b.x, b.y, w, b.h, b.th, dn); hText(u2, '★', b.x + 8, y + ((b.h - FH) >> 1), '#ffc33a'); hText(u2, txt, b.x + 8 + 14 + 6, y + ((b.h - FH) >> 1), INK); continue;
+      const txt = String(save.stars), w = 8 + 14 + 6 + hW(txt) + 10; b.w = w;
+      const y = hBox(u2, b.x, b.y, w, b.h, b.th, dn); hText(u2, '★', b.x + 8, y + ((b.h - FH) >> 1) - 1, '#ffc33a', true); hText(u2, txt, b.x + 8 + 14 + 6, y + ((b.h - FH) >> 1) - 1, '#f2eee3', true); continue;
     }
-    const lift = b.big && pulse && !dn ? -2 : 0;
-    const y = hBox(u2, b.x, b.y + lift, b.w, b.h - lift, b.th, dn);
-    const im = b.ic && hImg(b.ic), lab = b.lab ? t(b.lab).toUpperCase() : '', IS = 22;   // ikon 22px di tombol 48px
-    if(!lab){ if(im) u2.drawImage(im, b.x + ((b.w - IS) >> 1), y + ((b.h - IS) >> 1) - 1);
-      if(b.dot && save[b.dot] !== today()){ const f2 = Math.floor(ms/400) & 1; u2.fillStyle = INK; u2.fillRect(b.x + b.w - 12, y - 4, 12, 12); u2.fillStyle = f2 ? '#ef6479' : '#b52c25'; u2.fillRect(b.x + b.w - 11, y - 3, 10, 10); u2.fillStyle = '#ffadaf'; u2.fillRect(b.x + b.w - 10, y - 2, 3, 2); }
-      continue; }
-    if(b.dot && save[b.dot] !== today()){ const f2 = Math.floor(ms/400) & 1; u2.fillStyle = INK; u2.fillRect(b.x + b.w - 9, y - 6, 12, 12); u2.fillStyle = f2 ? '#ffc33a' : '#eb7d10'; u2.fillRect(b.x + b.w - 8, y - 5, 10, 10); u2.fillStyle = '#f2eee3'; u2.fillRect(b.x + b.w - 7, y - 4, 3, 2); }
-    const tw = hW(lab), icw = im && b.w - tw > 64 ? IS + 10 : 0;
-    if(icw) u2.drawImage(im, b.x + 8, y + ((b.h - IS) >> 1) - 1);
-    hText(u2, lab, b.x + icw + ((b.w - icw - tw) >> 1), y + ((b.h - FH) >> 1) - 2, '#f2eee3', true);
+    const lift = b.big && pulse && !dn ? -2 : 0, IS = 22;
+    const y = b.tab ? hTab(u2, b.x, b.y + lift, b.w, b.h - lift, b.th, dn) : hBox(u2, b.x, b.y + lift, b.w, b.h - lift, b.th, dn);
+    const im = b.ic && hImg(b.ic), lab = b.lab && !b.iconOnly ? t(b.lab).toUpperCase() : '';
+    const SL = b.tab ? Math.floor((b.h - 1)/4) : 0, cxo = b.x + (SL >> 1);
+    if(b.dot && save[b.dot] !== today()){ const f2 = Math.floor(ms/400) & 1; u2.fillStyle = INK; u2.fillRect(b.x + b.w - 10, y - 5, 10, 10); u2.fillStyle = f2 ? '#ffc33a' : '#eb7d10'; u2.fillRect(b.x + b.w - 9, y - 4, 8, 8); u2.fillStyle = '#f2eee3'; u2.fillRect(b.x + b.w - 8, y - 3, 2, 2); }
+    if(!lab){ if(im) u2.drawImage(im, cxo + ((b.w - SL - IS) >> 1), y + ((b.h - IS) >> 1)); continue; }
+    if(im) u2.drawImage(im, cxo + 8, y + ((b.h - IS) >> 1));
+    const tx = cxo + 8 + IS + 6, tw = hW(lab);
+    hText(u2, lab, tx + ((b.w - SL - (tx - b.x) - 8 - tw) >> 1), y + ((b.h - FH) >> 1) - 1, b.big ? '#110a02' : '#f2eee3', !b.big);
     if(b.big && pulse){ u2.fillStyle = '#f2eee3'; u2.fillRect(b.x + b.w - 10, y + 4, 2, 6); u2.fillRect(b.x + b.w - 12, y + 6, 6, 2); }
   }
   // posisi area sentuh DOM
