@@ -527,7 +527,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v3.1 · font & ikon piksel';
+const VERSION = 'v3.2 · ikon 2D';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -923,30 +923,16 @@ const PIXDEF = {
   undo: ['..YY......','.YYY......','YYYYYYYYY.','YYYYYYYYYY','.YYY....YY','..YY....YY','........YY','.....YYYYY','.....YYYY.'],
   check: ['........GG','.......GGG','......GGG.','GG...GGG..','GGG.GGG...','.GGGGG....','..GGG.....','...G......']
 };
-function buildPixIcon(rows){
-  const h0 = rows.length, w0 = Math.max(...rows.map(r => r.length)), W2 = 12, H2 = 14;
+function buildPixIcon(rows){                   // ikon 2D datar: warna dasar rata + outline 1 piksel, tanpa bevel/ketebalan 3D
+  const h0 = rows.length, w0 = Math.max(...rows.map(r => r.length)), W2 = 12, H2 = 12;
   const ox = 1 + Math.floor((10 - w0)/2), oy = 1 + Math.floor((10 - h0)/2);
   const grid = Array.from({length:H2}, () => Array(W2).fill(null));
   const at = (x, y) => { const r = rows[y - oy]; return r && x - ox >= 0 ? (r[x - ox] && r[x - ox] !== '.' ? r[x - ox] : null) : null; };
-  // isi dengan bevel: tepi atas/kiri terang, tepi bawah gelap
-  for(let y=0;y<H2;y++) for(let x=0;x<W2;x++){
-    const c = at(x, y); if(!c) continue; const f = ICF[c];
-    grid[y][x] = !at(x, y - 1) ? f[0] : !at(x, y + 1) ? f[2] : !at(x - 1, y) ? f[0] : f[1];
-  }
-  // ketebalan 3D: 2 piksel di bawah bentuk, warna gelap keluarga warnanya
-  for(let x=0;x<W2;x++) for(let y=H2-1;y>=0;y--){
-    const c = at(x, y); if(!c) continue;
-    for(const k of [1, 2]) if(y + k < H2 && !grid[y + k][x]) grid[y + k][x] = ICF[c][2] === '#110a02' ? '#110a02' : ICF[c][2];
-    break;
-  }
-  for(let y=0;y<H2;y++) for(let x=0;x<W2;x++){ if(!grid[y][x]) continue; const c = at(x, y);
-    if(!c){ const above = y > 0 && grid[y-1][x]; if(!above) grid[y][x] = grid[y][x]; } }
-  // outline gelap di sekeliling bentuk + ketebalan
+  for(let y=0;y<H2;y++) for(let x=0;x<W2;x++){ const c = at(x, y); if(c) grid[y][x] = ICF[c][1]; }
   const filled = grid.map(r => r.map(v => !!v));
   for(let y=0;y<H2;y++) for(let x=0;x<W2;x++){
     if(filled[y][x]) continue;
-    const nb = [[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy]) => filled[y+dy] && filled[y+dy][x+dx]);
-    if(nb) grid[y][x] = '#110a02';
+    if([[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy]) => filled[y+dy] && filled[y+dy][x+dx])) grid[y][x] = '#110a02';
   }
   const c = document.createElement('canvas'); c.width = W2; c.height = H2;
   const g = c.getContext('2d');
@@ -955,7 +941,7 @@ function buildPixIcon(rows){
 }
 for(const n in PIXDEF) PIXICON[n + '@px'] = buildPixIcon(PIXDEF[n]);
 const iconHTML = (n, sz) => { sz = sz || 24;
-  if(PIXICON[n + '@px']){ const k = 1; return `<img class="pxi" src="${PIXICON[n + '@px']}" alt="" style="width:${12*k*PXC}px!important;height:${14*k*PXC}px!important">`; }
+  if(PIXICON[n + '@px']){ const k = 1; return `<img class="pxi" src="${PIXICON[n + '@px']}" alt="" style="width:${12*k*PXC}px!important;height:${12*k*PXC}px!important">`; }
   const u = PIXICON[n + '@' + sz]; return u ? `<img class="pxi" src="${u}" alt="" style="width:${sz*PXC}px;height:${sz*PXC}px">` : (ICONS[n] || ''); };
 const iconSize = e => e.closest('.badge') ? 32 : (e.matches('.back,.dbig,.rbtn:not(.big),.dtoolbtn') || e.closest('.dhead,.dname')) ? 16 : 24;
 function hydrateIcons(){ document.querySelectorAll('[data-icon]').forEach(e => e.innerHTML = iconHTML(e.dataset.icon, iconSize(e))); }
@@ -3396,12 +3382,12 @@ function homeUI(L, ms){
     const lift = b.big && pulse && !dn ? -1 : 0;
     const y = hBox(u2, b.x, b.y + lift, b.w, b.h - lift, b.th, dn);
     const im = b.ic && hImg(b.ic), lab = b.lab ? t(b.lab).toUpperCase() : '';
-    if(!lab){ if(im) u2.drawImage(im, b.x + ((b.w - 12) >> 1), y + ((b.h - 14) >> 1) - 1);
+    if(!lab){ if(im) u2.drawImage(im, b.x + ((b.w - 12) >> 1), y + ((b.h - 12) >> 1) - 1);
       if(b.dot && save[b.dot] !== today()){ const f2 = Math.floor(ms/400) & 1; u2.fillStyle = INK; u2.fillRect(b.x + b.w - 7, y - 2, 6, 6); u2.fillStyle = f2 ? '#ef6479' : '#b52c25'; u2.fillRect(b.x + b.w - 6, y - 1, 4, 4); u2.fillStyle = '#ffadaf'; u2.fillRect(b.x + b.w - 6, y - 1, 1, 1); }
       continue; }
     if(b.dot && save[b.dot] !== today()){ const f2 = Math.floor(ms/400) & 1; u2.fillStyle = INK; u2.fillRect(b.x + b.w - 5, y - 3, 6, 6); u2.fillStyle = f2 ? '#ffc33a' : '#eb7d10'; u2.fillRect(b.x + b.w - 4, y - 2, 4, 4); u2.fillStyle = '#f2eee3'; u2.fillRect(b.x + b.w - 4, y - 2, 1, 1); }
     const tw = hW(lab), icw = im && b.w - tw > 30 ? 16 : 0;
-    if(icw) u2.drawImage(im, b.x + 4, y + ((b.h - 14) >> 1) - 1);
+    if(icw) u2.drawImage(im, b.x + 4, y + ((b.h - 12) >> 1) - 1);
     hText(u2, lab, b.x + icw + ((b.w - icw - tw) >> 1), y + ((b.h - 8) >> 1) - 1, '#f2eee3', true);
     if(b.big && pulse){ u2.fillStyle = '#f2eee3'; u2.fillRect(b.x + b.w - 5, y + 2, 1, 3); u2.fillRect(b.x + b.w - 6, y + 3, 3, 1); }
   }
