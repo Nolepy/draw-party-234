@@ -743,7 +743,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v6.4 · galeri gambar';
+const VERSION = 'v7.0 · kepala hewan';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -1024,13 +1024,14 @@ const PAL = [
   {id:'black', c:'#3f2f30', d:'#110a02', p:25}, {id:'white', c:'#f2eee3', d:'#aca394', p:25},
   {id:'rainbow', c:'#9e1e74', d:'#510c5d', p:60, pat:'rainbow'}, {id:'gold', c:'#ffc33a', d:'#eb7d10', p:80, pat:'gold'}
 ];
-const SPECIES = [{id:'fox',p:0},{id:'cat',p:0},{id:'frog',p:0},{id:'chick',p:0},{id:'bear',p:0},{id:'dog',p:0},{id:'bunny',p:0},{id:'mouse',p:10},{id:'pig',p:10},{id:'panda',p:20},{id:'fish',p:10},{id:'owl',p:15},{id:'blob',p:0}];
+const SPECIES = [{id:'bunny',p:0},{id:'chick',p:0},{id:'cat',p:0},{id:'dog',p:0},{id:'cow',p:0},{id:'sheep',p:0},{id:'fox',p:10},{id:'frog',p:10},{id:'bear',p:10},{id:'pig',p:15},{id:'mouse',p:15},{id:'panda',p:20}];
 const HATS = [{id:'none',p:0},{id:'party',p:10},{id:'cowboy',p:15},{id:'chef',p:15},{id:'crown',p:25},{id:'bunny',p:25},{id:'propeller',p:35},{id:'halo',p:45}];
-const ACCS = [{id:'ears',p:0},{id:'ahoge',p:0},{id:'leaf',p:0},{id:'bow',p:0},{id:'none',p:0},{id:'glasses',p:15},{id:'mustache',p:15}];
+const ACCS = [{id:'none',p:0},{id:'bow',p:0},{id:'glasses',p:15},{id:'mustache',p:15}];
 const FXS = [{id:'none',p:0},{id:'sparkle',p:10},{id:'hearts',p:20},{id:'bubbles',p:20},{id:'fire',p:35},{id:'rainbow',p:50}];
-const DEF_CUST = i => ({name:'', col:PAL[i].id, hat:'none', acc:'none', sp:['fox','cat','frog','chick'][i], fx:'none', skin:'', useSkin:false, eyes:true, outline:true});
+const DEF_CUST = i => ({name:'', col:PAL[i].id, hat:'none', acc:'none', sp:['bunny','chick','cat','dog'][i], fx:'none', skin:'', useSkin:false, eyes:true, outline:true});
 if(!Array.isArray(save.cust)) save.cust = [0,1,2,3].map(DEF_CUST);
 save.cust = save.cust.map((c,i) => Object.assign(DEF_CUST(i), c));
+save.cust.forEach((c,i) => { c.col = PAL[i].id; if(!SPECIES.some(s => s.id === c.sp)) c.sp = DEF_CUST(i).sp; if(!ACCS.some(a => a.id === c.acc)) c.acc = 'none'; });   // warna = identitas pemain (tetap), bukan kostum
 // GALERI: semua gambar yang pernah disimpan, bisa dipakai ulang oleh pemain mana pun
 if(!Array.isArray(save.gal)) save.gal = [];
 const GAL_MAX = 24;
@@ -1047,7 +1048,7 @@ function loadSkin(i){ const c = save.cust[i]; if(!c.skin){ skinImgs[i] = null; r
     g.putImageData(id, 0, 0); c.skin = k.toDataURL('image/png'); c.free = true; c.eyes = false; persist(); loadSkin(i); };
   im.src = c.skin; skinImgs[i] = im; }
 [0,1,2,3].forEach(loadSkin);
-const palOf = i => PAL.find(p => p.id === save.cust[i].col) || PAL[i];
+const palOf = i => PAL[i];
 CHARS.forEach((ch,i) => Object.defineProperties(ch, {
   c:{get: () => palOf(i).c, configurable:true}, d:{get: () => palOf(i).d, configurable:true}, pat:{get: () => palOf(i).pat, configurable:true},
   acc:{get: () => save.cust[i].acc, configurable:true}, sp:{get: () => save.cust[i].sp, configurable:true}, hat:{get: () => save.cust[i].hat, configurable:true}, fx:{get: () => save.cust[i].fx, configurable:true},
@@ -1246,7 +1247,7 @@ const L = {
   pname:'Nama Pemain', tabSp:'HEWAN', tabCol:'WARNA', tabHat:'TOPI', tabAcc:'AKSESORI', tabFx:'EFEK', tabDraw:'GAMBAR',
   buy:'Beli?', bought:'Terbeli! ✔', noStars:'Bintang kurang! Menang ronde untuk dapat ⭐',
   drawT:'Karakter gambarmu', drawS:'Bagian kosong jadi transparan.', autoOl:'Outline otomatis', drawGo:'✏️ MULAI GAMBAR', drawEdit:'✏️ UBAH',
-  useSkin:'Pakai gambar', modeT:'Mau pakai karakter apa?', modeA:'KOSTUM HEWAN', modeAS:'Hewan, warna, topi & lainnya', modeD:'GAMBAR SENDIRI', modeDS:'Gambar dari nol', inUse:'DIPAKAI', modeBack:'GANTI GAYA', noDraw:'Belum ada gambar', galT:'Gambar tersimpan', galNew:'BARU', galUse:'Pakai gambar ini', galDel:'Hapus dari galeri', galEmpty:'Belum ada gambar tersimpan.', eyes:'Mata otomatis', delSkin:'🗑 Lepas', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
+  useSkin:'Pakai gambar', modeT:'Mau pakai karakter apa?', modeA:'KEPALA HEWAN', modeAS:'Hewan, topi & aksesori', modeD:'GAMBAR SENDIRI', modeDS:'Gambar dari nol', inUse:'DIPAKAI', modeBack:'GANTI GAYA', noDraw:'Belum ada gambar', galT:'Gambar tersimpan', galNew:'BARU', galUse:'Pakai gambar ini', galDel:'Hapus dari galeri', galEmpty:'Belum ada gambar tersimpan.', eyes:'Mata otomatis', delSkin:'🗑 Lepas', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
   drawHint:'Gambar bebas, lingkaran hanya panduan ukuran', drawHero:'Pixel Jagoanmu!', faceL:'Outline', previewL:'Pratinjau', pen:'Pena', eraser:'Hapus', fillbg:'Isi latar',
   pts:'poin', safe:'aman', fell:'jatuh!', round:'Ronde', win:' menang!', draw:'Seri!', drawW:'Seri: ', champ:' juara!', allDraw:'Semua seri!'},
  en: {lang:'English', flag:'EN', c0:'Red', c1:'Blue', c2:'Green', c3:'Yellow',
@@ -1274,7 +1275,7 @@ const L = {
   pname:'Player Name', tabSp:'ANIMAL', tabCol:'COLOR', tabHat:'HATS', tabAcc:'EXTRAS', tabFx:'EFFECTS', tabDraw:'DRAW',
   buy:'Buy?', bought:'Bought! ✔', noStars:'Not enough stars! Win rounds to earn ⭐',
   drawT:'Your drawn character', drawS:'Empty pixels stay transparent.', autoOl:'Auto outline', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT',
-  useSkin:'Use drawing', modeT:'Which character do you want?', modeA:'ANIMAL COSTUME', modeAS:'Animal, color, hat & more', modeD:'DRAW YOUR OWN', modeDS:'Draw from scratch', inUse:'IN USE', modeBack:'CHANGE STYLE', noDraw:'No drawing yet', galT:'Saved drawings', galNew:'NEW', galUse:'Use this drawing', galDel:'Remove from gallery', galEmpty:'No saved drawings yet.', eyes:'Auto eyes', delSkin:'🗑 Remove', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
+  useSkin:'Use drawing', modeT:'Which character do you want?', modeA:'ANIMAL HEAD', modeAS:'Animal, hat & extras', modeD:'DRAW YOUR OWN', modeDS:'Draw from scratch', inUse:'IN USE', modeBack:'CHANGE STYLE', noDraw:'No drawing yet', galT:'Saved drawings', galNew:'NEW', galUse:'Use this drawing', galDel:'Remove from gallery', galEmpty:'No saved drawings yet.', eyes:'Auto eyes', delSkin:'🗑 Remove', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
   drawHint:'Draw freely, the circle is just a size guide', drawHero:'Pixel your Hero!', faceL:'Outline', previewL:'Preview', pen:'Pen', eraser:'Eraser', fillbg:'Fill bg',
   pts:'pts', safe:'safe', fell:'out!', round:'Round', win:' wins!', draw:'Draw!', drawW:'Draw: ', champ:' is champion!', allDraw:'All draw!'}
 };
@@ -1429,7 +1430,7 @@ $('gBack').onclick = () => $('games').classList.add('hidden');
 
 // ---------- Layar KARAKTER ----------
 let cP = 0, cTab = 'sp', pending = null, cMode = null;   // cMode: null = layar pilih gaya, 'animal' = kostum hewan, 'draw' = gambar sendiri
-const CATS = [['sp','tsp','tabSp',SPECIES],['col','tcol','tabCol',PAL],['hat','that','tabHat',HATS],['acc','tacc','tabAcc',ACCS],['fx','tfx','tabFx',FXS],['draw','tdraw','tabDraw',null]];
+const CATS = [['sp','tsp','tabSp',SPECIES],['hat','that','tabHat',HATS],['acc','tacc','tabAcc',ACCS],['fx','tfx','tabFx',FXS],['draw','tdraw','tabDraw',null]];
 const isOwned = (cat, it) => it.p === 0 || save.owned.includes(cat + ':' + it.id);
 function showChars(){ cMode = null; $('chars').classList.remove('hidden'); renderChars(); }
 $('cBack').onclick = () => { $('chars').classList.add('hidden'); refreshHome(); };
@@ -2610,7 +2611,8 @@ function drawFace(p, r, ch){
 
 function charShadow(p){
   let r = rad(p); if(!p.alive){ if(p.fall <= 0) return; r *= p.fall/p.fallMax; }
-  shadowEll(p.x + r*.1, p.y + r*.92, r*.78, r*.2);
+  if(p.alive) aEll(p.x + r*.05, p.y + r*.92, r*.86, r*.27, CHARS[p.i].c);     // cincin warna pemain: identitas tanpa mewarnai karakter
+  shadowEll(p.x + r*.1, p.y + r*.92, r*.7, r*.17);
 }
 function drawChar(p, spr){
   let r = rad(p), spin = 0;
@@ -3127,114 +3129,103 @@ function customSpr(src, R, outline, live){
 // pemisah di dalam (lengan, kaki, perut, tepi tudung) memakai warna lebih gelap, bukan garis hitam.
 const hexRamp = (hex, dir) => { const i = PALHEX.indexOf(hex); if(i < 0) return hex;
   for(const r of RAMPS){ const k = r.indexOf(i); if(k >= 0){ const j = k + dir; if(j >= 0 && j < r.length) return PALHEX[r[j]]; } } return hex; };
-const COSTUME = {
-  fox:{ears:'tri', inner:'#f2eee3', belly:'#f2eee3', tail:'fluff'},
-  cat:{ears:'tri', inner:'#ffadaf', tail:'thin', ah:1.18},
-  frog:{ears:'frog', belly:'light'},
-  chick:{ears:'tuft', beak:true, belly:'light', arms:'wing'},
-  bear:{ears:'round', inner:'light', belly:'light', tail:'nub'},
-  dog:{ears:'flop', belly:'#f2eee3', tail:'nub', snout:'dog'},
-  bunny:{ears:'long', inner:'#ffadaf', belly:'#f2eee3', tail:'puff'},
-  mouse:{ears:'big', inner:'#ffadaf', tail:'thin'},
-  pig:{ears:'pig', snout:'pig', tail:'curl', belly:'light'},
-  panda:{ears:'round', panda:true, belly:'#f2eee3'},
-  fish:{ears:'fin', arms:'fin', tail:'fishtail', belly:'scale'},
-  owl:{ears:'owltuft', beak:true, belly:'light', arms:'wing'},
-  blob:{ears:'pom'},
+// ===== KARAKTER KEPALA HEWAN (gaya ikon kepala piksel: warna asli hewan, garis luar 1 px, mata titik) =====
+// Digambar langsung per piksel seni di ukuran R berapa pun (tetap tajam, piksel sama besar dengan dunia).
+const HEADS = {
+  bunny:{base:'#f2eee3', ears:'long', inner:'#ffadaf', mouth:'w', cheek:true},
+  chick:{base:'#f2eee3', tall:true, comb:true, mouth:'beak'},
+  cat:{base:'#f2eee3', ears:'tri', inner:'#ffadaf', mouth:'w', cheek:true, whisk:true},
+  dog:{base:'#eb7d10', shade:'#b8300e', ears:'flop', earc:'#b8300e', mouth:'smile'},
+  cow:{base:'#f2eee3', ears:'side', earc:'#8b3c2b', horns:true, mouth:'snout', snout:'#ffb182', spot:'#86aaa2'},
+  sheep:{base:'#fcb67a', wool:'#f2eee3', ears:'side', earc:'#fcb67a', mouth:'smile'},
+  fox:{base:'#eb7d10', shade:'#b8300e', ears:'tri', inner:'#f2eee3', tip:'#3f2f30', lower:'#f2eee3', mouth:'smile'},
+  frog:{base:'#5ab230', shade:'#156948', bulge:true, mouth:'wide', cheek:true},
+  bear:{base:'#c5763b', shade:'#8b3c2b', ears:'round', inner:'#fcb67a', muzzle:'#fcb67a', mouth:'smile'},
+  pig:{base:'#ffadaf', shade:'#e6687d', ears:'tri', inner:'#e6687d', mouth:'snout', snout:'#e6687d', nost:'#9e1e74'},
+  panda:{base:'#f2eee3', ears:'round', earc:'#3f2f30', inner:'#3f2f30', patch:'#3f2f30', mouth:'smile'},
+  mouse:{base:'#86aaa2', shade:'#456a71', ears:'big', inner:'#ffadaf', mouth:'w', whisk:true, cheek:true},
 };
-const SKIN = '#ffb182', SKIN_D = '#fcb67a', HAIR = '#8b3c2b', HATSPR = new Map();
+const SKIN = '#ffb182', HATSPR = new Map();
 function costumeSpr(q, R, c){
-  const ch = CHARS[q.i], cs = COSTUME[ch.sp] || COSTUME.blob;
-  const base = ch.pat === 'gold' ? '#ffc33a' : ch.c, dark = ch.d, light = hexRamp(base, -1) === base ? '#f2eee3' : hexRamp(base, -1);
-  const body = cs.panda ? '#f2eee3' : base, bodyD = cs.panda ? '#aca394' : dark, limb = cs.panda ? dark : base;
+  const ch = CHARS[q.i], hd = HEADS[ch.sp] || HEADS.bunny;
   const sq = q.sq || [0, 0], dw = sq[0], dh = sq[1];
-  const S0 = Math.ceil(R*3.6) + 6, S = S0 + (S0 % 2), cx = S/2, cy = Math.round(S/2 + R*.3);
+  const S0 = Math.ceil(R*3) + 8, S = S0 + (S0 % 2), cx = S/2, cy = Math.round(S/2 + R*.22);
   if(!c) c = document.createElement('canvas'); if(c.width !== S || c.height !== S){ c.width = S; c.height = S; }
   const g = c.getContext('2d', {willReadFrequently:true}); g.setTransform(1,0,0,1,0,0); g.filter = 'none'; g.clearRect(0, 0, S, S);
   const id = g.createImageData(S, S), u = new Uint32Array(id.data.buffer);
   const U = {}; const col = h => U[h] || (U[h] = hexU(h));
-  const set = (x, y, h) => { x |= 0; y |= 0; if(x >= 0 && y >= 0 && x < S && y < S) u[y*S + x] = col(h); };
-  const get = (x, y) => (x >= 0 && y >= 0 && x < S && y < S) ? u[y*S + x] : 0;
+  const set = (x, y, h) => { x = Math.round(x); y = Math.round(y); if(x >= 0 && y >= 0 && x < S && y < S) u[y*S + x] = col(h); };
+  const get = (x, y) => { x = Math.round(x); y = Math.round(y); return (x >= 0 && y >= 0 && x < S && y < S) ? u[y*S + x] : 0; };
   const area = (x0, y0, x1, y1, test, h) => { for(let y = Math.floor(y0); y <= Math.ceil(y1); y++) for(let x = Math.floor(x0); x <= Math.ceil(x1); x++) if(test(x + .5, y + .5)) set(x, y, h); };
   const ell = (ex, ey, rx, ry, h, n) => { n = n || 2; area(ex - rx - 1, ey - ry - 1, ex + rx + 1, ey + ry + 1, (x, y) => Math.abs((x - ex)/rx)**n + Math.abs((y - ey)/ry)**n <= 1, h); };
   const tri = (ax, ay, bx, by, qx, qy, h) => { const d = (x1, y1, x2, y2, x, y) => (x - x2)*(y1 - y2) - (x1 - x2)*(y - y2);
     area(Math.min(ax, bx, qx), Math.min(ay, by, qy), Math.max(ax, bx, qx), Math.max(ay, by, qy), (x, y) => { const d1 = d(ax, ay, bx, by, x, y), d2 = d(bx, by, qx, qy, x, y), d3 = d(qx, qy, ax, ay, x, y); return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); }, h); };
-  const inner = cs.inner === 'light' ? light : cs.inner;
-  const face = q.fx > .35 ? 1 : q.fx < -.35 ? -1 : 0, tailSide = face >= 0 ? -1 : 1;
-  const Rv = R + dh, bw = R*.9 + dw/2, top = cy - Rv, bot = cy + R*.72;
-  const moving = Math.hypot(q.vx || 0, q.vy || 0) > 80, step = moving ? Math.floor(performance.now()/130) % 2 : -1;
-  // --- ekor (di belakang badan) ---
-  const tx = cx + tailSide*bw*.95, ty = cy + R*.4;
-  if(cs.tail === 'fluff'){ ell(tx + tailSide*R*.35, ty - R*.1, R*.42, R*.3, base); ell(tx + tailSide*R*.62, ty - R*.18, R*.18, R*.16, '#f2eee3'); }
-  if(cs.tail === 'thin'){ for(let k=0;k<Math.round(R*.8);k++) set(tx + tailSide*k, ty - Math.round(Math.sin(k/R*3)*R*.25) - (k > R*.5 ? k - R*.5 : 0), dark); }
-  if(cs.tail === 'nub') ell(tx + tailSide*R*.1, ty, R*.16, R*.14, base);
-  if(cs.tail === 'puff') ell(tx + tailSide*R*.12, ty, R*.2, R*.2, '#f2eee3');
-  if(cs.tail === 'curl'){ for(let k=0;k<6;k++){ const a = k*1.1; set(tx + tailSide*(R*.18 + Math.cos(a)*R*.14), ty + Math.sin(a)*R*.14, '#ffadaf'); } }
-  if(cs.tail === 'fishtail') tri(tx, ty, tx + tailSide*R*.7, ty - R*.45, tx + tailSide*R*.7, ty + R*.35, light);
-  // --- telinga / hiasan kepala (di belakang tudung) ---
-  const ex = R*.55, ey = top + R*.25, ah = cs.ah || 1.3;
-  if(cs.ears === 'tri') for(const sd of [-1,1]){ const ay = top - R*(ah - .85);
-    tri(cx + sd*R*.12, top + R*.45, cx + sd*R*.95, top + R*.5, cx + sd*R*.72, ay, base);
-    tri(cx + sd*R*.38, top + R*.4, cx + sd*R*.8, top + R*.42, cx + sd*R*.7, ay + R*.3, inner); }
-  if(cs.ears === 'round' || cs.ears === 'big'){ const er = cs.ears === 'big' ? R*.38 : R*.28; for(const sd of [-1,1]){ ell(cx + sd*R*.62, top + R*.15, er, er, cs.panda ? dark : base); ell(cx + sd*R*.62, top + R*.18, er*.5, er*.5, cs.panda ? dark : inner || light); } }
-  if(cs.ears === 'long') for(const sd of [-1,1]){ ell(cx + sd*R*.32, top - R*.45, R*.17, R*.6, base); ell(cx + sd*R*.32, top - R*.38, R*.07, R*.42, inner); }
-  if(cs.ears === 'flop') for(const sd of [-1,1]) ell(cx + sd*(bw + R*.02), cy - R*.35, R*.2, R*.42, dark);
-  if(cs.ears === 'pig') for(const sd of [-1,1]) tri(cx + sd*R*.25, top + R*.25, cx + sd*R*.75, top + R*.35, cx + sd*R*.75, top - R*.2, base);
-  if(cs.ears === 'frog') for(const sd of [-1,1]){ ell(cx + sd*R*.46, top + R*.08, R*.27, R*.25, base); ell(cx + sd*R*.46, top + R*.06, R*.16, R*.15, '#f2eee3'); const px = Math.round(cx + sd*R*.46) - (sd < 0 ? 1 : 0), py = Math.round(top + R*.06); set(px, py, INK); if(R >= 12) set(px, py + 1, INK); }
-  if(cs.ears === 'tuft') for(const k of [-1,0,1]) for(let j=0;j<Math.max(2, R*.35);j++) set(cx + k*2 - (k < 0 ? 1 : 0), top - j + Math.abs(k), base);
-  if(cs.ears === 'owltuft') for(const sd of [-1,1]) tri(cx + sd*R*.35, top + R*.2, cx + sd*R*.85, top + R*.35, cx + sd*R*.85, top - R*.35, dark);
-  if(cs.ears === 'fin') tri(cx - R*.45, top + R*.2, cx + R*.45, top + R*.2, cx + R*.1, top - R*.5, light);
-  if(cs.ears === 'pom') ell(cx, top - R*.05, R*.2, R*.2, light);
-  // --- badan + tudung (satu siluet) ---
-  area(cx - bw - 1, top - 1, cx + bw + 1, bot + 1, (x, y) => { const nx = (x - cx)/bw, ny = (y - (top + bot)/2)/((bot - top)/2); return Math.abs(nx)**3 + Math.abs(ny)**2.6 <= 1; }, body);
-  // kaki (dua, dengan celah; melangkah bergantian saat jalan)
-  const fw = Math.max(2, Math.round(R*.4)), fh = Math.max(2, Math.round(R*.3)), gap = Math.max(1, Math.round(R*.1));
-  for(const sd of [-1,1]){ const lift = (step === 0 && sd < 0) || (step === 1 && sd > 0) ? 1 : 0;
-    const x0 = sd < 0 ? Math.round(cx - gap/2 - fw) : Math.round(cx + gap/2), y0 = Math.round(bot - fh*.4) - lift;
-    for(let y = y0; y < y0 + fh; y++) for(let x = x0; x < x0 + fw; x++) set(x, y, y >= y0 + fh - 1 ? bodyD : limb); }
-  // lengan
-  for(const sd of [-1,1]){ const ax = cx + sd*(bw - R*.05), ay = cy + R*.15;
-    if(cs.arms === 'wing') tri(ax, ay - R*.25, ax + sd*R*.32, ay + R*.15, ax, ay + R*.3, limb === body ? hexRamp(body, 1) : limb);
-    else if(cs.arms === 'fin') tri(ax, ay - R*.2, ax + sd*R*.4, ay + R*.25, ax, ay + R*.25, light);
-    else { ell(ax, ay, R*.2, R*.3, limb); for(let y = Math.round(ay - R*.25); y <= ay + R*.25; y++) if(get(Math.round(ax - sd*R*.2), y) === col(limb) || get(Math.round(ax - sd*R*.2), y) === col(body)) set(ax - sd*R*.2, y, bodyD); } }
-  // perut
-  if(cs.belly){ const bc = cs.belly === 'light' ? light : cs.belly === 'scale' ? light : cs.belly;
-    ell(cx, cy + R*.42, R*.4, R*.24, bc);
-    if(cs.belly === 'scale') for(let k=-1;k<=1;k++){ set(cx + k*R*.25 - 1, cy + R*.42, base); set(cx + k*R*.25, cy + R*.42 + 1, base); } }
-  // lubang wajah: tepi tudung gelap, kulit, poni
-  const wx = cx + face, wy = cy - R*.28, whw = Math.max(2.2, R*.52), whh = Math.max(1.8, R*.36);
-  const inWin = (x, y, k) => Math.abs((x - wx)/(whw + k))**4 + Math.abs((y - wy)/(whh + k))**4 <= 1;
-  area(wx - whw - 2, wy - whh - 2, wx + whw + 2, wy + whh + 2, (x, y) => inWin(x, y, 1) && !inWin(x, y, 0), bodyD);
-  area(wx - whw - 1, wy - whh - 1, wx + whw + 1, wy + whh + 1, (x, y) => inWin(x, y, 0), SKIN);
-  const wt = Math.round(wy - whh);
-  if(R >= 7) for(let x = Math.round(wx - whw); x <= wx + whw; x++){ if(get(x, wt) === col(SKIN)) set(x, wt, HAIR); if((x + face) % 3 && get(x, wt + 1) === col(SKIN)) set(x, wt + 1, HAIR); }
-  // moncong / paruh di tudung
-  if(cs.snout === 'pig'){ ell(cx, top + R*.28, R*.2, R*.13, '#ffadaf'); set(cx - 2, top + R*.28, dark); set(cx + 1, top + R*.28, dark); }
-  if(cs.beak) tri(cx - R*.14, top + R*.22, cx + R*.14, top + R*.22, cx, top + R*.42, '#eb7d10');
-  if(ch.acc === 'bow'){ tri(cx + R*.35, top + R*.1, cx + R*.6, top - R*.08, cx + R*.6, top + R*.28, '#ef6479'); tri(cx + R*.85, top + R*.1, cx + R*.6, top - R*.08, cx + R*.6, top + R*.28, '#ef6479'); }
-  // kilap kiri-atas tudung
-  for(let k=0;k<2;k++) if(get(Math.round(cx - bw*.55) + k, Math.round(top + R*.18)) === col(body)) set(Math.round(cx - bw*.55) + k, Math.round(top + R*.18), cs.panda ? '#e3f4ee' : light);
+  const face = q.fx > .35 ? 1 : q.fx < -.35 ? -1 : 0;
+  const hw = R*1.0 + dw/2, hh = (hd.tall ? R*.98 : R*.84) + dh*.6, top = cy - hh, bot = cy + hh;
+  const base = hd.base, shade = hd.shade || (base === '#f2eee3' ? '#aca394' : hexRamp(base, 1));
+  // --- di belakang kepala: telinga, tanduk, jengger, bulu domba ---
+  if(hd.ears === 'long') for(const sd of [-1,1]){ ell(cx + sd*R*.4, top - R*.42, R*.2, R*.62, base); ell(cx + sd*R*.4, top - R*.34, R*.08, R*.46, hd.inner); }
+  if(hd.ears === 'tri') for(const sd of [-1,1]){ tri(cx + sd*R*.2, top + R*.3, cx + sd*R*.98, top + R*.42, cx + sd*R*.8, top - R*.55, base);
+    tri(cx + sd*R*.45, top + R*.28, cx + sd*R*.85, top + R*.32, cx + sd*R*.76, top - R*.3, hd.inner);
+    if(hd.tip) tri(cx + sd*R*.66, top - R*.2, cx + sd*R*.9, top - R*.12, cx + sd*R*.8, top - R*.55, hd.tip); }
+  if(hd.ears === 'round' || hd.ears === 'big'){ const er = hd.ears === 'big' ? R*.42 : R*.3; for(const sd of [-1,1]){ ell(cx + sd*R*.68, top + R*.12, er, er, hd.earc || base); ell(cx + sd*R*.68, top + R*.15, er*.5, er*.5, hd.inner); } }
+  if(hd.horns) for(const sd of [-1,1]){ for(let k=0;k<Math.max(2, Math.round(R*.35));k++){ set(cx + sd*R*.55 + (sd > 0 ? 0 : -1), top - k + 1, '#8b3c2b'); set(cx + sd*R*.55 + sd + (sd > 0 ? 0 : -1), top - k + 1, '#8b3c2b'); } }
+  if(hd.comb){ ell(cx - R*.25, top - R*.08, R*.2, R*.2, '#b52c25'); ell(cx + R*.05, top - R*.2, R*.22, R*.22, '#b52c25'); ell(cx + R*.3, top - R*.04, R*.18, R*.18, '#b52c25'); }
+  if(hd.wool){ const n = 10; for(let k=0;k<n;k++){ const a = k/n*Math.PI*2; ell(cx + Math.cos(a)*hw*.95, cy + Math.sin(a)*hh*.95, R*.3, R*.3, hd.wool); } ell(cx, cy, hw*1.02, hh*1.02, hd.wool); }
+  // --- kepala ---
+  const hx = hd.wool ? hw*.78 : hw, hy = hd.wool ? hh*.8 : hh;
+  area(cx - hx - 1, cy - hy - 1, cx + hx + 1, cy + hy + 1, (x, y) => Math.abs((x - cx)/hx)**2.3 + Math.abs((y - cy)/hy)**2.3 <= 1, base);
+  if(hd.wool){ ell(cx, cy - hy*.78, hx*.75, hy*.32, hd.wool); }
+  if(hd.lower) area(cx - hx, cy, cx + hx, cy + hy + 1, (x, y) => get(x - .5, y - .5) === col(base) && Math.abs((x - cx)/hx)**2 + Math.abs((y - cy - hy*.55)/(hy*.6))**2 <= 1, hd.lower);
+  // pita bayangan di bawah kepala (seperti ikon referensi)
+  const band = Math.max(1, Math.round(R*.1));
+  for(let y = Math.floor(cy); y < S; y++) for(let x = 0; x < S; x++){ const v = u[y*S + x]; if(v !== col(base) && v !== col(hd.lower || base)) continue; if(!get(x, y + band) || (hd.wool && get(x, y + band) === col(hd.wool))) set(x, y, v === col(base) ? shade : '#aca394'); }
+  if(hd.ears === 'flop' || hd.ears === 'side') for(const sd of [-1,1]){
+    if(hd.ears === 'flop') ell(cx + sd*(hx - R*.05), cy - R*.1, R*.28, R*.6, hd.earc);
+    else ell(cx + sd*(hx + R*.15), cy - hy*.35, R*.36, R*.17, hd.earc); }
+  if(hd.spot) ell(cx + hx*.55, cy - hy*.45, R*.22, R*.3, hd.spot);
+  if(hd.patch) for(const sd of [-1,1]) ell(cx + face + sd*R*.36, cy + R*.02, R*.22, R*.27, hd.patch);
   // --- wajah ---
-  const e = q.expr || 'normal', eyY = Math.round(wy + whh*.15), ed = Math.max(1, Math.round(whw*.42)), mY = eyY + Math.max(2, Math.round(whh*.55));
-  for(const sd of [-1,1]){ const x = Math.round(wx) + (sd < 0 ? -ed - 1 : ed);
+  const e = q.expr || 'normal', fx0 = cx + face;
+  let eyY = Math.round(cy - R*.08), ed = Math.max(2, Math.round(R*.36)), eyeCol = INK;
+  if(hd.comb) eyY = Math.round(cy - R*.18);
+  if(hd.bulge){ for(const sd of [-1,1]){ ell(cx + sd*R*.5, top + R*.02, R*.32, R*.3, base); ell(fx0 + sd*R*.5, top + R*.02, R*.2, R*.19, '#f2eee3'); } eyY = Math.round(top + R*.02); ed = Math.round(R*.5); }
+  if(hd.patch) eyeCol = '#f2eee3';
+  const ew = R >= 20 ? 2 : 1, eh = R >= 9 ? 2 : 1;
+  for(const sd of [-1,1]){ const x = Math.round(fx0 + sd*ed) - (sd < 0 ? ew : 0);
     if(e === 'dead'){ set(x - 1, eyY - 1, INK); set(x + 1, eyY - 1, INK); set(x, eyY, INK); set(x - 1, eyY + 1, INK); set(x + 1, eyY + 1, INK); }
-    else if(e === 'blink'){ set(x, eyY + 1, INK); set(x + sd*-1 + (sd < 0 ? 1 : 0), eyY + 1, INK); }
-    else if(e === 'happy'){ set(x - 1, eyY + 1, INK); set(x, eyY, INK); set(x + 1, eyY + 1, INK); }
-    else { set(x, eyY, INK); set(x, eyY + 1, INK); if(R >= 12) { set(x + (sd < 0 ? -1 : 1)*0, eyY - 1, INK); } if(e === 'scared') set(x + sd, eyY - 1, INK); }
-    if(R >= 8 && e !== 'dead') set(x + sd*2, eyY + 2, '#ef6479');
+    else if(e === 'blink'){ for(let k=-1;k<=ew;k++) set(x + k, eyY + 1, eyeCol); }
+    else if(e === 'happy'){ set(x - 1, eyY + 1, eyeCol); set(x, eyY, eyeCol); if(ew > 1) set(x + 1, eyY, eyeCol); set(x + ew, eyY + 1, eyeCol); }
+    else { for(let a=0;a<ew;a++) for(let b=0;b<eh;b++) set(x + a, eyY + b, eyeCol); if(e === 'scared'){ for(let a=0;a<ew;a++) set(x + a, eyY - 1, eyeCol); } }
+    if(hd.cheek && R >= 8 && e !== 'dead'){ const yy = eyY + eh + Math.max(1, Math.round(R*.12)), xx = x + sd*Math.max(2, Math.round(R*.2)) + (sd < 0 ? -1 : 0); set(xx, yy, '#ef6479'); set(xx + 1, yy, '#ef6479'); }
   }
-  if(e === 'scared' || e === 'dead'){ set(wx, mY, HAIR); set(wx - 1, mY, HAIR); }
-  else if(e === 'happy'){ set(wx - 1, mY - 1, HAIR); set(wx, mY - 1, HAIR); set(wx - 1, mY, '#ef6479'); set(wx, mY, '#ef6479'); }
-  else { set(wx - 1, mY - 1, HAIR); set(wx, mY - 1, HAIR); }
-  if(ch.acc === 'glasses' && e !== 'dead') for(const sd of [-1,1]){ const x = Math.round(wx) + (sd < 0 ? -ed - 2 : ed - 1); for(let k=0;k<3;k++){ set(x + k, eyY - 1, INK); set(x + k, eyY + 2, INK); } set(x, eyY, INK); set(x, eyY + 1, INK); set(x + 2, eyY, INK); set(x + 2, eyY + 1, INK); }
-  if(ch.acc === 'mustache'){ for(let k=-2;k<2;k++) set(wx + k, mY - 2, '#3f2f30'); set(wx - 3, mY - 1, '#3f2f30'); set(wx + 2, mY - 1, '#3f2f30'); }
+  const my = Math.round(cy + R*.3);
+  if(hd.mouth === 'w'){ set(fx0 - 1, my - 2, '#ef6479'); set(fx0, my - 2, '#ef6479');
+    set(fx0 - 2, my, INK); set(fx0 - 1, my + 1, INK); set(fx0, my + 1, INK); set(fx0 + 1, my, INK); if(R >= 12){ set(fx0 - 3, my - 1, INK); set(fx0 + 2, my - 1, INK); } }
+  if(hd.mouth === 'smile'){ if(hd.muzzle) ell(fx0 - .5, my - R*.05, R*.36, R*.26, hd.muzzle);
+    set(fx0 - 2, my - 2, INK); set(fx0 - 1, my - 2, INK); set(fx0, my - 2, INK); set(fx0 + 1, my - 2, INK); set(fx0 - 1, my - 1, INK); set(fx0, my - 1, INK);
+    set(fx0 - 2, my, INK); set(fx0 + 1, my, INK); if(R >= 12){ set(fx0 - 3, my - 1, INK); set(fx0 + 2, my - 1, INK); } if(e === 'happy') { set(fx0 - 1, my, '#ef6479'); set(fx0, my, '#ef6479'); } }
+  if(hd.mouth === 'beak'){ const by = Math.round(cy + R*.05); ell(fx0 - .5, by, R*.3, R*.16, '#ffc33a'); for(let x = Math.round(fx0 - R*.3); x < fx0 + R*.3; x++) set(x, by + Math.round(R*.12), '#eb7d10');
+    area(fx0 - R*.14, by + R*.22, fx0 + R*.1, by + R*.46, () => true, '#b52c25'); }
+  if(hd.mouth === 'snout'){ const sy = Math.round(cy + hy*.5); ell(fx0 - .5, sy, hx*.62, hy*.34, hd.snout); const nc = hd.nost || INK;
+    for(const sd of [-1,1]){ const x = Math.round(fx0 - .5 + sd*hx*.3); set(x, sy, nc); set(x, sy - 1, nc); } }
+  if(hd.mouth === 'wide'){ for(let x = Math.round(fx0 - R*.45); x <= fx0 + R*.45; x++) set(x, my, INK); set(fx0 - R*.5, my - 1, INK); set(fx0 + R*.5, my - 1, INK); }
+  // aksesori
+  if(ch.acc === 'bow'){ const bx = cx + hx*.55, by = top + R*.12; tri(bx - R*.3, by - R*.18, bx - R*.3, by + R*.18, bx, by, '#ef6479'); tri(bx + R*.3, by - R*.18, bx + R*.3, by + R*.18, bx, by, '#ef6479'); ell(bx, by, R*.08, R*.08, '#b52c25'); }
+  if(ch.acc === 'glasses' && e !== 'dead') for(const sd of [-1,1]){ const x0 = Math.round(fx0 + sd*ed) - (sd < 0 ? ew : 0) - 2, w = ew + 4;
+    for(let k=0;k<w;k++){ set(x0 + k, eyY - 2, INK); set(x0 + k, eyY + eh + 1, INK); } for(let k=-2;k<=eh+1;k++){ set(x0, eyY + k, INK); set(x0 + w - 1, eyY + k, INK); } }
+  if(ch.acc === 'glasses' && e !== 'dead') for(let x = Math.round(fx0 - ed + 2); x < fx0 + ed - 1; x++) set(x, eyY - 1, INK);
+  if(ch.acc === 'mustache'){ const yy = my - 1; for(let k=-3;k<3;k++) set(fx0 + k, yy, '#3f2f30'); set(fx0 - 4, yy - 1, '#3f2f30'); set(fx0 + 3, yy - 1, '#3f2f30'); }
   g.putImageData(id, 0, 0);
   autoOutline(g, S, S);
-  const id2 = g.getImageData(0, 0, S, S), u2 = new Uint32Array(id2.data.buffer); if(S >= 12) shadeEdges(u2, S, S); g.putImageData(id2, 0, 0);
-  // topi toko: sprite sendiri, ditempel di atas tudung
+  const id2 = g.getImageData(0, 0, S, S), u2 = new Uint32Array(id2.data.buffer); if(S >= 12) shadeEdges(u2, S, S);
+  if(hd.whisk && R >= 9){ const ww = Math.max(2, Math.round(R*.3)); for(const sd of [-1,1]) for(const dy of [0, 2]){ const y = Math.round(cy + R*.2) + dy;
+    for(let k=1;k<=ww;k++){ const x = Math.round(cx + sd*(hx + k)) - (sd < 0 ? 1 : 0); if(x >= 0 && x < S && !(u2[y*S + x] >>> 24)) u2[y*S + x] = INKU; } } }
+  g.putImageData(id2, 0, 0);
+  // topi toko: sprite sendiri, ditempel di atas kepala
   if(ch.hat && ch.hat !== 'none'){ const hr = Math.round(R*.8), hk = ch.hat + hr; let hs = HATSPR.get(hk);
     if(!hs){ hs = makeSpr(document.createElement('canvas'), hr*2.1, 1, () => drawHat(ch.hat, hr)); HATSPR.set(hk, hs); }
-    if(hs) g.drawImage(hs, Math.round(cx - hs.width/2), Math.round(top + R*.65 - hs.height/2)); }
+    if(hs) g.drawImage(hs, Math.round(cx - hs.width/2), Math.round(top + R*.5 - hs.height/2)); }
   const b = c.__base || (c.__base = document.createElement('canvas')); b.width = S; b.height = S; b.getContext('2d').drawImage(c, 0, 0); c.__rot = null;
   return c;
 }
