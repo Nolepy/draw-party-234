@@ -389,6 +389,40 @@
   .ico .pxi{width:calc(var(--px)*12)!important;height:calc(var(--px)*14)!important}
   .badge{display:flex!important;flex-direction:column;align-items:center;gap:calc(var(--px)*2);width:auto!important;height:auto!important}
   .badge b{position:static!important;padding:0!important}
+
+  /* ===== TEMA PESTA untuk semua layar (v2.0) ===== */
+  html body:not(#zz):not(#zy) #games,html body:not(#zz):not(#zy) #chars,html body:not(#zz):not(#zy) #draw{background:none!important}
+  html body:not(#zz):not(#zy) .overlay{background:repeating-conic-gradient(#271e69 0 25%,transparent 0 50%) 0 0/calc(var(--px)*2) calc(var(--px)*2)!important;image-rendering:pixelated}
+  html body:not(#zz):not(#zy) .card,html body:not(#zz):not(#zy) .panel,html body:not(#zz):not(#zy) .cl,html body:not(#zz):not(#zy) .dpaper,html body:not(#zz):not(#zy) .dsheet,html body:not(#zz):not(#zy) .dpol{background:#f2eee3!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;
+    box-shadow:inset 0 0 0 calc(var(--px)*2) #e6687d,inset 0 0 0 calc(var(--px)*3) #9e1e74,0 calc(var(--px)*2) 0 #510c5d,0 calc(var(--px)*3) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .card::before,html body:not(#zz):not(#zy) .panel::before,html body:not(#zz):not(#zy) .dpaper::before,html body:not(#zz):not(#zy) .dpaper::after,html body:not(#zz):not(#zy) .gtitle::before,html body:not(#zz):not(#zy) #modal h2::before,html body:not(#zz):not(#zy) .gtitle::after,html body:not(#zz):not(#zy) #modal h2::after{display:none!important}
+  html body:not(#zz):not(#zy) h2,html body:not(#zz):not(#zy) .gtitle,html body:not(#zz):not(#zy) .otitle,html body:not(#zz):not(#zy) .dhead span,html body:not(#zz):not(#zy) .pnl{background:#e6687d!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;box-shadow:inset 0 var(--px) 0 #ffadaf,inset 0 calc(var(--px)*-2) 0 #9e1e74,0 calc(var(--px)*2) 0 #510c5d,0 calc(var(--px)*3) 0 var(--ink)!important;color:#f2eee3!important}
+  html body:not(#zz):not(#zy) .go,html body:not(#zz):not(#zy) .chip,html body:not(#zz):not(#zy) .ctab.on,html body:not(#zz):not(#zy) .wallet,html body:not(#zz):not(#zy) .rbtn.yellow,html body:not(#zz):not(#zy) .dbig.yellow{background:#ffc33a!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;box-shadow:inset 0 var(--px) 0 #f2eee3,inset 0 calc(var(--px)*-2) 0 #eb7d10,0 calc(var(--px)*2) 0 #b8300e,0 calc(var(--px)*3) 0 var(--ink)!important;color:var(--ink)!important}
+  html body:not(#zz):not(#zy) .chip{background:#f2eee3!important;box-shadow:inset 0 var(--px) 0 #e3f4ee,inset 0 calc(var(--px)*-2) 0 #aca394,0 calc(var(--px)*2) 0 #6f5e57,0 calc(var(--px)*3) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .chip.sel,html body:not(#zz):not(#zy) .chip.on,html body:not(#zz):not(#zy) .chip.big:hover{background:#ffc33a!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;box-shadow:inset 0 var(--px) 0 #f2eee3,inset 0 calc(var(--px)*-2) 0 #eb7d10,0 calc(var(--px)*2) 0 #b8300e,0 calc(var(--px)*3) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .go.alt,html body:not(#zz):not(#zy) .ctab,html body:not(#zz):not(#zy) .rbtn.blue,html body:not(#zz):not(#zy) .dbig.blue,html body:not(#zz):not(#zy) #pName,html body:not(#zz):not(#zy) #dName{background:#0a98d6!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;box-shadow:inset 0 var(--px) 0 #49e2dd,inset 0 calc(var(--px)*-2) 0 #214aa6,0 calc(var(--px)*2) 0 #271e69,0 calc(var(--px)*3) 0 var(--ink)!important;color:#f2eee3!important}
+  html body:not(#zz):not(#zy) .ctab.on{background:#ffc33a!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;box-shadow:inset 0 var(--px) 0 #f2eee3,inset 0 calc(var(--px)*-2) 0 #eb7d10,0 calc(var(--px)*2) 0 #b8300e,0 calc(var(--px)*3) 0 var(--ink)!important;color:var(--ink)!important}
+  html body:not(#zz):not(#zy) .rbtn.green,html body:not(#zz):not(#zy) .ptab.on{background:#5ab230!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;box-shadow:inset 0 var(--px) 0 #d5e848,inset 0 calc(var(--px)*-2) 0 #156948,0 calc(var(--px)*2) 0 #0e343f,0 calc(var(--px)*3) 0 var(--ink)!important;color:#f2eee3!important}
+  html body:not(#zz):not(#zy) .ptab{background:#f2eee3!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;box-shadow:inset 0 var(--px) 0 #e3f4ee,inset 0 calc(var(--px)*-2) 0 #aca394,0 calc(var(--px)*2) 0 #6f5e57,0 calc(var(--px)*3) 0 var(--ink)!important;color:var(--ink)!important}
+  html body:not(#zz):not(#zy) .back,html body:not(#zz):not(#zy) .x,html body:not(#zz):not(#zy) .dclose,html body:not(#zz):not(#zy) #mx,html body:not(#zz):not(#zy) #quit{background:#e6687d!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;box-shadow:inset 0 var(--px) 0 #ffadaf,inset 0 calc(var(--px)*-2) 0 #9e1e74,0 calc(var(--px)*2) 0 #510c5d,0 calc(var(--px)*3) 0 var(--ink)!important;color:#f2eee3!important}
+  html body:not(#zz):not(#zy) .go:active,html body:not(#zz):not(#zy) .chip:active,html body:not(#zz):not(#zy) .ctab:active,html body:not(#zz):not(#zy) .back:active,html body:not(#zz):not(#zy) .x:active,html body:not(#zz):not(#zy) .rbtn:active,html body:not(#zz):not(#zy) .dbig:active,html body:not(#zz):not(#zy) .ptab:active,html body:not(#zz):not(#zy) #quit:active{transform:translateY(calc(var(--px)*2))!important;box-shadow:inset 0 var(--px) 0 rgba(0,0,0,.2),0 var(--px) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .it{background:#f2eee3!important;border:var(--px) solid var(--ink)!important;border-radius:0!important;transform:none!important;box-shadow:inset 0 0 0 var(--px) #e3f4ee,0 calc(var(--px)*2) 0 #aca394,0 calc(var(--px)*3) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .it.sel{box-shadow:inset 0 0 0 calc(var(--px)*2) #5ab230,0 calc(var(--px)*2) 0 #156948,0 calc(var(--px)*3) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .gtile{transform:none!important}
+  html body:not(#zz):not(#zy) .gtile .pic{border:var(--px) solid var(--ink)!important;border-radius:0!important;transform:none!important}
+  html body:not(#zz):not(#zy) .gtile:nth-child(4n+1) .pic{box-shadow:0 0 0 calc(var(--px)*2) #ffc33a,0 0 0 calc(var(--px)*3) var(--ink),0 calc(var(--px)*4) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .gtile:nth-child(4n+2) .pic{box-shadow:0 0 0 calc(var(--px)*2) #49e2dd,0 0 0 calc(var(--px)*3) var(--ink),0 calc(var(--px)*4) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .gtile:nth-child(4n+3) .pic{box-shadow:0 0 0 calc(var(--px)*2) #ef6479,0 0 0 calc(var(--px)*3) var(--ink),0 calc(var(--px)*4) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .gtile:nth-child(4n+4) .pic{box-shadow:0 0 0 calc(var(--px)*2) #d5e848,0 0 0 calc(var(--px)*3) var(--ink),0 calc(var(--px)*4) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .gtile:active .pic{transform:translateY(calc(var(--px)*2))!important}
+  html body:not(#zz):not(#zy) .gtile b{color:#f2eee3!important}
+  html body:not(#zz):not(#zy) .avwrap{border:var(--px) solid var(--ink)!important;border-radius:0!important;box-shadow:inset 0 0 0 calc(var(--px)*2) #ffc33a,0 calc(var(--px)*2) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) #toast{background:#271e69!important;color:#f2eee3!important;border:var(--px) solid var(--ink)!important;box-shadow:inset 0 0 0 var(--px) #9e1e74,0 calc(var(--px)*2) 0 var(--ink)!important}
+  html body:not(#zz):not(#zy) .cr{background:none!important}
+  html body:not(#zz):not(#zy) #champ{color:#ffc33a!important}
+  html body:not(#zz):not(#zy) .go:not(.alt),html body:not(#zz):not(#zy) .chip,html body:not(#zz):not(#zy) .ctab.on,html body:not(#zz):not(#zy) .wallet,html body:not(#zz):not(#zy) .ptab:not(.on),html body:not(#zz):not(#zy) .rbtn.yellow,html body:not(#zz):not(#zy) .dbig.yellow,html body:not(#zz):not(#zy) .go:not(.alt) *,html body:not(#zz):not(#zy) .chip *,html body:not(#zz):not(#zy) .ctab.on *,html body:not(#zz):not(#zy) .ptab:not(.on) *{text-shadow:none!important;color:var(--ink)!important}
+  html body:not(#zz):not(#zy) #pName,html body:not(#zz):not(#zy) #dName{-webkit-text-fill-color:#f2eee3!important;color:#f2eee3!important;text-align:center}
+  html body:not(#zz):not(#zy) #draw{background:repeating-conic-gradient(#271e69 0 25%,transparent 0 50%) 0 0/calc(var(--px)*2) calc(var(--px)*2)!important;image-rendering:pixelated}
   /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
   #home#home{touch-action:none}
   #home#home .hz:not(#zz){position:absolute;opacity:0;padding:0;margin:0;border:0!important;box-shadow:none!important;background:none!important;transform:none!important;min-width:0;min-height:0}
@@ -478,7 +512,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v1.9 · home pesta';
+const VERSION = 'v2.0 · tema pesta';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -2828,8 +2862,8 @@ function homeLayout(){
   HOME.L = L; HOME.posKey = ''; return L;
 }
 // latar: pita warna + sinar berputar & lampu sorot dengan dithering (bukan transparansi)
-function homeBg(L, step){
-  const key = HOME.key + ':' + step; if(HOME.bgKey === key) return; HOME.bgKey = key;
+function homeBg(L, step, bare){
+  const key = HOME.key + ':' + step + (bare ? 'b' : ''); if(HOME.bgKey === key) return; HOME.bgKey = key;
   if(HB3.width !== AW || HB3.height !== AH){ HB3.width = AW; HB3.height = AH; }
   const g = HB3.getContext('2d'), id = g.createImageData(AW, AH), u = new Uint32Array(id.data.buffer);
   const C1 = hexU('#271e69'), C2 = hexU('#510c5d'), C3 = hexU('#9e1e74');
@@ -2848,6 +2882,7 @@ function homeBg(L, step){
     u[y*AW + x] = c;
   }
   g.putImageData(id, 0, 0);
+  if(bare) return;
   // panggung kayu
   const sx = L.stX, sw2 = L.stW, st = L.stTop;
   g.fillStyle = INK; g.fillRect(sx - 1, st - 1, sw2 + 2, AH - st + 1);
@@ -2861,9 +2896,9 @@ function homeBg(L, step){
   g.fillStyle = '#e6687d'; for(let x = sx; x < sx + sw2; x += 10){ g.fillRect(x, st + 11, 10, 1); g.fillRect(x + 1, st + 12, 8, 1); g.fillRect(x + 3, st + 13, 4, 1); }
   g.fillStyle = '#ffadaf'; for(let x = sx; x < sx + sw2; x += 10) g.fillRect(x + 4, st + 14, 2, 1);
 }
-function homeFrame(dt){
+function homeFrame(dt, bare){
   const L = homeLayout(), ms = performance.now();
-  homeBg(L, Math.floor(ms/140) % 96);
+  homeBg(L, Math.floor(ms/140) % 96, bare);
   if(HB.width !== AW || HB.height !== AH){ HB.width = AW; HB.height = AH; }
   const g = HB.getContext('2d'); g.setTransform(1,0,0,1,0,0); g.imageSmoothingEnabled = false; g.filter = 'none';
   g.drawImage(HB3, 0, 0);
@@ -2882,6 +2917,7 @@ function homeFrame(dt){
         for(let r=0;r<ln;r++){ const half = Math.max(0, Math.round((ln - r)*3/ln)); g.fillStyle = r === 0 || half <= 0 ? INK : col; g.fillRect(x + 3 - half - 1, y + 1 + r, half*2 + 2, 1);
           g.fillStyle = col; if(half > 0) g.fillRect(x + 3 - half, y + 1 + r, half*2, 1); }
         g.fillStyle = INK; g.fillRect(x + 3, y + ln + 1, 1, 1); } } }
+  if(bare){ homeConfetti(g, dt, ms); ctx = sctx; PXW = 1; blit([[HB, 0, 0]]); return; }
   // bola disko
   const by = Math.round((L.stTop + 50)/2), br = Math.max(7, Math.min(12, Math.round(AH*.06))), bx = L.cx, ph = Math.floor(ms/110) % 4;
   g.fillStyle = '#aca394'; g.fillRect(bx, 0, 1, by - br);
@@ -2913,12 +2949,18 @@ function homeFrame(dt){
     const shw = Math.max(3, R - 2 + up/2); g.fillStyle = '#8b3c2b'; g.fillRect(ax - shw, feet - 1, shw*2, 2);
     c.ang = ang*Math.PI*2/ROTN*(c.i % 2 ? -1 : 1);
   });
-  // konfeti piksel: bentuk 2x1 -> 1x1 -> 1x2 -> 1x1 (frame), posisi selalu bulat
+  homeConfetti(g, dt, ms);
+  // lapisan UI (di atas karakter)
+  homeUI(L, ms);
+}
+// konfeti piksel: bentuk 2x1 -> 1x1 -> 1x2 -> 1x1 (frame), posisi selalu bulat
+function homeConfetti(g, dt, ms){
   if(!HOME.conf.length) for(let i=0;i<42;i++) HOME.conf.push({x:Math.random(), y:Math.random(), v:rnd(10,22), w:rnd(0,6), c:CONF[i % 5], f:rnd(0,480)});
   for(const q of HOME.conf){ q.y += q.v*dt/AH; if(q.y > 1.03){ q.y = -.03; q.x = Math.random(); }
     const fr = Math.floor((ms + q.f)/120) & 3, x = Math.round(q.x*AW + Math.sin(ms/700 + q.w)*3), y = Math.round(q.y*AH);
     g.fillStyle = q.c; if(fr === 0) g.fillRect(x, y, 2, 1); else if(fr === 2) g.fillRect(x, y, 1, 2); else g.fillRect(x, y, 1, 1); }
-  // lapisan UI (di atas karakter)
+}
+function homeUI(L, ms){
   const u2 = artCanvas(HUDB); u2.setTransform(1,0,0,1,0,0); u2.filter = 'none'; u2.clearRect(0, 0, AW, AH);
   // logo
   const word = 'DRAW PARTY', gw = ch => ch === ' ' ? 6 : PF[ch][0].length*2 + 1;
@@ -2980,8 +3022,10 @@ function frame(now){
   const dt = Math.min(.05, (now-last)/1000); last = now;
   setSong(state === 'menu' || !match ? 'menu' : 'game'); musicTick();
   const scrOpen = !$('chars').classList.contains('hidden'), drOpen = !$('draw').classList.contains('hidden');
-  if(drOpen){ T += dt; renderDrawPreview(); }
-  else if(scrOpen){ T += dt; renderAvatar(dt); }
+  const gmOpen = !$('games').classList.contains('hidden');
+  if(drOpen){ T += dt; homeFrame(dt, true); renderDrawPreview(); }
+  else if(scrOpen){ T += dt; homeFrame(dt, true); renderAvatar(dt); }
+  else if(gmOpen && (state === 'menu' || !match)){ T += dt; homeFrame(dt, true); }
   else if(state === 'menu' || !match) renderMenu(dt);
   else { update(dt); render(); }
   requestAnimationFrame(frame);
