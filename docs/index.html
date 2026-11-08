@@ -423,6 +423,9 @@
   html body:not(#zz):not(#zy) .go:not(.alt),html body:not(#zz):not(#zy) .chip,html body:not(#zz):not(#zy) .ctab.on,html body:not(#zz):not(#zy) .wallet,html body:not(#zz):not(#zy) .ptab:not(.on),html body:not(#zz):not(#zy) .rbtn.yellow,html body:not(#zz):not(#zy) .dbig.yellow,html body:not(#zz):not(#zy) .go:not(.alt) *,html body:not(#zz):not(#zy) .chip *,html body:not(#zz):not(#zy) .ctab.on *,html body:not(#zz):not(#zy) .ptab:not(.on) *{text-shadow:none!important;color:var(--ink)!important}
   html body:not(#zz):not(#zy) #pName,html body:not(#zz):not(#zy) #dName{-webkit-text-fill-color:#f2eee3!important;color:#f2eee3!important;text-align:center}
   html body:not(#zz):not(#zy) #draw{background:repeating-conic-gradient(#271e69 0 25%,transparent 0 50%) 0 0/calc(var(--px)*2) calc(var(--px)*2)!important;image-rendering:pixelated}
+  html body:not(#zz):not(#zy) .dcv{background:repeating-conic-gradient(#e3f4ee 0 25%,#aca394 0 50%) 0 0/calc(100%/16) calc(100%/16)!important;image-rendering:pixelated}
+  html body:not(#zz):not(#zy) .dring{box-shadow:none!important;border:var(--px) dashed rgba(17,10,2,.35)!important}
+  html body:not(#zz):not(#zy) #dTool.on,html body:not(#zz):not(#zy) #dFill.on{outline:calc(var(--px)*2) solid #ffc33a;outline-offset:0}
   /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
   #home#home{touch-action:none}
   #home#home .hz:not(#zz){position:absolute;opacity:0;padding:0;margin:0;border:0!important;box-shadow:none!important;background:none!important;transform:none!important;min-width:0;min-height:0}
@@ -512,7 +515,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v2.0 · tema pesta';
+const VERSION = 'v2.1 · kepala hewan + gambar bebas';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -787,24 +790,29 @@ const PAL = [
   {id:'black', c:'#3f2f30', d:'#110a02', p:25}, {id:'white', c:'#f2eee3', d:'#aca394', p:25},
   {id:'rainbow', c:'#9e1e74', d:'#510c5d', p:60, pat:'rainbow'}, {id:'gold', c:'#ffc33a', d:'#eb7d10', p:80, pat:'gold'}
 ];
-const SPECIES = [{id:'fox',p:0},{id:'cat',p:0},{id:'frog',p:0},{id:'chick',p:0},{id:'bear',p:0},{id:'dog',p:0},{id:'bunny',p:0},{id:'mouse',p:10},{id:'pig',p:10},{id:'panda',p:20},{id:'blob',p:0}];
+const SPECIES = [{id:'fox',p:0},{id:'cat',p:0},{id:'frog',p:0},{id:'chick',p:0},{id:'bear',p:0},{id:'dog',p:0},{id:'bunny',p:0},{id:'mouse',p:10},{id:'pig',p:10},{id:'panda',p:20},{id:'fish',p:10},{id:'owl',p:15},{id:'blob',p:0}];
 const HATS = [{id:'none',p:0},{id:'party',p:10},{id:'cowboy',p:15},{id:'chef',p:15},{id:'crown',p:25},{id:'bunny',p:25},{id:'propeller',p:35},{id:'halo',p:45}];
 const ACCS = [{id:'ears',p:0},{id:'ahoge',p:0},{id:'leaf',p:0},{id:'bow',p:0},{id:'none',p:0},{id:'glasses',p:15},{id:'mustache',p:15}];
 const FXS = [{id:'none',p:0},{id:'sparkle',p:10},{id:'hearts',p:20},{id:'bubbles',p:20},{id:'fire',p:35},{id:'rainbow',p:50}];
-const DEF_CUST = i => ({name:'', col:PAL[i].id, hat:'none', acc:'none', sp:['fox','cat','frog','chick'][i], fx:'none', skin:'', useSkin:false, eyes:true});
+const DEF_CUST = i => ({name:'', col:PAL[i].id, hat:'none', acc:'none', sp:['fox','cat','frog','chick'][i], fx:'none', skin:'', useSkin:false, eyes:true, outline:true});
 if(!Array.isArray(save.cust)) save.cust = [0,1,2,3].map(DEF_CUST);
 save.cust = save.cust.map((c,i) => Object.assign(DEF_CUST(i), c));
 if(!save.v2){ save.cust.forEach(c => { if(['ears','ahoge','leaf','bow'].includes(c.acc)) c.acc = 'none'; }); save.v2 = true; }   // karakter lama -> kepala hewan
 if(!Array.isArray(save.owned)) save.owned = [];
 const skinImgs = [null,null,null,null];
-function loadSkin(i){ const c = save.cust[i]; if(!c.skin){ skinImgs[i] = null; return; } const im = new Image(); im.src = c.skin; skinImgs[i] = im; }
+function loadSkin(i){ const c = save.cust[i]; if(!c.skin){ skinImgs[i] = null; return; } const im = new Image();
+  if(!c.free) im.onload = () => {                    // gambar versi lama (kulit kotak) -> potong bulat sekali agar jadi karakter utuh
+    const k = document.createElement('canvas'); k.width = k.height = 32; const g = k.getContext('2d'); g.drawImage(im, 0, 0, 32, 32);
+    const id = g.getImageData(0, 0, 32, 32); for(let y=0;y<32;y++) for(let x=0;x<32;x++) if((x - 15.5)**2 + (y - 15.5)**2 > 16*16) id.data[(y*32 + x)*4 + 3] = 0;
+    g.putImageData(id, 0, 0); c.skin = k.toDataURL('image/png'); c.free = true; c.eyes = false; persist(); loadSkin(i); };
+  im.src = c.skin; skinImgs[i] = im; }
 [0,1,2,3].forEach(loadSkin);
 const palOf = i => PAL.find(p => p.id === save.cust[i].col) || PAL[i];
 CHARS.forEach((ch,i) => Object.defineProperties(ch, {
   c:{get: () => palOf(i).c, configurable:true}, d:{get: () => palOf(i).d, configurable:true}, pat:{get: () => palOf(i).pat, configurable:true},
   acc:{get: () => save.cust[i].acc, configurable:true}, sp:{get: () => save.cust[i].sp, configurable:true}, hat:{get: () => save.cust[i].hat, configurable:true}, fx:{get: () => save.cust[i].fx, configurable:true},
   skin:{get: () => save.cust[i].useSkin && skinImgs[i] && skinImgs[i].complete && skinImgs[i].naturalWidth ? skinImgs[i] : null, configurable:true},
-  eyes:{get: () => save.cust[i].eyes, configurable:true}
+  eyes:{get: () => save.cust[i].eyes, configurable:true}, outline:{get: () => save.cust[i].outline !== false, configurable:true}
 }));
 
 // ---------- Ikon doodle (SVG) ----------
@@ -989,9 +997,9 @@ const L = {
   d_random:'game acak tiap ronde', goal:'GOL!', gamesT:'PILIH GAME', help6:'🎮 Ada 9 mini game — lihat semuanya di PILIH GAME.',
   pname:'Nama Pemain', tabSp:'HEWAN', tabCol:'WARNA', tabHat:'TOPI', tabAcc:'AKSESORI', tabFx:'EFEK', tabDraw:'GAMBAR',
   buy:'Beli?', bought:'Terbeli! ✔', noStars:'Bintang kurang! Menang ronde untuk dapat ⭐',
-  drawT:'Gambar karaktermu sendiri!', drawS:'Coretanmu jadi kulit karakter di semua mini game.', drawGo:'✏️ MULAI MENGGAMBAR', drawEdit:'✏️ UBAH GAMBAR',
+  drawT:'Buat karaktermu dari nol!', drawS:'Bentuk, warna, dan wajah semuanya kamu gambar sendiri. Bagian kosong jadi transparan.', autoOl:'Outline otomatis', drawGo:'✏️ MULAI MENGGAMBAR', drawEdit:'✏️ UBAH GAMBAR',
   useSkin:'Pakai gambar', eyes:'Mata otomatis', delSkin:'🗑 Hapus gambar', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
-  drawHint:'Gambar di dalam lingkaran', drawHero:'Pixel Jagoanmu!', faceL:'Wajah', previewL:'Pratinjau', pen:'Pena', eraser:'Hapus', fillbg:'Isi latar',
+  drawHint:'Gambar bebas, lingkaran hanya panduan ukuran', drawHero:'Pixel Jagoanmu!', faceL:'Outline', previewL:'Pratinjau', pen:'Pena', eraser:'Hapus', fillbg:'Isi latar',
   pts:'poin', safe:'aman', fell:'jatuh!', round:'Ronde', win:' menang!', draw:'Seri!', drawW:'Seri: ', champ:' juara!', allDraw:'Semua seri!'},
  en: {lang:'English', flag:'🇬🇧', c0:'Red', c1:'Blue', c2:'Green', c3:'Yellow',
   m_eat:'Blob Feast', m_sumo:'Sumo Blob', m_food:'Snack Grab', m_combo:'Mixed',
@@ -1017,9 +1025,9 @@ const L = {
   d_random:'random game each round', goal:'GOAL!', gamesT:'PICK A GAME', help6:'🎮 9 mini games — see them all in PICK GAME.',
   pname:'Player Name', tabSp:'ANIMAL', tabCol:'COLOR', tabHat:'HATS', tabAcc:'EXTRAS', tabFx:'EFFECTS', tabDraw:'DRAW',
   buy:'Buy?', bought:'Bought! ✔', noStars:'Not enough stars! Win rounds to earn ⭐',
-  drawT:'Draw your own character!', drawS:'Your doodle becomes your character skin in every mini game.', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT DRAWING',
+  drawT:'Create your character from scratch!', drawS:'Draw the shape, colors and face yourself. Empty pixels stay transparent.', autoOl:'Auto outline', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT DRAWING',
   useSkin:'Use drawing', eyes:'Auto eyes', delSkin:'🗑 Delete drawing', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
-  drawHint:'Draw inside the circle', drawHero:'Pixel your Hero!', faceL:'Face', previewL:'Preview', pen:'Pen', eraser:'Eraser', fillbg:'Fill bg',
+  drawHint:'Draw freely, the circle is just a size guide', drawHero:'Pixel your Hero!', faceL:'Outline', previewL:'Preview', pen:'Pen', eraser:'Eraser', fillbg:'Fill bg',
   pts:'pts', safe:'safe', fell:'out!', round:'Round', win:' wins!', draw:'Draw!', drawW:'Draw: ', champ:' is champion!', allDraw:'All draw!'}
 };
 const LANGS = Object.keys(L);
@@ -1204,13 +1212,13 @@ function renderChars(){
   if(cTab === 'draw'){
     box.innerHTML = `<div class="drawpanel"><canvas id="dpv" width="240" height="240"></canvas><div class="dcol"><h2>${t('drawT')}</h2><div class="hint" style="text-align:left">${t('drawS')}</div>
       <button class="go" id="dOpen">${c.skin ? t('drawEdit') : t('drawGo')}</button>
-      ${c.skin ? `<label class="tog"><input type="checkbox" id="tSkin" ${c.useSkin ? 'checked' : ''}> ${t('useSkin')}</label><label class="tog"><input type="checkbox" id="tEyes" ${c.eyes ? 'checked' : ''}> ${t('eyes')}</label><button class="chip" id="dDel">${t('delSkin')}</button>` : ''}</div></div>`;
+      ${c.skin ? `<label class="tog"><input type="checkbox" id="tSkin" ${c.useSkin ? 'checked' : ''}> ${t('useSkin')}</label><label class="tog"><input type="checkbox" id="tEyes" ${c.outline !== false ? 'checked' : ''}> ${t('autoOl')}</label><button class="chip" id="dDel">${t('delSkin')}</button>` : ''}</div></div>`;
     previewChar($('dpv'), cP, {}, {r:.3, L:240, bg:'#e3f4ee'});
     $('dOpen').onclick = openDraw;
     if(c.skin){
       $('tSkin').onchange = e => { c.useSkin = e.target.checked; persist(); renderChars(); };
-      $('tEyes').onchange = e => { c.eyes = e.target.checked; persist(); renderChars(); };
-      $('dDel').onclick = () => { c.skin = ''; c.useSkin = false; persist(); loadSkin(cP); renderChars(); };
+      $('tEyes').onchange = e => { c.outline = e.target.checked; persist(); renderChars(); };
+      $('dDel').onclick = () => { c.skin = ''; c.useSkin = false; persist(); loadSkin(cP); thumbCache = null; renderChars(); };
     }
     return;
   }
@@ -1267,12 +1275,13 @@ function dUpdatePen(){
   dot.style.width = dot.style.height = px + 'px';
   dot.style.background = dTool === 'era' ? '#e3f4ee' : dCol === 'rainbow' ? 'conic-gradient(#d5734c,#ffc33a,#5ab230,#0a98d6,#214aa6,#d5734c)' : dCol;
   $('dTool').innerHTML = iconHTML(dTool === 'era' ? 'eraser' : 'pencil', 16);
+  $('dFill').classList.toggle('on', dTool === 'fill'); $('dTool').classList.toggle('on', dTool !== 'fill');
 }
 function openDraw(){
   const c = save.cust[cP];
   dctx.globalCompositeOperation = 'source-over'; dctx.clearRect(0, 0, 32, 32); dHist = [];
   if(c.skin && skinImgs[cP] && skinImgs[cP].complete){ dctx.imageSmoothingEnabled = skinImgs[cP].naturalWidth > 64; dctx.drawImage(skinImgs[cP], 0, 0, 32, 32); quantize(dctx, 32, 32); }
-  dEyesOn = c.eyes; dTool = 'pen';
+  dEyesOn = c.outline !== false; dTool = 'pen';
   $('dName').value = c.name; $('dName').placeholder = t('c'+cP);
   $('dColors').innerHTML = DCOLS.map((cc,k) => `<button data-c="${cc}" class="${cc === dCol ? 'on' : ''}" style="--r:${((k*7)%5-2)*1.5}deg;background-color:${cc === 'rainbow' ? '#e3f4ee' : cc};${cc === 'rainbow' ? 'background:conic-gradient(#d5734c,#ffc33a,#5ab230,#0a98d6,#214aa6,#d5734c)' : ''}"></button>`).join('');
   $('dColors').querySelectorAll('button').forEach(b => b.onclick = () => { dCol = b.dataset.c; dTool = 'pen'; $('dColors').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); dUpdatePen(); });
@@ -1290,13 +1299,24 @@ document.querySelectorAll('.fopt').forEach(b => b.onclick = () => { dEyesOn = b.
 $('dGuide').onclick = () => { const on = $('dGuide').classList.toggle('on'); document.querySelector('.dring').classList.toggle('off', !on); };
 $('dPrevBtn').onclick = () => { const on = $('dPrevBtn').classList.toggle('on'); $('dPol').classList.toggle('hidden', !on); };
 function snap(){ dHist.push(dctx.getImageData(0, 0, 32, 32)); if(dHist.length > 40) dHist.shift(); }
-$('dFill').onclick = () => { snap(); dctx.globalCompositeOperation = 'destination-over'; dctx.fillStyle = dCol === 'rainbow' ? `hsl(${dHue},75%,65%)` : dCol; dctx.fillRect(0, 0, 32, 32); dctx.globalCompositeOperation = 'source-over'; };
+$('dFill').onclick = () => { dTool = dTool === 'fill' ? 'pen' : 'fill'; dUpdatePen(); };
+function dFlood(x, y){                          // ember: isi area bersambung yang warnanya sama (termasuk area kosong)
+  if(x < 0 || y < 0 || x > 31 || y > 31) return;
+  const id = dctx.getImageData(0, 0, 32, 32), u = new Uint32Array(id.data.buffer), from = u[y*32 + x];
+  const col = dCol === 'rainbow' ? RAINBOW[(dHue = (dHue + 8) % 64) >> 3] : dCol, to = hexU(col);
+  if(from === to) return;
+  const st = [y*32 + x];
+  while(st.length){ const i = st.pop(); if(u[i] !== from) continue; u[i] = to; const px = i & 31;
+    if(px > 0) st.push(i - 1); if(px < 31) st.push(i + 1); if(i >= 32) st.push(i - 32); if(i < 992) st.push(i + 32); }
+  dctx.putImageData(id, 0, 0);
+}
 $('dUndo').onclick = () => { const h = dHist.pop(); if(h) dctx.putImageData(h, 0, 0); };
 $('dClr').onclick = () => { snap(); dctx.clearRect(0, 0, 32, 32); };
 $('dCancel').onclick = () => { $('draw').classList.add('hidden'); renderChars(); };
 $('dSave').onclick = () => {
   const c = save.cust[cP], prevSkin = c.skin;
-  c.skin = dc.toDataURL('image/png');   // 32x32 piksel c.useSkin = true; c.eyes = dEyesOn; $('pName').value = c.name;
+  c.skin = dc.toDataURL('image/png');   // 32x32 piksel, latar transparan = bentuk karakter
+  c.useSkin = true; c.eyes = false; c.free = true; c.outline = dEyesOn; $('pName').value = c.name;
   try{ localStorage.setItem(SAVE_KEY, JSON.stringify(save)); toast(t('saved')); sfx('coin'); }
   catch(e){ c.skin = prevSkin; toast(t('saveErr')); }
   loadSkin(cP); thumbCache = null;
@@ -1314,22 +1334,19 @@ function dLine(a, b){                       // garis Bresenham: piksel demi piks
   let err = dx + dy;
   for(let n=0;n<200;n++){ dPlot(x0, y0); if(x0 === b.x && y0 === b.y) break; const e2 = 2*err; if(e2 >= dy){ err += dy; x0 += sx; } if(e2 <= dx){ err += dx; y0 += sy; } }
 }
-dc.addEventListener('pointerdown', e => { e.preventDefault(); try{ dc.setPointerCapture(e.pointerId); }catch(_){} snap(); dDown = dPos(e); dLine(dDown, dDown); });
+dc.addEventListener('pointerdown', e => { e.preventDefault(); snap(); const q = dPos(e); if(dTool === 'fill'){ dFlood(q.x, q.y); return; } try{ dc.setPointerCapture(e.pointerId); }catch(_){} dDown = q; dLine(dDown, dDown); });
 dc.addEventListener('pointermove', e => { if(!dDown) return; const p = dPos(e); dLine(dDown, p); dDown = p; });
 ['pointerup','pointercancel'].forEach(ev => dc.addEventListener(ev, () => dDown = null));
-function renderDrawPreview(){
-  const c = save.cust[cP], keep = [c.useSkin, c.eyes, skinImgs[cP]], keepCtx = ctx;
-  c.useSkin = true; skinImgs[cP] = dc; dc.complete = true; dc.naturalWidth = 256;
-  dc.complete = true; dc.naturalWidth = 32;
-  const draw1 = (cvs, eyes, bg, r, L) => {
-    const g = pxCanvas(cvs, L, L, 4); ctx = g; PXW = 4; c.eyes = eyes;
-    g.fillStyle = bg; g.fillRect(0, 0, L, L);
-    drawCharPix({i:cP, x:L/2, y:L*.56, vx:0, vy:0, m:(L*r)**2, alive:true, fall:0, fallMax:1, fx:0, fy:.3, seed:cP*1.7, expr:'normal', dashFx:0});
-    quantize(g, cvs.width, cvs.height, true); fitCss(cvs);
+function renderDrawPreview(){                  // pratinjau = sprite yang benar-benar dipakai di game (1 piksel gambar = 1 piksel game)
+  const draw1 = (cvs, outline, bg, L) => {
+    const W = L >> 2; if(cvs.width !== W){ cvs.width = cvs.height = W; }          // kanvas dalam piksel seni (sama dengan game)
+    const g = cvs.getContext('2d'); g.setTransform(1,0,0,1,0,0); g.imageSmoothingEnabled = false;
+    g.fillStyle = bg; g.fillRect(0, 0, W, W);
+    const cs = customSpr(dc, Math.min(17, (W >> 1) - 3), outline, true); if(cs) g.drawImage(cs, (W - cs.width) >> 1, (W - cs.height) >> 1);
+    fitCss(cvs);
   };
-  if(!$('dPol').classList.contains('hidden')) draw1($('dprev'), dEyesOn, '#e3f4ee', .3, 240);
-  if(Math.floor(T*10) % 3 === 0) document.querySelectorAll('.fopt canvas').forEach((cv2,k) => draw1(cv2, k === 0, k === 0 ? '#ef6479' : '#b52c25', .32, 96));
-  ctx = keepCtx; PXW = 1; [c.useSkin, c.eyes, skinImgs[cP]] = keep;
+  if(!$('dPol').classList.contains('hidden')) draw1($('dprev'), dEyesOn, '#e3f4ee', 240);
+  if(Math.floor(T*10) % 3 === 0) document.querySelectorAll('.fopt canvas').forEach((cv2,k) => draw1(cv2, k === 0, k === 0 ? '#ffadaf' : '#86aaa2', 96));
 }
 document.querySelectorAll('#home [data-act]').forEach(b => b.onclick = () => {
   const a = b.dataset.act;
@@ -2175,22 +2192,23 @@ function drawChar(p, spr){
   else if(p.sq){ const R = p.R; ctx.translate(0, r); ctx.scale((R + p.sq[0])/R, (R + p.sq[1])/R); ctx.translate(0, -r); }   // squash berporos di kaki
   speciesBack(ch, r);
   accessoryBack(ch, r);
-  const skin = ch.skin;
-  wobbly(0, 0, r, p.seed, 0);
+  const skin = ch.skin, hs = skin ? 'blob' : ch.sp;
+  headPath(hs, r);
   ctx.fillStyle = skin ? '#f2eee3' : ch.sp === 'panda' ? '#e3f4ee' : ch.d; ctx.fill();            // warna gelap = bayangan
   ctx.save();
   if(skin){ ctx.imageSmoothingEnabled = false; ctx.drawImage(maskedSkin(skin, skin === dc), -r, -r, r*2, r*2); }
   else {
-    fillPoly(clampPoly(ellPts(-r*.2, -r*.24, r*.98, r*.98, 0, 40), r), bodyStyle(ch, r));         // bagian terang
-    ctx.fillStyle = '#f2eee3'; ctx.fillRect(-r*.62, -r*.62, r*.26, r*.18); ctx.fillRect(-r*.7, -r*.4, r*.14, r*.14); // kilap
+    headFill(hs, r, bodyStyle(ch, r), .84, -r*.1, -r*.1);                                         // bagian terang (cahaya kiri-atas)
+    const tp = headTop(hs, r);
+    ctx.fillStyle = '#f2eee3'; ctx.fillRect(-r*.56, tp + r*.3, r*.24, r*.16); ctx.fillRect(-r*.66, tp + r*.5, r*.13, r*.13); // kilap
     speciesFront(p, ch, r);
   }
   ctx.restore();
-  wobbly(0, 0, r, p.seed, 0); inkStroke(Math.max(3, r*.09));
+  headPath(hs, r); inkStroke(Math.max(3, r*.09));
   accessoryFront(ch, r);
   if(!skin || ch.eyes){ if(!spr) drawFace(p, r, ch); speciesTop(p, ch, r); }
   accessoryFace(p, ch, r);
-  drawHat(ch.hat, r);
+  ctx.save(); ctx.translate(0, headTop(skin ? 'blob' : ch.sp, r) + r); drawHat(ch.hat, r); ctx.restore();
   ctx.restore();
 }
 function bodyStyle(ch, r){
@@ -2280,6 +2298,39 @@ function maskedSkin(img, live){                 // kulit gambar sendiri dipotong
 }
 
 // ---------- Kepala hewan ----------
+// tiap spesies punya siluet sendiri: superellipse [rx, ry, n] + modifikasi bentuk
+const HEAD = {
+  cat:  {rx:1.08, ry:.9,  n:3.2},
+  fox:  {rx:1.1,  ry:.95, n:2.6, chin:.5},
+  frog: {rx:1.22, ry:.78, n:2.4},
+  dog:  {rx:.95,  ry:1.04,n:2.6, jowl:.12},
+  chick:{rx:.95,  ry:1.0, n:2.1, egg:.16},
+  bear: {rx:1.06, ry:.94, n:2.3, egg:.06},
+  bunny:{rx:.92,  ry:1.0, n:2.2, egg:.08},
+  mouse:{rx:.9,   ry:.96, n:2.1, egg:.2},
+  pig:  {rx:1.14, ry:.88, n:2.6},
+  panda:{rx:1.06, ry:.94, n:2.5},
+  fish: {rx:1.2,  ry:.8,  n:1.7},
+  owl:  {rx:1.0,  ry:1.0, n:4.0},
+  blob: {rx:1,    ry:1,   n:2},
+};
+const headCache = new Map();
+function headPts(sp, r){
+  const h = HEAD[sp] || HEAD.blob, k = sp + r.toFixed(2); if(headCache.has(k)) return headCache.get(k);
+  const out = [], N = 48, e = 2/h.n;
+  for(let i=0;i<N;i++){
+    const a = i/N*Math.PI*2, c = Math.cos(a), s = Math.sin(a);
+    let x = Math.sign(c)*Math.abs(c)**e*h.rx, y = Math.sign(s)*Math.abs(s)**e*h.ry;
+    if(h.egg) x *= 1 + h.egg*y/h.ry;                           // lebih lebar di bawah
+    if(h.chin && y > 0) x *= 1 - h.chin*(y/h.ry)**1.6;          // dagu lancip (rubah)
+    if(h.jowl && y > .2) x *= 1 + h.jowl;                       // pipi turun (anjing)
+    out.push([x*r, y*r]);
+  }
+  if(headCache.size > 300) headCache.clear(); headCache.set(k, out); return out;
+}
+const headTop = (sp, r) => -(HEAD[sp] || HEAD.blob).ry*r;
+function headPath(sp, r){ const pts = headPts(sp, r); ctx.beginPath(); pts.forEach((q,i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.closePath(); }
+function headFill(sp, r, fill, sc, dx, dy){ const pts = headPts(sp, r).map(([x,y]) => [x*sc + dx, y*sc + dy]); fillPoly(pts, fill); }
 const CREAM = '#f2eee3', PINK = '#ffadaf';
 function blobAt(x, y, rx, ry, rot, fill, lw){ ctx.beginPath(); ctx.ellipse(x, y, rx, ry, rot || 0, 0, 7); ctx.fillStyle = fill; ctx.fill(); if(lw) inkStroke(lw); }
 function speciesBack(ch, r){
@@ -2310,12 +2361,19 @@ function speciesBack(ch, r){
     for(const s of [-1,1]) blobAt(s*r*.44, -r*.66, r*.34, r*.32, 0, c, lw);
   } else if(sp === 'chick'){
     for(const k of [-1,0,1]) blobAt(k*r*.14, -r*1.02 - (k === 0 ? r*.08 : 0), r*.1, r*.2, k*.5, c, lw*.8);
+  } else if(sp === 'fish'){                                     // sirip punggung & sirip samping
+    ctx.beginPath(); ctx.moveTo(-r*.42, -r*.6); ctx.quadraticCurveTo(-r*.1, -r*1.4, r*.5, -r*1.15); ctx.lineTo(r*.38, -r*.6); ctx.closePath(); ctx.fillStyle = d; ctx.fill(); inkStroke(lw);
+    for(const s of [-1,1]){ ctx.beginPath(); ctx.moveTo(s*r*1.1, -r*.15); ctx.lineTo(s*r*1.55, -r*.5); ctx.lineTo(s*r*1.5, r*.38); ctx.closePath(); ctx.fillStyle = d; ctx.fill(); inkStroke(lw); }
+  } else if(sp === 'owl'){                                      // jambul telinga
+    for(const s of [-1,1]){ ctx.beginPath(); ctx.moveTo(s*r*.35, -r*.9); ctx.lineTo(s*r*.95, -r*1.42); ctx.lineTo(s*r*.92, -r*.62); ctx.closePath(); ctx.fillStyle = d; ctx.fill(); inkStroke(lw); }
   }
 }
 function speciesFront(p, ch, r){
   const sp = ch.sp, gx = p.fx*r*.12, gy = p.fy*r*.08;
   const blobAt = (x, y, rx, ry, rot, fill) => fillPoly(clampPoly(ellPts(x, y, rx, ry, rot, 24), r*.96), fill);
-  if(sp === 'fox'){ blobAt(gx - r*.42, gy + r*.42, r*.5, r*.42, .4, CREAM); blobAt(gx + r*.42, gy + r*.42, r*.5, r*.42, -.4, CREAM); }
+  if(sp === 'fox'){ blobAt(gx - r*.36, gy + r*.36, r*.42, r*.36, .4, CREAM); blobAt(gx + r*.36, gy + r*.36, r*.42, r*.36, -.4, CREAM); }
+  if(sp === 'owl'){ for(const s of [-1,1]) blobAt(gx + s*r*.34, gy - r*.12, r*.38, r*.4, 0, CREAM); blobAt(gx, gy + r*.55, r*.5, r*.3, 0, ch.d); }
+  if(sp === 'fish'){ for(const k of [-1,0,1]){ ctx.beginPath(); ctx.arc(gx + k*r*.3, gy + r*.52, r*.16, Math.PI*1.1, Math.PI*1.9); ctx.lineWidth = PXW; ctx.strokeStyle = ch.d; ctx.stroke(); } }
   if(sp === 'bear' || sp === 'dog') blobAt(gx, gy + r*.32, r*.36, r*.27, 0, CREAM);
   if(sp === 'panda') for(const s of [-1,1]) blobAt(gx*1.3 + s*r*.32, gy - r*.06, r*.2, r*.27, s*.5, ch.d);
   if(sp === 'frog' || sp === 'chick' || sp === 'pig' || sp === 'mouse' || sp === 'cat') for(const s of [-1,1]) blobAt(gx + s*r*.56, gy + r*.22, r*.13, r*.08, 0, PINK);
@@ -2329,6 +2387,9 @@ function speciesTop(p, ch, r){
   if(sp === 'pig'){ blobAt(gx, gy + r*.16, r*.24, r*.16, 0, '#d5734c', lw*.8); blobAt(gx - r*.08, gy + r*.16, r*.04, r*.06, 0, INK); blobAt(gx + r*.08, gy + r*.16, r*.04, r*.06, 0, INK); }
   if(sp === 'chick'){ ctx.beginPath(); ctx.moveTo(gx - r*.13, gy + r*.08); ctx.lineTo(gx + r*.13, gy + r*.08); ctx.lineTo(gx, gy + r*.24); ctx.closePath(); ctx.fillStyle = '#ffb182'; ctx.fill(); inkStroke(lw*.7); }
   if(sp === 'bunny'){ ctx.fillStyle = '#e3f4ee'; ctx.fillRect(gx - r*.06, gy + r*.3, r*.12, r*.1); }
+  if(sp === 'owl'){ ctx.beginPath(); ctx.moveTo(gx - r*.11, gy + r*.06); ctx.lineTo(gx + r*.11, gy + r*.06); ctx.lineTo(gx, gy + r*.26); ctx.closePath(); ctx.fillStyle = '#eb7d10'; ctx.fill(); inkStroke(lw*.7); }
+  if(sp === 'fish'){ blobAt(gx, gy + r*.22, r*.1, r*.08, 0, '#e6687d', lw*.7); }
+  if(sp === 'dog'){ ctx.fillStyle = '#e6687d'; ctx.fillRect(gx - r*.07, gy + r*.32, r*.14, r*.14); }
 }
 
 // ---------- Gambar makanan ----------
@@ -2523,7 +2584,7 @@ function pixFace(g, size, q, R){
   const frog = ch.sp === 'frog' && !ch.skin;
   const dx = Math.round((q.fx || 0)*R*.14), dy = Math.round((q.fy || 0)*R*.1) - (q.sq ? q.sq[1] : 0);   // wajah ikut turun saat squash
   const ew = Math.max(1, Math.round(R*.16)), eh = Math.max(2, Math.round(R*.24));
-  const ex = frog ? Math.round(R*.42) : Math.max(1, Math.round(R*.22)), ey = frog ? -Math.round(R*.7) : -Math.round(R*.2);
+  const sp0 = ch.skin ? 'blob' : ch.sp, ex = frog ? Math.round(R*.42) : sp0 === 'owl' ? Math.round(R*.24) : sp0 === 'fish' ? Math.round(R*.4) : Math.max(1, Math.round(R*.22)), ey = frog ? -Math.round(R*.7) : sp0 === 'owl' ? -Math.round(R*.22) : -Math.round(R*.2);
   const eyeY = c + ey + dy;
   for(const side of [-1, 1]){
     const x = side < 0 ? c - ex - ew + dx : c + ex + dx;          // posisi cermin
@@ -2541,6 +2602,39 @@ function pixFace(g, size, q, R){
   else if(e === 'dead'){ P(mx - 2, my, 1, 1, INK); P(mx - 1, my + 1, 1, 1, INK); P(mx, my, 1, 1, INK); P(mx + 1, my + 1, 1, 1, INK); }
   else { P(mx - 2, my, 1, 1, INK); P(mx - 1, my + 1, 2, 1, INK); P(mx + 1, my, 1, 1, INK); }
 }
+// ===== KARAKTER GAMBAR SENDIRI =====
+// Gambar 32x32 milik pemain dipakai utuh (bentuknya = siluet karakter). Ukuran piksel tetap sama dengan aset lain:
+// tampil 1x, dikecilkan dengan sampling warna mayoritas (garis gelap diberi bobot lebih), atau dibesarkan kelipatan bulat.
+const customCache = new WeakMap();
+function customSpr(src, R, outline, live){
+  let m = !live && customCache.get(src); const key = R + (outline ? 'o' : 'n');
+  if(m && m.has(key)) return m.get(key);
+  const t32 = document.createElement('canvas'); t32.width = t32.height = 32; const tg = t32.getContext('2d', {willReadFrequently:true});
+  tg.imageSmoothingEnabled = false; tg.drawImage(src, 0, 0, 32, 32);
+  const u = new Uint32Array(tg.getImageData(0, 0, 32, 32).data.buffer);
+  let x0 = 32, y0 = 32, x1 = -1, y1 = -1;
+  for(let y=0;y<32;y++) for(let x=0;x<32;x++) if(u[y*32 + x] >>> 24 > 127){ if(x < x0) x0 = x; if(x > x1) x1 = x; if(y < y0) y0 = y; if(y > y1) y1 = y; }
+  if(x1 < 0) return null;
+  const bw = x1 - x0 + 1, bh = y1 - y0 + 1, S = Math.max(bw, bh), D = 2*R + 2;
+  let tw, th, sample;
+  if(D >= 2*S){ const k = Math.min(3, Math.floor(D/S)); tw = bw*k; th = bh*k; sample = (x, y) => u[(y0 + Math.floor(y/k))*32 + x0 + Math.floor(x/k)]; }
+  else if(D >= S){ tw = bw; th = bh; sample = (x, y) => u[(y0 + y)*32 + x0 + x]; }
+  else { const f = D/S; tw = Math.max(2, Math.round(bw*f)); th = Math.max(2, Math.round(bh*f));
+    sample = (x, y) => { const sx0 = x0 + Math.floor(x/f), sx1 = Math.max(sx0 + 1, x0 + Math.floor((x + 1)/f)), sy0 = y0 + Math.floor(y/f), sy1 = Math.max(sy0 + 1, y0 + Math.floor((y + 1)/f));
+      const cnt = new Map(); let empty = 0;
+      for(let yy=sy0;yy<sy1 && yy<32;yy++) for(let xx=sx0;xx<sx1 && xx<32;xx++){ const c = u[yy*32 + xx];
+        if(c >>> 24 < 128){ empty++; continue; } const lum = (c & 255) + ((c >> 8) & 255) + ((c >> 16) & 255); cnt.set(c, (cnt.get(c) || 0) + (lum < 180 ? 1.6 : 1)); }
+      let best = 0, bv = empty*.9; for(const [c, v] of cnt) if(v > bv){ bv = v; best = c; } return best; }; }
+  let w = tw + 4, h = th + 4; w += w % 2; h += h % 2;
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d', {willReadFrequently:true});
+  const id = g.createImageData(w, h), o = new Uint32Array(id.data.buffer), ox = (w - tw) >> 1, oy = (h - th) >> 1;
+  for(let y=0;y<th;y++) for(let x=0;x<tw;x++){ const v = sample(x, y); if(v >>> 24 > 127) o[(oy + y)*w + ox + x] = (v | 0xff000000) >>> 0; }
+  g.putImageData(id, 0, 0);
+  if(outline) autoOutline(g, w, h);
+  c.__base = c; c.__rot = null;
+  if(!live){ if(!m){ m = new Map(); customCache.set(src, m); } if(m.size > 40) m.clear(); m.set(key, c); }
+  return c;
+}
 // sprite karakter: jari-jari bulat dalam piksel seni, tanpa squash/napas (yang membuat ukuran bergetar 1px)
 function charCanvas(p, scale, c){
   let R = Math.max(3, Math.round(rad(p)/scale));
@@ -2548,6 +2642,8 @@ function charCanvas(p, scale, c){
   const q = Object.assign({}, p, {x:0, y:0, m:(R*scale)**2, alive:true});
   if(!p.alive) q.expr = 'dead';
   q.sq = p.alive && p.sq && R >= 6 ? [Math.min(p.sq[0], R >> 2), Math.max(p.sq[1], -(R >> 2))] : null; q.R = R;
+  const chc = CHARS[q.i];
+  if(chc.skin){ const cs = customSpr(chc.skin, R, chc.outline, chc.skin === dc); if(cs) return cs; }
   return makeSpr(c || document.createElement('canvas'), R*scale*1.95, scale, () => drawChar(q, true), (g, size) => { if(!CHARS[q.i].skin || CHARS[q.i].eyes) pixFace(g, size, q, R); });
 }
 function drawCharPix(p){                         // untuk pratinjau/kartu: tempel sprite 1:1 di grid
@@ -2584,9 +2680,9 @@ function charSpr(p, slot, extraAng){
   let r = rad(p), k = 1;
   if(!p.alive){ if(p.fall <= 0) return; k = p.fall/p.fallMax; if(r*k < 1) return; }
   const c = sprPool[slot] || (sprPool[slot] = document.createElement('canvas'));
-  if(!charCanvas(p, SPRSCALE, c)) return;
+  const cc = charCanvas(p, SPRSCALE, c); if(!cc) return;
   const lean = p.alive ? clamp(p.vx/1400, -.22, .22) : (1-k)*7;
-  pushSpr(c, p.x, p.y, lean + (extraAng || 0));
+  pushSpr(cc, p.x, p.y, lean + (extraAng || 0));
 }
 function sparkSpr(q){
   const k = 1 - q.life/q.max, fr = k < .15 ? .6 : k < .45 ? 1 : k < .75 ? .65 : .35;   // 4 frame efek
