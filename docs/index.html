@@ -553,7 +553,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v5.0 · piksel tegas + UI gelap';
+const VERSION = 'v5.1 · ikon sel-out';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -936,7 +936,7 @@ const PIXDEF = {
   gear: ['....SS....','.SS.SS.SS.','.SSSSSSSS.','..SSSSSS..','SSSS..SSSS','SSSS..SSSS','..SSSSSS..','.SSSSSSSS.','.SS.SS.SS.','....SS....'],
   help: ['..YYYYYY..','.YYDDDDYY.','YYDDYYDDYY','YYYYYYDDYY','YYYYYDDYYY','YYYYDDYYYY','YYYYDDYYYY','.YYYYYYYY.','..YYDDYY..','...YYYY...'],
   back: ['...W......','..WW......','.WWWWWWWW.','WWWWWWWWW.','.WWWWWWWW.','..WW......','...W......'],
-  tcol: ['..SSSSSS..','.S......S.','.BBBBBBBB.','BBBBBBBBBB','.SSSSSSSS.','.SSSSSSSS.','.SSSBSSSS.','..SSBSSS..','....B.....'],
+  tcol: ['..NNNNNN..','.NRRNNYYN.','NNRRNNYYNN','NNNNNNNNNN','NBBNN..NNN','NBBNN..GGN','.NNNNNNGGN','..NNNNNNN.'],
   bucket: ['..SSSSSS..','.S......S.','.BBBBBBBB.','BBBBBBBBBB','.SSSSSSSS.','.SSSSSSSS.','.SSSBSSSS.','..SSBSSS..','....B.....'],
   that: ['.....Y....','....KK....','....KKK...','...YYKK...','...KKKKK..','..KKKYYK..','..KKKKKKK.','.YYKKKKKK.','.KKKKKKKKK'],
   tacc: ['DDDD..DDDD','DBBDDDDBBD','DBBD..DBBD','.DD....DD.'],
@@ -952,6 +952,13 @@ const PIXDEF = {
   undo: ['..YY......','.YYY......','YYYYYYYYY.','YYYYYYYYYY','.YYY....YY','..YY....YY','........YY','.....YYYYY','.....YYYY.'],
   check: ['........GG','.......GGG','......GGG.','GG...GGG..','GGG.GGG...','.GGGGG....','..GGG.....','...G......']
 };
+const ICR = { // ramp ikon: [kilap, dasar, bayang, garis sel-out]
+  Y:['#f2eee3','#ffc33a','#eb7d10','#b8300e'], O:['#ffc33a','#eb7d10','#b8300e','#6c0b1c'], R:['#ef6479','#b52c25','#6c0b1c','#461d19'],
+  B:['#49e2dd','#0a98d6','#214aa6','#271e69'], G:['#d5e848','#5ab230','#156948','#0e343f'], P:['#e6687d','#9e1e74','#510c5d','#271e69'],
+  K:['#ffadaf','#e6687d','#9e1e74','#510c5d'], W:['#f2eee3','#e3f4ee','#86aaa2','#456a71'], S:['#e3f4ee','#86aaa2','#456a71','#26364b'],
+  N:['#fcb67a','#c5763b','#8b3c2b','#461d19'], T:['#1db578','#18657a','#0e343f','#110a02'], C:['#f2eee3','#f2eee3','#aca394','#6f5e57'],
+  D:['#3f2f30','#3f2f30','#3f2f30','#110a02']
+};
 function buildPixIcon(rows){                   // ikon 2D datar 22x22: grid 10x10 diperhalus EPX ke 20x20, warna rata + outline 1 piksel
   const h0 = rows.length, w0 = Math.max(...rows.map(r => r.length));
   const ox = Math.floor((10 - w0)/2), oy = Math.floor((10 - h0)/2);
@@ -961,16 +968,26 @@ function buildPixIcon(rows){                   // ikon 2D datar 22x22: grid 10x1
     const P = at(x, y), A = at(x, y-1), B = at(x+1, y), C = at(x-1, y), D = at(x, y+1);
     const q = [(C === A && C !== D && A !== B && C) ? A : P, (A === B && A !== C && B !== D && A) ? B : P, (D === C && D !== B && C !== A && D) ? C : P, (B === D && B !== A && D !== C && B) ? D : P];
     if(!P){ q[0] = (C && C === A && C !== D && A !== B) ? A : null; q[1] = (A && A === B && A !== C && B !== D) ? B : null; q[2] = (D && D === C && D !== B && C !== A) ? C : null; q[3] = (B && B === D && B !== A && D !== C) ? D : null; }
-    const gx = 1 + 2*x, gy = 1 + 2*y; [[0,0],[1,0],[0,1],[1,1]].forEach(([dx,dy], k) => { if(q[k]) grid[gy+dy][gx+dx] = ICF[q[k]][1]; });
+    const gx = 1 + 2*x, gy = 1 + 2*y; [[0,0],[1,0],[0,1],[1,1]].forEach(([dx,dy], k) => { if(q[k]) grid[gy+dy][gx+dx] = q[k]; });
   }
-  const filled = grid.map(r => r.map(v => !!v));
+  // gaya ikon "sel-out": tiap bahan punya ramp 4 warna [kilap, dasar, bayang, garis]; garis luar = warna tergelap bahan di sebelahnya
+  const L = (x, y) => (grid[y] && grid[y][x]) || null, out = Array.from({length:W2}, () => Array(W2).fill(null));
   for(let y=0;y<W2;y++) for(let x=0;x<W2;x++){
-    if(filled[y][x]) continue;
-    if([[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy]) => filled[y+dy] && filled[y+dy][x+dx])) grid[y][x] = '#110a02';
+    const m = L(x, y);
+    if(!m){ let best = null, bi = -1;
+      for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ const n = L(x+dx, y+dy); if(n){ const k = 'DTRPBGNOSKYWC'.indexOf(n); if(best === null || k < bi){ best = n; bi = k; } } }
+      if(best) out[y][x] = ICR[best][3]; continue; }
+    const R = ICR[m]; if(m === 'D'){ out[y][x] = R[1]; continue; }
+    const up = L(x, y-1) === null, dn = L(x, y+1) !== m, rt = L(x+1, y) === null, lf = L(x-1, y) === null;
+    out[y][x] = (dn || rt) ? R[2] : (up || (lf && L(x, y-1) !== m)) ? R[0] : R[1];   // bayang bawah/kanan, kilap tepi atas
+  }
+  for(let y=0;y<W2;y++) for(let x=0;x<W2;x++){             // kilau kecil 2 piksel di pojok kiri-atas tiap bahan besar
+    const m = L(x, y); if(!m || m === 'D' || m === 'C' || m === 'W') continue;
+    if(L(x-1, y-1) === m && L(x, y-1) === m && L(x-1, y) === m && L(x-2, y-2) !== m && L(x, y-2) !== m && L(x-2,y) !== m && L(x+2,y+2) === m && L(x+3,y+3) === m) out[y][x] = ICR[m][0];
   }
   const c = document.createElement('canvas'); c.width = W2; c.height = W2;
   const g = c.getContext('2d');
-  for(let y=0;y<W2;y++) for(let x=0;x<W2;x++) if(grid[y][x]){ g.fillStyle = grid[y][x]; g.fillRect(x, y, 1, 1); }
+  for(let y=0;y<W2;y++) for(let x=0;x<W2;x++) if(out[y][x]){ g.fillStyle = out[y][x]; g.fillRect(x, y, 1, 1); }
   return c.toDataURL();
 }
 for(const n in PIXDEF) PIXICON[n + '@px'] = buildPixIcon(PIXDEF[n]);
