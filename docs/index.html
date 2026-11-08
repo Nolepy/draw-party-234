@@ -154,21 +154,50 @@
   .drawpanel h2{font-size:4.6vh!important;margin:0}
   .tog{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;cursor:pointer}
   .tog input{width:22px;height:22px;accent-color:#7cc47a}
-  #draw{position:fixed;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;gap:3vw;background:#dedbd2;padding:2vh 3vw;box-sizing:border-box}
-  .dtools{display:flex;flex-direction:column;gap:1.6vh;width:22vw}
-  .dcolors{display:grid;grid-template-columns:repeat(4,1fr);gap:1vh}
-  .dcolors button{aspect-ratio:1;border:3px solid var(--ink);border-radius:50%;cursor:pointer;box-shadow:2px 2px 0 var(--ink);padding:0}
-  .dcolors button.on{outline:3px solid #fff;transform:scale(1.15)}
-  .drow{display:flex;gap:1vw}
-  .dbtn{flex:1;height:8vh;font-size:3.6vh;border:3px solid var(--ink);border-radius:10px;background:#fff;box-shadow:2px 3px 0 var(--ink);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center}
-  .dbtn.on{background:#f2c94c}
-  .dbtn .sz{display:block;border-radius:50%;background:var(--ink)}
-  .dstage{position:relative;width:min(84vh,44vw);height:min(84vh,44vw);flex:none;overflow:hidden;border-radius:8px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
-  #dc{width:100%;height:100%;display:block;border-radius:6px;background:#fff;touch-action:none;cursor:crosshair}
-  .dring{position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 999px rgba(222,219,210,.78);border:4px dashed var(--ink);pointer-events:none}
-  .dhint{position:absolute;left:6px;right:auto;top:4px;text-align:center;font-size:12px;font-weight:700;opacity:.6;pointer-events:none}
-  .dside{display:flex;flex-direction:column;gap:1.6vh;align-items:center;width:20vw}
-  #dprev{width:min(36vh,18vw);height:min(36vh,18vw);border-radius:50%;background:#a9d3f0;border:4px solid var(--ink)}
+  #draw{position:fixed;inset:0;z-index:9;display:flex;align-items:center;gap:3vw;padding:3vh 3vw 3vh 4vw;box-sizing:border-box;overflow:hidden;
+    background-color:#8fc6e3;background-image:repeating-linear-gradient(-35deg,rgba(255,255,255,.16) 0 3px,transparent 3px 24px),radial-gradient(ellipse at 30% 40%,rgba(255,255,255,.3),transparent 65%)}
+  .dpaper{position:relative;z-index:1;width:36vw;height:94vh;flex:none;background:#fdfdf9;background-image:repeating-linear-gradient(transparent 0 23px,#d6e4f3 23px 25px);border:2px solid #cfcac0;box-shadow:6px 7px 0 rgba(38,35,34,.22);transform:rotate(-.6deg);display:flex;flex-direction:column;gap:1.5vh;padding:2.4vh 2vw;box-sizing:border-box}
+  .dpaper::before{content:'';position:absolute;top:-1.6vh;left:38%;width:24%;height:4.2vh;background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.08);transform:rotate(-3deg)}
+  .dhead{display:flex;align-items:center;gap:.8vw;background:#f2b42c;background-image:repeating-linear-gradient(-60deg,rgba(255,255,255,.28) 0 2px,transparent 2px 7px);padding:.8vh .8vw;margin:0 -1.2vw;border:3px solid var(--ink);transform:rotate(-1deg);box-shadow:3px 3px 0 var(--ink)}
+  .dhead i{width:8vh;height:8vh;flex:none;background:#bfe3f2;border:2.5px solid var(--ink)}
+  .dhead i svg,.dname i svg,.dtoolbtn svg,.dbig svg,.rbtn svg,.dpencils svg{width:100%;height:100%;display:block;overflow:visible}
+  .dhead span{flex:1;background:#fff;border:3px solid var(--ink);font-family:'Lilita One',sans-serif;font-size:4.8vh;padding:.4vh 1vw;text-align:center;white-space:nowrap}
+  .dname{display:flex;align-items:center;gap:1vw}
+  .dname i{width:7vh;height:7vh;flex:none}
+  .dname input{flex:1;min-width:0;font-family:'Lilita One',sans-serif;font-size:4.4vh;border:2.5px solid var(--ink);background:#fff repeating-linear-gradient(transparent 0 9px,#e3e8ef 9px 10px);text-align:center;padding:.3vh;color:var(--ink);outline:none;touch-action:manipulation;-webkit-user-select:text;user-select:text}
+  .dpen{display:flex;align-items:center;gap:.8vw;background:#c7cfd8;border:2.5px solid var(--ink);padding:.8vh .6vw}
+  .dtoolbtn{width:8.5vh;height:8.5vh;flex:none;border:2.5px solid var(--ink);background:#e9edf2;padding:.6vh;cursor:pointer}
+  #dSz{flex:1;height:3.6vh;border-radius:2vh 6vh 6vh 2vh;background:linear-gradient(90deg,#e8735a var(--v,30%),#fff var(--v,30%))}
+  #dSz::-webkit-slider-thumb{width:3vh;height:7vh;border-radius:3px;background:#4b5f8c}
+  .dsz{width:8.5vh;height:8.5vh;flex:none;background:#f2c94c;border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center}
+  #dDot{display:block;border-radius:50%;border:2px solid var(--ink)}
+  .dswatch{display:grid;grid-template-columns:repeat(6,1fr);gap:1.4vh 1vw;background:#a9d3df;border:2.5px solid var(--ink);padding:1.6vh 1.4vw}
+  .dswatch button{aspect-ratio:1;border:2.5px solid var(--ink);box-shadow:2px 3px 0 var(--ink);background-image:repeating-linear-gradient(-45deg,rgba(255,255,255,.42) 0 2px,transparent 2px 6px);transform:rotate(var(--r));padding:0;cursor:pointer}
+  .dswatch button.on{outline:4px solid #f2c94c;outline-offset:2px;transform:rotate(var(--r)) scale(1.12)}
+  .dface{display:flex;align-items:center;gap:1vw;background:#5d6b78;border:2.5px solid var(--ink);padding:1vh 1vw}
+  .dface .lbl{color:#fff;font-weight:800;font-size:2.8vh;flex:1}
+  .fopt{width:11vh;height:11vh;padding:0;border:3px solid var(--ink);background:#e8735a;border-radius:6px;cursor:pointer;overflow:hidden}
+  .fopt.on{outline:4px solid #f2c94c;outline-offset:1px}
+  .fopt canvas{width:100%;height:100%;display:block}
+  .dbtns{display:flex;gap:1.5vw;margin-top:auto}
+  .dbig{flex:1;height:11vh;border:3px solid var(--ink);box-shadow:3px 4px 0 var(--ink);padding:1.2vh;cursor:pointer;transform:rotate(-.8deg)}
+  .dbig:active,.rbtn:active,.dtoolbtn:active{transform:scale(.93)}
+  .blue{background:#3fb0dc}.yellow{background:#f2d43c}.green{background:#5cbf4a}
+  .dright{position:relative;flex:1;min-width:0;height:94vh;display:flex;flex-direction:column;gap:2vh}
+  .dsheet{flex:1;min-height:0;background:#fff;border:2px solid #d9d4ca;box-shadow:6px 7px 0 rgba(38,35,34,.22);display:flex;align-items:center;justify-content:center;overflow:hidden;transform:rotate(.4deg)}
+  .dcv{position:relative;height:100%;aspect-ratio:1;max-width:100%}
+  #dc{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
+  .dring{position:absolute;inset:3%;border-radius:50%;border:3px dashed rgba(38,35,34,.45);box-shadow:0 0 0 999px rgba(255,255,255,.6);pointer-events:none}
+  .dring.off{display:none}
+  .dbar{display:flex;align-items:center;gap:2vw;height:14vh;flex:none}
+  .rbtn{width:13vh;height:13vh;border-radius:50%;border:3px solid var(--ink);box-shadow:3px 4px 0 var(--ink);padding:2.4vh;cursor:pointer;opacity:.6}
+  .rbtn.on,.rbtn.yellow,.rbtn.green{opacity:1}
+  .rbtn.big{width:17vh;height:17vh;margin:-3vh 0 -1vh;padding:3vh}
+  .dpol{position:absolute;right:-1.5vw;top:-1.5vh;width:22vh;background:#fff;padding:1.2vh 1.2vh .4vh;border:1px solid #ccc;box-shadow:3px 4px 0 rgba(0,0,0,.22);transform:rotate(6deg);text-align:center;font-weight:800;font-size:2.2vh;z-index:2}
+  .dpol.hidden{display:none}
+  #dprev{width:100%;aspect-ratio:1;display:block;background:#a9d3f0}
+  .dclose{position:absolute;left:1vw;top:1.5vh;z-index:3;width:6vh;height:6vh;border-radius:50%;border:2.5px solid var(--ink);background:#e8735a;color:#fff;font-size:3vh;box-shadow:2px 2px 0 var(--ink);cursor:pointer;padding:0}
+  .dpencils{position:absolute;left:-2vw;bottom:-3vh;width:24vh;height:24vh;pointer-events:none;z-index:0;transform:rotate(-8deg)}
   #toast{position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:30;background:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:8px 16px;box-shadow:3px 3px 0 var(--ink);font-size:15px;transition:opacity .3s;pointer-events:none}
   #tab{font-size:15px;line-height:1.7}
 </style>
@@ -223,21 +252,29 @@
 </div>
 
 <div id="draw" class="hidden">
-  <div class="dtools">
-    <div class="dcolors" id="dColors"></div>
-    <div class="drow" id="dSizes"></div>
-    <div class="drow">
-      <button class="dbtn on" id="dPen">✏️</button><button class="dbtn" id="dEra">🧽</button><button class="dbtn" id="dFill">🪣</button>
+  <div class="dpaper">
+    <div class="dhead"><i data-icon="note"></i><span data-t="drawHero">Gambar Jagoanmu!</span></div>
+    <div class="dname"><i data-icon="save"></i><input id="dName" maxlength="10" autocomplete="off" spellcheck="false"></div>
+    <div class="dpen"><button id="dTool" class="dtoolbtn"></button><input type="range" id="dSz" min="3" max="34" value="10"><span class="dsz"><b id="dDot"></b></span></div>
+    <div class="dswatch" id="dColors"></div>
+    <div class="dface"><span class="lbl" data-t="faceL">Wajah</span>
+      <button class="fopt" data-e="1"><canvas width="120" height="120"></canvas></button>
+      <button class="fopt" data-e="0"><canvas width="120" height="120"></canvas></button></div>
+    <div class="dbtns"><button class="dbig blue" id="dFill" data-icon="bucket"></button><button class="dbig yellow" id="dClr" data-icon="trash"></button></div>
+  </div>
+  <div class="dright">
+    <div class="dsheet"><div class="dcv"><canvas id="dc" width="256" height="256"></canvas><div class="dring"></div></div></div>
+    <div class="dbar">
+      <button class="rbtn blue on" id="dGuide" data-icon="guide"></button>
+      <button class="rbtn blue on" id="dPrevBtn" data-icon="person"></button>
+      <span style="flex:1"></span>
+      <button class="rbtn yellow" id="dUndo" data-icon="undo"></button>
+      <button class="rbtn green big" id="dSave" data-icon="check"></button>
     </div>
-    <div class="drow"><button class="dbtn" id="dUndo">↶</button><button class="dbtn" id="dClr">🗑</button></div>
+    <div class="dpol" id="dPol"><canvas id="dprev" width="240" height="240"></canvas><span data-t="previewL">Pratinjau</span></div>
   </div>
-  <div class="dstage"><canvas id="dc" width="256" height="256"></canvas><div class="dring"></div><div class="dhint" data-t="drawHint"></div></div>
-  <div class="dside">
-    <canvas id="dprev" width="240" height="240"></canvas>
-    <label class="tog"><input type="checkbox" id="dEyes"> <span data-t="eyes"></span></label>
-    <button class="go" id="dSave" data-t="save">SIMPAN</button>
-    <button class="go alt small" id="dCancel" data-t="cancel">BATAL</button>
-  </div>
+  <button class="dclose" id="dCancel">✕</button>
+  <div class="dpencils"></div>
 </div>
 
 <div class="overlay hidden" id="modal"><div class="card"><button class="x" id="mx">✕</button><div id="mbody"></div></div></div>
@@ -257,20 +294,23 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v0.7 · karakter + gambar sendiri';
+const VERSION = 'v0.8 · editor gambar baru + layar penuh';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#262322', FONT = "'Baloo 2',system-ui,sans-serif";
 const font = px => `700 ${px}px ${FONT}`;
 const fontT = px => `${px}px 'Lilita One',${FONT}`;
-const WW = 1200, WH = 675, CX = 600, CY = 337.5;
+let WW = 1200, CX = 600, lockWorld = false;
+const WH = 675, CY = 337.5;
 let W, H, DPR, S, OX, OY;
 function resize(){
   DPR = Math.min(devicePixelRatio || 1, 2);
   W = innerWidth; H = innerHeight;
   cv.style.width = W + 'px'; cv.style.height = H + 'px';
   cv.width = W*DPR; cv.height = H*DPR;
-  S = Math.min(W/(WW+140), H/(WH+40)); OX = (W-WW*S)/2; OY = (H-WH*S)/2;
+  // arena melebar mengikuti rasio layar HP (20:9 dll) supaya penuh tanpa sisa kiri-kanan
+  if(!lockWorld){ WW = Math.round(Math.max(1200, Math.min(1560, WH*W/H))); CX = WW/2; }
+  S = Math.min(W/WW, H/WH); OX = (W-WW*S)/2; OY = (H-WH*S)/2;
 }
 addEventListener('resize', () => { resize(); buildBg(); }); resize();
 
@@ -328,8 +368,9 @@ function sheep(g, x, y, s){
   g.beginPath(); g.arc(x + s*.75, y - s*.1, s*.22, 0, 7); g.fillStyle = INK; g.fill();
 }
 // lantai arena (koordinat dunia, digambar sekali)
-const paper = document.createElement('canvas'); paper.width = WW; paper.height = WH;
-(function(){
+const paper = document.createElement('canvas');
+function buildPaper(){
+  paper.width = WW; paper.height = WH;
   const p = paper.getContext('2d');
   p.fillStyle = '#f4f2ec'; p.fillRect(0,0,WW,WH);
   grain(p, WW, WH, 3000);
@@ -337,8 +378,8 @@ const paper = document.createElement('canvas'); paper.width = WW; paper.height =
   for(let c = -WH*2; c < WW + WH*2; c += 80){ p.moveTo(c, 0); p.lineTo(c + WH*1.73, WH); p.moveTo(c, 0); p.lineTo(c - WH*1.73, WH); }
   p.stroke();
   p.strokeStyle = 'rgba(38,35,34,.38)'; p.lineWidth = 2; p.lineCap = 'round';
-  for(let i=0;i<110;i++) tuft(p, rnd(20,WW-20), rnd(20,WH-20), rnd(6,10));
-})();
+  for(let i=0;i<Math.round(WW/11);i++) tuft(p, rnd(20,WW-20), rnd(20,WH-20), rnd(6,10));
+}
 // latar layar di luar arena: hutan, gunung, domba
 const bg = document.createElement('canvas');
 function buildBg(){
@@ -431,10 +472,21 @@ const ICONS = {
   tacc: G('<rect x="10" y="38" width="34" height="24" rx="8" fill="#262322"/><rect x="56" y="38" width="34" height="24" rx="8" fill="#262322"/><path d="M44 46h12" fill="none"/><path d="M16 44l8 8M62 44l8 8" stroke="#fff" stroke-width="3"/>'),
   tfx: G('<path d="M50 8c8 16 26 22 26 46 0 18-12 30-26 30S24 72 24 54c0-12 8-18 10-28 6 8 4 16 10 18 0-14 0-24 6-36z" fill="#f0a35a"/><path d="M50 50c6 8 12 10 12 20 0 8-6 12-12 12s-12-4-12-12c0-6 6-10 6-16 2 4 4 4 6-4z" fill="#f2c94c"/>'),
   tdraw: G('<path d="M20 80l6-22 44-44 16 16-44 44z" fill="#f2c94c"/><path d="M70 14l16 16 6-6c3-3 3-7 0-10l-6-6c-3-3-7-3-10 0z" fill="#e8735a"/><path d="M26 58l16 16M20 80l14-4-10-10z" fill="#262322"/>'),
+  note: G('<path d="M24 14h40l14 14v58H24z" fill="#fff"/><path d="M64 14v14h14" fill="#e3e8ef"/><path d="M34 40h32M34 52h32M34 64h22" fill="none" stroke-width="3"/>'),
+  save: G('<path d="M20 34h28l6 8h26v40H20z" fill="#fff"/><rect x="38" y="10" width="26" height="30" rx="3" fill="#fff"/><path d="M46 18v14l-5-5M46 32l5-5" fill="none" stroke-width="3"/>'),
+  pencil: G('<path d="M22 82l6-22 44-44 16 16-44 44z" fill="#e8735a"/><path d="M72 16l16 16 4-4c3-3 3-7 0-10l-6-6c-3-3-7-3-10 0z" fill="#f49ac1"/><path d="M28 60l16 16" fill="none"/><path d="M22 82l12-3-9-9z" fill="#262322"/><path d="M34 54l30-30" stroke="#fff" stroke-width="3" opacity=".6"/>'),
+  eraser: G('<path d="M18 62l36-36 26 26-28 28H34z" fill="#f49ac1"/><path d="M18 62l18 18h16l10-10-26-26z" fill="#fff"/><path d="M30 90h50" fill="none"/>'),
+  bucket: G('<path d="M22 36l34-16 22 44-34 16z" fill="#fff"/><path d="M56 20c10-6 22 0 24 10" fill="none"/><path d="M78 62c4 8 8 12 8 18a7 7 0 0 1-14 0c0-6 4-10 6-18z" fill="#6aa6d8"/>'),
+  trash: G('<path d="M26 30h48l-5 56H31z" fill="#fff"/><path d="M18 30h64M40 22h20" fill="none"/><path d="M40 42v34M50 42v34M60 42v34" fill="none" stroke-width="5"/>'),
+  guide: G('<rect x="16" y="16" width="68" height="68" rx="6" fill="#4b5f8c"/><circle cx="50" cy="50" r="26" fill="#a9d3f0" stroke-dasharray="6 5"/><path d="M16 50h68M50 16v68" stroke="#fff" stroke-width="2" opacity=".5"/>'),
+  person: G('<rect x="18" y="14" width="60" height="70" rx="6" fill="#fff"/><circle cx="48" cy="34" r="10" fill="#f2c94c"/><path d="M48 44v20M36 52h24M48 64l-10 14M48 64l10 14" fill="none" stroke-width="5"/><path d="M70 10c10 0 16 8 14 16M84 26l-6-2M84 26l2-6" fill="none" stroke-width="3"/>'),
+  undo: G('<path d="M30 46c0-20 30-28 42-10 10 16-2 36-22 36" fill="none" stroke-width="9"/><path d="M14 40l18 18 10-24z" fill="#262322"/>'),
+  check: G('<path d="M16 52l24 24 46-50" fill="none" stroke-width="16"/><path d="M16 52l24 24 46-50" fill="none" stroke="#fff" stroke-width="7"/>'),
   back: G('<path d="M44 18 8 50l36 32V64h44V36H44z" fill="#fff"/>'),
   help: G('<circle cx="50" cy="50" r="40" fill="#f2c94c"/><path d="M38 38c0-16 26-16 26 0 0 10-14 10-14 22" fill="none" stroke-width="7"/><circle cx="50" cy="74" r="4" fill="#262322"/>')
 };
 document.querySelectorAll('[data-icon]').forEach(e => e.innerHTML = ICONS[e.dataset.icon]);
+document.querySelector('.dpencils').innerHTML = G('<path d="M10 90 70 30l10 10-60 60z" fill="#7cc47a"/><path d="M70 30l12-12 10 10-12 12z" fill="#f3d9b1"/><path d="M82 18l6-6 4 4-6 6z" fill="#262322"/><path d="M30 100 80 50l10 8-48 50z" fill="#f2c94c"/><path d="M80 50l12-8 4 12-6 4z" fill="#f3d9b1"/>');
 
 // ---------- Bahasa ----------
 const L = {
@@ -464,7 +516,7 @@ const L = {
   buy:'Beli?', bought:'Terbeli! ✔', noStars:'Bintang kurang! Menang ronde untuk dapat ⭐',
   drawT:'Gambar karaktermu sendiri!', drawS:'Coretanmu jadi kulit karakter di semua mini game.', drawGo:'✏️ MULAI MENGGAMBAR', drawEdit:'✏️ UBAH GAMBAR',
   useSkin:'Pakai gambar', eyes:'Mata otomatis', delSkin:'🗑 Hapus gambar', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
-  drawHint:'Gambar di dalam lingkaran', pen:'Pena', eraser:'Hapus', fillbg:'Isi latar',
+  drawHint:'Gambar di dalam lingkaran', drawHero:'Gambar Jagoanmu!', faceL:'Wajah', previewL:'Pratinjau', pen:'Pena', eraser:'Hapus', fillbg:'Isi latar',
   pts:'poin', safe:'aman', fell:'jatuh!', round:'Ronde', win:' menang!', draw:'Seri!', drawW:'Seri: ', champ:' juara!', allDraw:'Semua seri!'},
  en: {lang:'English', flag:'🇬🇧', c0:'Red', c1:'Blue', c2:'Green', c3:'Yellow',
   m_eat:'Blob Feast', m_sumo:'Sumo Blob', m_food:'Snack Grab', m_combo:'Mixed',
@@ -492,7 +544,7 @@ const L = {
   buy:'Buy?', bought:'Bought! ✔', noStars:'Not enough stars! Win rounds to earn ⭐',
   drawT:'Draw your own character!', drawS:'Your doodle becomes your character skin in every mini game.', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT DRAWING',
   useSkin:'Use drawing', eyes:'Auto eyes', delSkin:'🗑 Delete drawing', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
-  drawHint:'Draw inside the circle', pen:'Pen', eraser:'Eraser', fillbg:'Fill bg',
+  drawHint:'Draw inside the circle', drawHero:'Draw your Hero!', faceL:'Face', previewL:'Preview', pen:'Pen', eraser:'Eraser', fillbg:'Fill bg',
   pts:'pts', safe:'safe', fell:'out!', round:'Round', win:' wins!', draw:'Draw!', drawW:'Draw: ', champ:' is champion!', allDraw:'All draw!'}
 };
 const LANGS = Object.keys(L);
@@ -727,34 +779,45 @@ function renderAvatar(dt){
   parts = kp; ctx = keepCtx;
 }
 
-// ---------- Editor gambar ----------
-const DCOLS = ['#262322','#ffffff','#e8735a','#f0a35a','#f2c94c','#7cc47a','#5cc8b8','#6aa6d8','#b48ad8','#f49ac1','#b08968','#a8a8b3'];
+// ---------- Editor gambar (gaya kertas sketsa) ----------
+const DCOLS = ['#f2c94c','#e8735a','#3fa9e0','#f0a35a','#5cbf4a','#e070d0','#262322','#ffffff','#b08968','#8a63c9','#a8a8b3','rainbow'];
 const dc = $('dc'), dctx = dc.getContext('2d');
-let dTool = 'pen', dCol = '#262322', dSize = 10, dHist = [], dDown = null;
+let dTool = 'pen', dCol = '#e8735a', dSize = 10, dHist = [], dDown = null, dHue = 0, dEyesOn = true;
+function dUpdatePen(){
+  const z = $('dSz'); z.style.setProperty('--v', ((dSize-3)/31*100) + '%');
+  const dot = $('dDot'), px = Math.max(4, dSize*.55);
+  dot.style.width = dot.style.height = px + 'px';
+  dot.style.background = dTool === 'era' ? '#fff' : dCol === 'rainbow' ? 'conic-gradient(#e8735a,#f2c94c,#5cbf4a,#3fa9e0,#8a63c9,#e8735a)' : dCol;
+  $('dTool').innerHTML = ICONS[dTool === 'era' ? 'eraser' : 'pencil'];
+}
 function openDraw(){
   const c = save.cust[cP];
   dctx.globalCompositeOperation = 'source-over'; dctx.clearRect(0, 0, 256, 256); dHist = [];
   if(c.skin && skinImgs[cP] && skinImgs[cP].complete) dctx.drawImage(skinImgs[cP], 0, 0, 256, 256);
-  $('dEyes').checked = c.eyes;
-  $('dColors').innerHTML = DCOLS.map(cc => `<button style="background:${cc}" data-c="${cc}" class="${cc === dCol ? 'on' : ''}"></button>`).join('');
-  $('dColors').querySelectorAll('button').forEach(b => b.onclick = () => { dCol = b.dataset.c; if(dTool === 'era') setTool('pen'); $('dColors').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
-  $('dSizes').innerHTML = [5,10,20].map(z => `<button class="dbtn ${z === dSize ? 'on' : ''}" data-z="${z}"><span class="sz" style="width:${z*.7+4}px;height:${z*.7+4}px"></span></button>`).join('');
-  $('dSizes').querySelectorAll('button').forEach(b => b.onclick = () => { dSize = +b.dataset.z; $('dSizes').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
-  applyLang();
+  dEyesOn = c.eyes; dTool = 'pen';
+  $('dName').value = c.name; $('dName').placeholder = t('c'+cP);
+  $('dColors').innerHTML = DCOLS.map((cc,k) => `<button data-c="${cc}" class="${cc === dCol ? 'on' : ''}" style="--r:${((k*7)%5-2)*1.5}deg;background-color:${cc === 'rainbow' ? '#fff' : cc};${cc === 'rainbow' ? 'background:conic-gradient(#e8735a,#f2c94c,#5cbf4a,#3fa9e0,#8a63c9,#e8735a)' : ''}"></button>`).join('');
+  $('dColors').querySelectorAll('button').forEach(b => b.onclick = () => { dCol = b.dataset.c; dTool = 'pen'; $('dColors').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); dUpdatePen(); });
+  document.querySelectorAll('.fopt').forEach(b => b.classList.toggle('on', (b.dataset.e === '1') === dEyesOn));
+  $('dSz').value = dSize; dUpdatePen(); applyLang();
   $('draw').classList.remove('hidden');
 }
-function setTool(tl){ dTool = tl; $('dPen').classList.toggle('on', tl === 'pen'); $('dEra').classList.toggle('on', tl === 'era'); }
-function snap(){ dHist.push(dctx.getImageData(0, 0, 256, 256)); if(dHist.length > 20) dHist.shift(); }
-$('dPen').onclick = () => setTool('pen');
-$('dEra').onclick = () => setTool('era');
-$('dFill').onclick = () => { snap(); dctx.globalCompositeOperation = 'destination-over'; dctx.fillStyle = dCol; dctx.fillRect(0, 0, 256, 256); dctx.globalCompositeOperation = 'source-over'; };
+$('dSz').oninput = () => { dSize = +$('dSz').value; dUpdatePen(); };
+$('dTool').onclick = () => { dTool = dTool === 'pen' ? 'era' : 'pen'; dUpdatePen(); };
+$('dName').addEventListener('input', () => { save.cust[cP].name = $('dName').value.trim().slice(0,10); });
+$('dName').addEventListener('keydown', e => { if(e.key === 'Enter') $('dName').blur(); });
+document.querySelectorAll('.fopt').forEach(b => b.onclick = () => { dEyesOn = b.dataset.e === '1'; document.querySelectorAll('.fopt').forEach(x => x.classList.toggle('on', x === b)); });
+$('dGuide').onclick = () => { const on = $('dGuide').classList.toggle('on'); document.querySelector('.dring').classList.toggle('off', !on); };
+$('dPrevBtn').onclick = () => { const on = $('dPrevBtn').classList.toggle('on'); $('dPol').classList.toggle('hidden', !on); };
+function snap(){ dHist.push(dctx.getImageData(0, 0, 256, 256)); if(dHist.length > 25) dHist.shift(); }
+$('dFill').onclick = () => { snap(); dctx.globalCompositeOperation = 'destination-over'; dctx.fillStyle = dCol === 'rainbow' ? `hsl(${dHue},75%,65%)` : dCol; dctx.fillRect(0, 0, 256, 256); dctx.globalCompositeOperation = 'source-over'; };
 $('dUndo').onclick = () => { const h = dHist.pop(); if(h) dctx.putImageData(h, 0, 0); };
 $('dClr').onclick = () => { snap(); dctx.clearRect(0, 0, 256, 256); };
-$('dCancel').onclick = () => $('draw').classList.add('hidden');
+$('dCancel').onclick = () => { $('draw').classList.add('hidden'); renderChars(); };
 $('dSave').onclick = () => {
   const c = save.cust[cP], prevSkin = c.skin;
-  c.skin = dc.toDataURL('image/png'); c.useSkin = true; c.eyes = $('dEyes').checked;
-  try{ localStorage.setItem(SAVE_KEY, JSON.stringify(save)); toast(t('saved')); }
+  c.skin = dc.toDataURL('image/png'); c.useSkin = true; c.eyes = dEyesOn; $('pName').value = c.name;
+  try{ localStorage.setItem(SAVE_KEY, JSON.stringify(save)); toast(t('saved')); sfx('coin'); }
   catch(e){ c.skin = prevSkin; toast(t('saveErr')); }
   loadSkin(cP); thumbCache = null;
   $('draw').classList.add('hidden'); setTimeout(renderChars, 60);
@@ -762,7 +825,8 @@ $('dSave').onclick = () => {
 const dPos = e => { const b = dc.getBoundingClientRect(); return {x:(e.clientX - b.left)/b.width*256, y:(e.clientY - b.top)/b.height*256}; };
 function dLine(a, b){
   dctx.globalCompositeOperation = dTool === 'era' ? 'destination-out' : 'source-over';
-  dctx.strokeStyle = dCol; dctx.lineWidth = dTool === 'era' ? dSize*1.6 : dSize; dctx.lineCap = 'round'; dctx.lineJoin = 'round';
+  if(dCol === 'rainbow'){ dHue = (dHue + 6) % 360; dctx.strokeStyle = `hsl(${dHue},75%,60%)`; } else dctx.strokeStyle = dCol;
+  dctx.lineWidth = dTool === 'era' ? dSize*1.5 : dSize; dctx.lineCap = 'round'; dctx.lineJoin = 'round';
   dctx.beginPath(); dctx.moveTo(a.x, a.y); dctx.lineTo(b.x + .01, b.y); dctx.stroke();
   dctx.globalCompositeOperation = 'source-over';
 }
@@ -770,11 +834,16 @@ dc.addEventListener('pointerdown', e => { e.preventDefault(); try{ dc.setPointer
 dc.addEventListener('pointermove', e => { if(!dDown) return; const p = dPos(e); dLine(dDown, p); dDown = p; });
 ['pointerup','pointercancel'].forEach(ev => dc.addEventListener(ev, () => dDown = null));
 function renderDrawPreview(){
-  const cvs = $('dprev'), g = cvs.getContext('2d'), keepCtx = ctx, c = save.cust[cP], keep = [c.useSkin, c.eyes, skinImgs[cP]];
-  c.useSkin = true; c.eyes = $('dEyes').checked; skinImgs[cP] = dc;
-  dc.complete = true; dc.naturalWidth = 256;
-  ctx = g; g.setTransform(1,0,0,1,0,0); g.fillStyle = '#a9d3f0'; g.fillRect(0, 0, 240, 240);
-  drawChar({i:cP, x:120, y:132, vx:0, vy:0, m:68*68, alive:true, fall:0, fallMax:1, fx:0, fy:.3, seed:cP*1.7, expr:'normal', dashFx:0});
+  const c = save.cust[cP], keep = [c.useSkin, c.eyes, skinImgs[cP]], keepCtx = ctx;
+  c.useSkin = true; skinImgs[cP] = dc; dc.complete = true; dc.naturalWidth = 256;
+  const draw1 = (cvs, eyes, bg, r) => {
+    const g = cvs.getContext('2d'); ctx = g; c.eyes = eyes; g.setTransform(1,0,0,1,0,0);
+    g.fillStyle = bg; g.fillRect(0, 0, cvs.width, cvs.height);
+    const w = cvs.width;
+    drawChar({i:cP, x:w/2, y:w*.56, vx:0, vy:0, m:(w*r)**2, alive:true, fall:0, fallMax:1, fx:0, fy:.3, seed:cP*1.7, expr:'normal', dashFx:0});
+  };
+  if(!$('dPol').classList.contains('hidden')) draw1($('dprev'), dEyesOn, '#a9d3f0', .28);
+  if(Math.floor(T*10) % 3 === 0) document.querySelectorAll('.fopt canvas').forEach((cv2,k) => draw1(cv2, k === 0, k === 0 ? '#e8735a' : '#b54a33', .3));
   ctx = keepCtx; [c.useSkin, c.eyes, skinImgs[cP]] = keep;
 }
 document.querySelectorAll('.mbtn').forEach(b => b.onclick = () => {
@@ -870,11 +939,13 @@ function goFull(){
 }
 function resetInput(){ ptrs.clear(); pads.forEach(p => { p.id = null; p.press = 0; }); }
 function toMenu(){
+  lockWorld = false; resize(); buildBg();
   state = 'menu'; match = null; players = []; parts = []; resetInput();
   $('home').classList.remove('hidden'); $('end').classList.add('hidden'); $('quit').classList.add('hidden');
   refreshHome();
 }
 function startMatch(order, n){
+  lockWorld = true;
   match = {order, idx:0, wins:new Array(n).fill(0), n};
   resetInput();
   $('home').classList.add('hidden'); $('games').classList.add('hidden'); $('end').classList.add('hidden'); $('quit').classList.remove('hidden');
@@ -889,10 +960,10 @@ function spawnPos(i, n){
   if(mode === 'soccer'){
     const team = i % 2, mates = [0,1,2,3].filter(j => j < n && j % 2 === team);
     const y = mates.length > 1 ? (i < 2 ? CY + 130 : CY - 130) : CY;
-    return {x: team ? 880 : 320, y};
+    return {x: team ? WW-320 : 320, y};
   }
-  if(n === 2) return i === 0 ? {x:220,y:CY} : {x:980,y:CY};
-  return [{x:200,y:480},{x:1000,y:480},{x:200,y:195},{x:1000,y:195}][i];
+  if(n === 2) return i === 0 ? {x:220,y:CY} : {x:WW-220,y:CY};
+  return [{x:200,y:480},{x:WW-200,y:480},{x:200,y:195},{x:WW-200,y:195}][i];
 }
 function startRound(){
   mode = match.order[match.idx];
@@ -1700,6 +1771,7 @@ function drawFood(f){
 
 // ---------- Render ----------
 function drawArena(){
+  if(paper.width !== WW) buildPaper();
   ctx.drawImage(paper, 0, 0);
   if(mode === 'sumo'){
     ctx.save();
