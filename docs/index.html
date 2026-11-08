@@ -522,7 +522,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v2.4 · popup laptop';
+const VERSION = 'v2.5 · semua ukuran layar';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -534,19 +534,22 @@ const WH = 675, CY = 337.5;
 let W, H, DPR, S, OX, OY;
 // ===== PIXEL PERFECT =====
 // Semua aset memakai satu grid: 1 piksel seni = tepat K piksel fisik layar (bilangan bulat).
-let K = 5, PXC = 1, AW = 400, AH = 216, GBW = 400, GOX = 0, PXS = 3;
+let K = 5, PXC = 1, AW = 400, AH = 216, GBW = 400, GBH = 216, GOX = 0, GOY = 0, PXS = 3;
 function resize(){
   DPR = devicePixelRatio || 1;
   W = innerWidth; H = innerHeight;
   const Wd = Math.round(W*DPR), Hd = Math.round(H*DPR);
   cv.width = Wd; cv.height = Hd; cv.style.width = (Wd/DPR) + 'px'; cv.style.height = (Hd/DPR) + 'px';
-  K = Math.max(2, Math.round(Hd/180));          // ±180 piksel seni tingginya; SEMUA aset memakai 1 piksel seni ini
+  K = Math.max(2, Math.min(Math.round(Hd/180), Math.floor(Wd/320)));   // ±180 piksel seni tingginya, lebar minimal 320; SEMUA aset memakai 1 piksel seni ini
   PXC = K/DPR;                                  // ukuran 1 piksel seni dalam px CSS
   AW = Math.floor(Wd/K); AH = Math.floor(Hd/K);
   PXS = WH/AH;                                  // satuan dunia per piksel seni
+  const minW = lockWorld ? WW : 1200;
+  if(AW*PXS < minW) PXS = minW/AW;               // layar lebih "kotak" dari 16:9: skala ikut lebar, ada bingkai atas-bawah (dunia tidak terpotong)
   if(!lockWorld){ WW = Math.max(1200, Math.min(1560, AW*PXS)); CX = WW/2; }
   GBW = Math.min(AW, Math.round(WW/PXS)); GOX = Math.floor((AW - GBW)/2);
-  S = PXC/PXS; OX = GOX*PXC; OY = 0;
+  GBH = Math.min(AH, Math.round(WH/PXS)); GOY = Math.floor((AH - GBH)/2);
+  S = PXC/PXS; OX = GOX*PXC; OY = GOY*PXC;
   document.documentElement.style.setProperty('--px', PXC + 'px');
   if(typeof hydrateIcons === 'function'){ try{ hydrateIcons(); }catch(e){} }
 }
@@ -2797,11 +2800,11 @@ function sparkSpr(q){
 
 function render(){
   // 1) dunia digambar di kanvas piksel seni, 2) dikunci ke palet, 3) diperbesar tepat K kali
-  const BW = GBW, BH = AH;
+  const BW = GBW, BH = GBH;
   const g = pxCanvas(PB, BW*PXS, BH*PXS, PXS, true);
   ctx = g; PXW = PXS;
   const sx = Math.round((Math.random()-.5)*shake/3), sy = Math.round((Math.random()-.5)*shake/3);
-  SPRSCALE = PXS; SPRMAP = (x, y) => [GOX + sx + x/PXS, sy + y/PXS];
+  SPRSCALE = PXS; SPRMAP = (x, y) => [GOX + sx + x/PXS, GOY + sy + y/PXS];
   g.fillStyle = '#110a02'; g.fillRect(0, 0, WW, WH);
   drawArena();
   if(mode === 'soccer'){ const B = X.ball; ctx.beginPath(); ctx.ellipse(B.x + B.r*.15, B.y + B.r*.95, B.r*.85, B.r*.25, 0, 0, 7); softFill('#110a02', .22); }
@@ -2823,7 +2826,7 @@ function render(){
   if(match) hud();
   quantize(hg, AW, AH, true);
   ctx = sctx; PXW = 1;
-  blit([[PB, GOX + sx, sy]]); drawSprites(); blit([[PB2, GOX + sx, sy], [HUDB, 0, 0]], true);
+  blit([[PB, GOX + sx, GOY + sy]]); drawSprites(); blit([[PB2, GOX + sx, GOY + sy], [HUDB, 0, 0]], true);
 }
 const PB2 = document.createElement('canvas');
 function foodSpr(f){
@@ -3052,11 +3055,22 @@ function hBox(g, x, y, w, h, th, down){
   return y;
 }
 function homeLayout(){
-  const key = AW + 'x' + AH + save.lang; if(HOME.key === key) return HOME.L; HOME.key = key;
-  const m = 6, bw = Math.min(112, Math.floor(AW*.28)), ib = 18;
-  const L = {m, bw, cx:AW >> 1, stTop:Math.round(AH*.76)};
-  L.stW = Math.max(110, AW - 2*(bw + m*3)); L.stX = L.cx - (L.stW >> 1);
-  const y0 = Math.round(AH*.31), big = 28, sm = 22, gap = 7;
+  const key = AW + 'x' + AH + save.lang + ':' + PXC; if(HOME.key === key) return HOME.L; HOME.key = key;
+  // tata letak menyesuaikan rasio layar: HP lebar (19.5:9) sampai jendela laptop yang hampir kotak
+  const m = 6, ib = 18;
+  let bw = Math.max(70, Math.min(112, Math.floor(AW*.28)));
+  if(AW - 2*(bw + m*2) < 96) bw = Math.max(62, Math.floor((AW - 96)/2) - m*2);
+  const L = {m, bw, cx:AW >> 1};
+  // logo: kalau bertabrakan dengan ikon atas, turunkan ke bawah baris ikon
+  let lw = 0; for(const ch of 'DRAW PARTY') lw += ch === ' ' ? 6 : PF[ch][0].length*2 + 1;
+  const iconsL = AW - m - ib*4 - 9, starsR = m + 40;
+  L.ly = (L.cx - (lw >> 1) - 10 < starsR || L.cx + (lw >> 1) + 10 > iconsL) ? m + ib + 7 : Math.max(4, Math.round(AH*.05));
+  L.logoB = L.ly + 31;
+  L.stTop = Math.max(Math.round(AH*.76), L.logoB + 34);
+  L.stW = Math.max(60, AW - 2*(bw + m*2)); L.stX = L.cx - (L.stW >> 1);
+  const y0 = Math.max(Math.round(AH*.31), L.ly > 20 ? m + ib + 10 : 0);
+  let big = 28, sm = 22, gap = 7;
+  if(y0 + big + sm*2 + gap*2 + 3 > AH - m){ big = 24; sm = 18; gap = 5; }
   L.btns = [
     {id:'hQuick', x:m, y:y0, w:bw, h:big, th:HCOL.yel, ic:'bolt', lab:'quick', big:true},
     {id:'hPick', x:m, y:y0 + big + gap, w:bw, h:sm, th:HCOL.blu, ic:'dice', lab:'pick'},
@@ -3121,7 +3135,7 @@ function homeFrame(dt, bare){
     else if(f < .14){ g.fillStyle = '#ffc33a'; g.fillRect(x + 1, y, 1, 1); g.fillRect(x, y + 1, 1, 1); } }
   // tali bendera (bunting) melengkung + kibar 2 frame
   const flagF = Math.floor(ms/320) & 1;
-  const lgw = 70, byy = 6 + 18 + 4;
+  const lgw = 70, byy = L.ly > 20 ? L.logoB - 6 : 6 + 18 + 4;
   for(const [x0, x1, sag, yy] of [[-2, L.cx - lgw, 9, byy], [L.cx + lgw, AW + 2, 9, byy]]){
     let px = -1; for(let x = Math.max(0, x0); x < Math.min(AW, x1); x++){ const t2 = (x - x0)/(x1 - x0), y = Math.round(yy + Math.sin(t2*Math.PI)*sag); g.fillStyle = '#aca394'; g.fillRect(x, y, 1, 1);
       if(x - px >= 10 && x > 2 && x < AW - 8){ px = x; const col = CONF[Math.floor(x/10 + yy) % 5], ln = 7 + ((x/10 + flagF) & 1);
@@ -3130,7 +3144,7 @@ function homeFrame(dt, bare){
         g.fillStyle = INK; g.fillRect(x + 3, y + ln + 1, 1, 1); } } }
   if(bare){ homeConfetti(g, dt, ms); ctx = sctx; PXW = 1; blit([[HB, 0, 0]]); return; }
   // bola disko
-  const by = Math.round((L.stTop + 50)/2), br = Math.max(7, Math.min(12, Math.round(AH*.06))), bx = L.cx, ph = Math.floor(ms/110) % 4;
+  const br = Math.max(6, Math.min(12, Math.round(AH*.06), Math.floor((L.stTop - L.logoB - 30)/2))), by = Math.round((L.logoB + L.stTop - 24)/2), bx = L.cx, ph = Math.floor(ms/110) % 4;
   g.fillStyle = '#aca394'; g.fillRect(bx, 0, 1, by - br);
   const DC = ['#e3f4ee','#86aaa2','#456a71','#26364b'];
   for(let y=-br-1;y<=br+1;y++) for(let x=-br-1;x<=br+1;x++){ const d2 = (x + .5)**2 + (y + .5)**2;
@@ -3176,7 +3190,7 @@ function homeUI(L, ms){
   // logo
   const word = 'DRAW PARTY', gw = ch => ch === ' ' ? 6 : PF[ch][0].length*2 + 1;
   let lw = 0; for(const ch of word) lw += gw(ch); lw -= 1;
-  let lx = L.cx - (lw >> 1); const ly = Math.max(4, Math.round(AH*.05)), wave = Math.floor(ms/90) % 18;
+  let lx = L.cx - (lw >> 1); const ly = L.ly, wave = Math.floor(ms/90) % 18;
   [...word].forEach((ch, k) => { if(ch !== ' '){ const im = logoGlyph(ch, k); u2.drawImage(im, lx - 1, ly - 1 - (wave === k ? 2 : wave === k + 1 || wave === k - 1 ? 1 : 0)); } lx += gw(ch); });
   // pita "234 MINIGAMES"
   const rt = '234  MINIGAMES', rw = hW(rt) + 12, rx = L.cx - (rw >> 1), ry = ly + 18;
@@ -3210,7 +3224,7 @@ function homeUI(L, ms){
     if(b.big && pulse){ u2.fillStyle = '#f2eee3'; u2.fillRect(b.x + b.w - 5, y + 2, 1, 3); u2.fillRect(b.x + b.w - 6, y + 3, 3, 1); }
   }
   // posisi area sentuh DOM
-  const pk = HOME.key + L.btns.map(b => b.w).join(',');
+  const pk = HOME.key + W + 'x' + H + L.btns.map(b => b.w).join(',');
   if(HOME.posKey !== pk){ HOME.posKey = pk; for(const b of L.btns){ const e = $(b.id); if(!e) continue;
     Object.assign(e.style, {left:b.x*PXC + 'px', top:b.y*PXC + 'px', width:b.w*PXC + 'px', height:(b.h + 2)*PXC + 'px'}); } }
   // susun: latar -> karakter -> UI, semua dikali K
