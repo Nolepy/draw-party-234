@@ -515,7 +515,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v2.2 · main sendiri vs bot';
+const VERSION = 'v2.3 · keyboard laptop';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#110a02', FONT = "'Pixelify Sans',monospace";
@@ -979,7 +979,7 @@ const L = {
   d_eat:'makan & membesar', d_sumo:'dorong keluar ring', d_food:'kumpulkan terbanyak', d_combo:'3 mode bergantian',
   trophies:'Trofi', ranks:'Peringkat', hGift:'HADIAH', hSpin:'PUTAR RODA', quick:'MAIN CEPAT', pick:'PILIH GAME', tour:'TURNAMEN', chars:'KARAKTER',
   menu:'✕ Menu', again:'MAIN LAGI', home:'MENU', rot:'Putar HP ke mode landscape 📱↔️',
-  pl:'pemain', solo:'1 pemain vs 3 bot', howMany:'Berapa pemain?', quickT:'⚡ Main Cepat', quickS:'3 ronde dengan mini game acak. Langsung main!',
+  pl:'pemain', kbMove:'GERAK:', kbSolo:'GERAK: WASD / PANAH · DASH: SPASI / ENTER', kbEsc:'ESC = KEMBALI KE MENU', solo:'1 pemain vs 3 bot', howMany:'Berapa pemain?', quickT:'⚡ Main Cepat', quickS:'3 ronde dengan mini game acak. Langsung main!',
   tourT:'🏆 Turnamen', tourS:'6 ronde, 6 mini game berbeda. Ronde terbanyak jadi juara!',
   pickT:'Pilih Game', modeL:'✎ Mode', npL:'✎ Jumlah pemain', start:'MULAI!',
   charsT:'Karakter', acc0:'Telinga kucing', acc1:'Rambut ahoge', acc2:'Tunas daun', acc3:'Pita manis', soon:'Kostum & karakter baru segera hadir ✎',
@@ -1007,7 +1007,7 @@ const L = {
   d_eat:'eat & grow', d_sumo:'push them out', d_food:'collect the most', d_combo:'3 modes in turn',
   trophies:'Trophies', ranks:'Leaders', hGift:'DAILY GIFT', hSpin:'LUCKY SPIN', quick:'QUICK GAME', pick:'PICK GAME', tour:'TOURNAMENT', chars:'CHARACTERS',
   menu:'✕ Menu', again:'PLAY AGAIN', home:'MENU', rot:'Rotate your phone to landscape 📱↔️',
-  pl:'players', solo:'1 player vs 3 bots', howMany:'How many players?', quickT:'⚡ Quick Game', quickS:'3 rounds of random mini games. Jump right in!',
+  pl:'players', kbMove:'MOVE:', kbSolo:'MOVE: WASD / ARROWS · DASH: SPACE / ENTER', kbEsc:'ESC = BACK TO MENU', solo:'1 player vs 3 bots', howMany:'How many players?', quickT:'⚡ Quick Game', quickS:'3 rounds of random mini games. Jump right in!',
   tourT:'🏆 Tournament', tourS:'6 rounds, 6 different mini games. Most rounds wins!',
   pickT:'Pick a Game', modeL:'✎ Mode', npL:'✎ Players', start:'START!',
   charsT:'Characters', acc0:'Cat ears', acc1:'Ahoge hair', acc2:'Leaf sprout', acc3:'Sweet bow', soon:'New costumes & characters coming soon ✎',
@@ -1548,11 +1548,25 @@ cv.addEventListener('lostpointercapture', release);
 addEventListener('contextmenu', e => e.preventDefault());
 
 const keys = {};
+// ===== KEYBOARD (main di laptop) =====
+// P1 WASD + Spasi · P2 panah + Enter · P3 IJKL + O · P4 Numpad 8456 + Numpad 0. Main sendiri: WASD atau panah.
+const KEYMAP = [
+  {mv:['KeyA','KeyD','KeyW','KeyS'], dash:['Space','KeyQ','KeyE']},
+  {mv:['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'], dash:['Enter','ShiftRight','NumpadEnter']},
+  {mv:['KeyJ','KeyL','KeyI','KeyK'], dash:['KeyO','KeyU']},
+  {mv:['Numpad4','Numpad6','Numpad8','Numpad5'], dash:['Numpad0','NumpadDecimal']},
+];
+const isTouch = () => matchMedia('(pointer:coarse)').matches;
 addEventListener('keydown', e => {
+  if(e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
   keys[e.code] = true;
-  if(state !== 'play') return;
-  if(e.code === 'Space' && players[0]) dash(players[0]);
-  if((e.code === 'Enter' || e.code === 'ShiftRight') && players[1]) dash(players[1]);
+  if(match && e.code === 'Escape'){ $('quit').click(); return; }
+  if(state !== 'play' || e.repeat) return;
+  KEYMAP.forEach((km, i) => {
+    const owner = solo() ? 0 : i;                     // main sendiri: semua set tombol mengendalikan pemain 1
+    if(km.dash.includes(e.code) && players[owner] && !players[owner].bot){ e.preventDefault(); dash(players[owner]); }
+  });
+  if(e.code.startsWith('Arrow') || e.code === 'Space') e.preventDefault();
 });
 addEventListener('keyup', e => keys[e.code] = false);
 addEventListener('blur', () => { for(const k in keys) keys[k] = false; });
@@ -1563,9 +1577,10 @@ function readCtrl(p){
   if(pad.id !== null){
     const dx = pad.px-pad.ox, dy = pad.py-pad.oy, l = Math.hypot(dx,dy), dead = 8, R = JR();
     if(l > dead){ const m = Math.min(1, (l-dead)/(R-dead)); p.cx = dx/l*m; p.cy = dy/l*m; }
-  } else if(p.i < 2){
-    const k = p.i === 0 ? ['KeyA','KeyD','KeyW','KeyS'] : ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'];
-    const x = (keys[k[1]]?1:0) - (keys[k[0]]?1:0), y = (keys[k[3]]?1:0) - (keys[k[2]]?1:0);
+  } else {
+    let x = 0, y = 0;
+    KEYMAP.forEach((km, i) => { if(i !== p.i && !(solo() && p.i === 0)) return; const k = km.mv;
+      x += (keys[k[1]]?1:0) - (keys[k[0]]?1:0); y += (keys[k[3]]?1:0) - (keys[k[2]]?1:0); });
     if(x || y){ const l = Math.hypot(x,y); p.cx = x/l; p.cy = y/l; }
   }
 }
@@ -2939,7 +2954,7 @@ function hud(){
     pxDisc(PXC, 2*PXC, R, '#110a02');
     pxDisc(0, 0, R, ready ? ch.c : '#aca394', 0, p.dashCd > 0 ? p.dashCd/p.dashMax : undefined, '#6f5e57');
     ctx.fillStyle = '#f2eee3'; ctx.fillRect(-snapA(R*.55), -snapA(R*.6), 3*PXC, 2*PXC);
-    drawPixText(mode === 'snow' ? '❄' : 'DASH', 0, PXC*.5, 1, INK, 'center');
+    drawPixText(!isTouch() ? (solo() ? 'SPASI' : ['SPASI','ENTER','O','NUM0'][p.i]) : mode === 'snow' ? '❄' : 'DASH', 0, PXC*.5, 1, INK, 'center');
     // label pemain
     const dir = solo() ? -1 : ((p.i === 0 || p.i === 3) ? 1 : -1) * (save.dashPos === 'in' ? -1 : 1);
     const live = liveText(p);
@@ -2958,6 +2973,11 @@ function hud(){
     bigText(tCount > .2 ? String(n) : t('start'), H/2 - 10, 64, tCount > .2 ? '#ffc33a' : '#1db578');
     ctx.restore();
     bigText(MODES[mode].hint, H/2 + 42, 16, '#e3f4ee');
+    if(!isTouch()){
+      const mv = ['P1 WASD','P2 PANAH','P3 IJKL','P4 NUMPAD 8456'];
+      bigText(solo() ? t('kbSolo') : t('kbMove') + ' ' + mv.slice(0, match.n).join(' · '), H/2 + 84, 13, '#ffc33a');
+      bigText(t('kbEsc'), H/2 + 116, 11, '#86aaa2');
+    }
   }
   if(state === 'end') bigText(endText, H/2, 38, endCol);
 }
