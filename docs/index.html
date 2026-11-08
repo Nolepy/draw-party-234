@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Draw Party 234 MiniGames</title>
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABn0lEQVR4XrWWPUsDQRCGN5JChJAUgp2kNgpWMWghJJ0/wcIqCGlS2IlgJ/Y2giiIRf7FCRaKdkJML3aCxaWzU2bOWed2Z+aOoE91H7vvOzM7u3cVx2i1Nr/4/axMJg8VmosXXDgZNL3ufKPhrz/TNPKT3vfOX/04MPIG94frswYssnX6jAZVip5HCFHwTIrQxoP2HEzmYjD4pO5yqVpo40kTDSTKmJC4RVV62VnOFjdxWSYQDV88Iln7bQI3jpsAQAPohrBLli7PMpP+MDPhYj/QmPf+UE3Cl4i3HAdELHEN0vMl4hk8vqWuY0QFUNQwVoL0MAMuDvU+mprrloPWS0Ptor8iMggXtHY1cj2hQ8LnWlsXZtBu74jJaM9DxH3AkToI21doWwl1Hyx0j11tdzE3Z3VjD+9fnm5yz7ujD3d7fSAaRPsAd+04jcQtIBDoPOmoF/eBRhi5hboPsL6Dpi9HGaB02vGudlFZE0scQAPppCyTiSVOmv6TebGtF2P/Tn5XNAc/mTSVRMJawqmYrMgHGhAe9WE1/O8F8B+/Ld+zIa+/BHX7ywAAAABJRU5ErkJggg==">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
@@ -239,36 +240,36 @@
   h1,h2,.otitle,.gtitle,.mbtn span,.go,.gtile b,.ptab,.ctab,.lbox,.dhead span,.wallet,.badge b,.it .price,#champ,.ico{font-family:'Silkscreen','Pixelify Sans',monospace!important;font-weight:700!important}
   /* garis luar tebal + bevel */
   .chip,.go,.mbtn,.ctab,.it,.dbig,.rbtn,.ptab,.back,.sbtn,.dtoolbtn,.dsz,.fopt,.x,.dclose,.hand,.lbox,.wallet,#toast,.gtile .pic,.drawpanel,.dswatch button{
-    border:4px solid var(--ink)!important;box-shadow:inset 0 4px 0 rgba(255,255,255,.38),inset 0 -5px 0 rgba(0,0,0,.2),0 5px 0 rgba(43,43,58,.45)!important}
-  .chip:active,.go:active,.mbtn:active,.ctab:active,.it:active,.back:active,.rbtn:active,.dbig:active{transform:translateY(3px)!important;box-shadow:inset 0 4px 0 rgba(255,255,255,.38),inset 0 -3px 0 rgba(0,0,0,.2),0 2px 0 rgba(43,43,58,.45)!important}
+    border:calc(var(--px)*2) solid var(--ink)!important;box-shadow:inset 0 calc(var(--px)*2) 0 rgba(255,255,255,.38),inset 0 calc(var(--px)*-2) 0 rgba(0,0,0,.2),0 calc(var(--px)*2) 0 rgba(43,43,58,.45)!important}
+  .chip:active,.go:active,.mbtn:active,.ctab:active,.it:active,.back:active,.rbtn:active,.dbig:active{transform:translateY(calc(var(--px)*2))!important;box-shadow:inset 0 calc(var(--px)*2) 0 rgba(255,255,255,.38),inset 0 calc(var(--px)*-2) 0 rgba(0,0,0,.2),0 calc(var(--px)*1) 0 rgba(43,43,58,.45)!important}
   .outl,h1,h2,.otitle,.gtitle,.mbtn span,.go,.gtile b,.ptab,.badge b,.wallet,.ico,.pnl,.dhead span,.lbox{color:var(--cream)!important;
-    text-shadow:3px 0 0 var(--ink),-3px 0 0 var(--ink),0 3px 0 var(--ink),0 -3px 0 var(--ink),3px 3px 0 var(--ink),-3px -3px 0 var(--ink),3px -3px 0 var(--ink),-3px 3px 0 var(--ink),0 5px 0 var(--ink)!important}
+    text-shadow:calc(var(--px)*2) 0 0 var(--ink),calc(var(--px)*-2) 0 0 var(--ink),0 calc(var(--px)*2) 0 var(--ink),0 calc(var(--px)*-2) 0 var(--ink),calc(var(--px)*2) calc(var(--px)*2) 0 var(--ink),calc(var(--px)*-2) calc(var(--px)*-2) 0 var(--ink),calc(var(--px)*2) calc(var(--px)*-2) 0 var(--ink),calc(var(--px)*-2) calc(var(--px)*2) 0 var(--ink),0 calc(var(--px)*2) 0 var(--ink)!important}
   /* latar wajik oranye */
-  #games,#chars,#draw,.overlay{background-color:var(--or1)!important;background-image:linear-gradient(45deg,var(--or2) 25%,transparent 25%,transparent 75%,var(--or2) 75%),linear-gradient(-45deg,var(--or2) 25%,transparent 25%,transparent 75%,var(--or2) 75%)!important;background-size:90px 90px!important}
+  #games,#chars,#draw,.overlay{background-color:var(--or1)!important;background-image:linear-gradient(45deg,var(--or2) 25%,transparent 25%,transparent 75%,var(--or2) 75%),linear-gradient(-45deg,var(--or2) 25%,transparent 25%,transparent 75%,var(--or2) 75%)!important;background-size:calc(var(--px)*45) calc(var(--px)*45)!important}
   .overlay{background-color:rgba(232,148,90,.92)!important}
   /* buku catatan hijau berspiral */
-  .panel,.card,.dpaper,.cl{background:var(--gr)!important;border:5px solid var(--ink)!important;box-shadow:inset 0 0 0 5px var(--grl),inset 0 -10px 0 rgba(0,0,0,.12),0 7px 0 rgba(43,43,58,.45)!important}
-  .card::before,.panel::before,.dpaper::after{content:'';position:absolute;left:-22px;top:26px;bottom:26px;width:34px;pointer-events:none;
-    background:radial-gradient(circle at 17px 17px,transparent 6px,var(--ink) 6px 9px,#e6eef5 9px 13px,var(--ink) 13px 16px,transparent 16px) 0 0/34px 46px repeat-y}
-  .card{position:relative;padding:16px 22px 18px 46px!important;color:var(--ink)}
-  .card::before{left:4px!important}
-  .card.blue{background:var(--teall)!important;box-shadow:inset 0 0 0 5px #9fe0d0,inset 0 -10px 0 rgba(0,0,0,.12),0 7px 0 rgba(43,43,58,.45)!important}
+  .panel,.card,.dpaper,.cl{background:var(--gr)!important;border:calc(var(--px)*2) solid var(--ink)!important;box-shadow:inset 0 0 0 calc(var(--px)*2) var(--grl),inset 0 calc(var(--px)*-5) 0 rgba(0,0,0,.12),0 calc(var(--px)*4) 0 rgba(43,43,58,.45)!important}
+  .card::before,.panel::before,.dpaper::after{content:'';position:absolute;left:calc(var(--px)*-11);top:calc(var(--px)*13);bottom:calc(var(--px)*13);width:calc(var(--px)*17);pointer-events:none;
+    background:radial-gradient(circle at calc(var(--px)*8) calc(var(--px)*8),transparent calc(var(--px)*3),var(--ink) calc(var(--px)*3) calc(var(--px)*4),#e6eef5 calc(var(--px)*4) calc(var(--px)*6),var(--ink) calc(var(--px)*6) calc(var(--px)*8),transparent calc(var(--px)*8)) 0 0/calc(var(--px)*17) calc(var(--px)*23) repeat-y}
+  .card{position:relative;padding:calc(var(--px)*8) calc(var(--px)*11) calc(var(--px)*9) calc(var(--px)*23)!important;color:var(--ink)}
+  .card::before{left:calc(var(--px)*2)!important}
+  .card.blue{background:var(--teall)!important;box-shadow:inset 0 0 0 calc(var(--px)*2) #9fe0d0,inset 0 calc(var(--px)*-5) 0 rgba(0,0,0,.12),0 calc(var(--px)*4) 0 rgba(43,43,58,.45)!important}
   /* pelat judul toska */
-  #modal h2,.gtitle,.logo h1,.dhead span,.otitle{display:inline-block;align-self:center;background:var(--teal);border:4px solid var(--ink);padding:6px 18px 4px;box-shadow:inset 0 4px 0 rgba(255,255,255,.25),inset 0 -5px 0 rgba(0,0,0,.25),0 5px 0 rgba(43,43,58,.45);position:relative}
-  .gtitle::before,#modal h2::before{content:'';position:absolute;left:14px;right:14px;top:-16px;height:22px;pointer-events:none;
-    background:repeating-linear-gradient(90deg,transparent 0 22px,var(--ink) 22px 25px,#e6eef5 25px 32px,var(--ink) 32px 35px,transparent 35px 56px)}
-  #modal h2{font-size:20px!important;margin:4px 0 8px}
+  #modal h2,.gtitle,.logo h1,.dhead span,.otitle{display:inline-block;align-self:center;background:var(--teal);border:calc(var(--px)*2) solid var(--ink);padding:calc(var(--px)*3) calc(var(--px)*9) calc(var(--px)*2);box-shadow:inset 0 calc(var(--px)*2) 0 rgba(255,255,255,.25),inset 0 calc(var(--px)*-2) 0 rgba(0,0,0,.25),0 calc(var(--px)*2) 0 rgba(43,43,58,.45);position:relative}
+  .gtitle::before,#modal h2::before{content:'';position:absolute;left:calc(var(--px)*7);right:calc(var(--px)*7);top:calc(var(--px)*-8);height:calc(var(--px)*11);pointer-events:none;
+    background:repeating-linear-gradient(90deg,transparent 0 calc(var(--px)*11),var(--ink) calc(var(--px)*11) calc(var(--px)*12),#e6eef5 calc(var(--px)*12) calc(var(--px)*16),var(--ink) calc(var(--px)*16) calc(var(--px)*18),transparent calc(var(--px)*18) calc(var(--px)*28))}
+  #modal h2{font-size:calc(var(--px)*10)!important;margin:calc(var(--px)*2) 0 calc(var(--px)*4)}
   .gtitle{font-size:5.6vh!important;margin:4vh auto 0!important;display:table!important;padding:1vh 4vw .6vh}
   .logo{left:calc(16vh + 4vw)!important;top:2.5vh!important}
   .logo h1{font-size:3.6vh!important;padding:1vh 1.6vw .7vh;white-space:nowrap}
   .logo h1 span{color:var(--cream)!important}
   .logo h1 .b{color:var(--mus)!important}
   /* tombol menu: blok mustard + panel kotak-kotak cokelat */
-  .panel{right:-4px!important;top:-4px!important;bottom:-4px!important;width:47vw!important}
+  .panel{right:calc(var(--px)*-2)!important;top:calc(var(--px)*-2)!important;bottom:calc(var(--px)*-2)!important;width:47vw!important}
   .inner{padding:4.5vh 3.5vw 4vh 5.5vw!important;gap:2.4vh!important}
   .mbtn{background:var(--mus)!important;height:12.6vh;padding:0 1vh 0 12.5vh!important}
-  .mbtn span{align-self:stretch;display:flex!important;align-items:center;justify-content:center;margin:1.2vh 0 1.6vh;font-size:4.3vh!important;letter-spacing:1px;
-    background-color:var(--br);background-image:conic-gradient(var(--brd) 25%,transparent 0 50%,var(--brd) 0 75%,transparent 0);background-size:14px 14px;border:3px solid var(--musd)}
+  .mbtn span{align-self:stretch;display:flex!important;align-items:center;justify-content:center;margin:1.2vh 0 1.6vh;font-size:4.3vh!important;letter-spacing:calc(var(--px)*1);
+    background-color:var(--br);background-image:conic-gradient(var(--brd) 25%,transparent 0 50%,var(--brd) 0 75%,transparent 0);background-size:calc(var(--px)*7) calc(var(--px)*7);border:calc(var(--px)*2) solid var(--musd)}
   .mbtn .ic{left:1.6vh!important;width:9.5vh!important;height:9.5vh!important}
   .mbtn.gold{background:var(--mus)!important}
   .ico,.tops em{font-size:2.6vh!important}
@@ -276,61 +277,90 @@
   /* tombol umum */
   .chip{background:var(--cream)!important;color:var(--ink)!important;font-family:'Pixelify Sans',monospace;font-weight:700}
   .chip.sel,.chip.on{background:var(--mus)!important}
-  .go{background:var(--grd)!important;font-size:20px;padding:10px 26px}
+  .go{background:var(--grd)!important;font-size:calc(var(--px)*10);padding:calc(var(--px)*5) calc(var(--px)*13)}
   .go.alt,.go.alt.small{background:#4aa3e8!important}
   .go.small{background:var(--grd)!important}
-  .x,.dclose{background:var(--red)!important;color:#fff!important;font-family:'Silkscreen',monospace!important;width:42px!important;height:42px!important;top:-16px!important;right:-14px!important;left:auto!important}
+  .x,.dclose{background:var(--red)!important;color:#fff!important;font-family:'Silkscreen',monospace!important;width:calc(var(--px)*21)!important;height:calc(var(--px)*21)!important;top:calc(var(--px)*-8)!important;right:calc(var(--px)*-7)!important;left:auto!important}
   .dclose{top:1.5vh!important;left:1.5vw!important;right:auto!important}
   .back{background:var(--red)!important;width:14vh!important;height:10vh!important;padding:1.4vh 3vh!important;left:2.5vw;top:3vh}
   .sbtn{background:var(--cream)!important;padding:1.4vh!important;width:15vh!important;height:15vh!important}
-  .dot{border:3px solid var(--ink)!important;background:var(--red)!important;right:-1vh!important;top:-1vh!important}
+  .dot{border:calc(var(--px)*2) solid var(--ink)!important;background:var(--red)!important;right:-1vh!important;top:-1vh!important}
   .pxi{width:100%;height:100%;display:block;image-rendering:pixelated}
   .ico .pxi,.ico svg{width:10vh!important;height:10vh!important}
   .hint{color:var(--ink);font-weight:600}
-  .list div,.grid4 > div{border:3px solid var(--ink)!important;background:var(--cream)!important;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
+  .list div,.grid4 > div{border:calc(var(--px)*2) solid var(--ink)!important;background:var(--cream)!important;box-shadow:inset 0 calc(var(--px)*-2) 0 rgba(0,0,0,.12)}
   /* layar pilih game */
-  .gtile .pic{border-width:5px!important}
-  .gtile b{font-size:clamp(11px,3.2vh,18px)!important}
+  .gtile .pic{border-width:calc(var(--px)*2)!important}
+  .gtile b{font-size:clamp(calc(var(--px)*6),3.2vh,calc(var(--px)*9))!important}
   /* layar karakter */
-  .cl{border-right-width:5px!important}
+  .cl{border-right-width:calc(var(--px)*2)!important}
   .cl .back{position:absolute!important}
-  .avwrap{border:5px solid var(--ink)!important;box-shadow:0 0 0 6px var(--mus),0 0 0 10px var(--ink),0 12px 0 rgba(43,43,58,.45)!important;background:#4aa3e8}
+  .avwrap{border:calc(var(--px)*2) solid var(--ink)!important;box-shadow:0 0 0 calc(var(--px)*3) var(--mus),0 0 0 calc(var(--px)*5) var(--ink),0 calc(var(--px)*6) 0 rgba(43,43,58,.45)!important;background:#4aa3e8}
   .pnl{font-family:'Silkscreen',monospace;font-size:2.6vh!important}
-  #pName,#dName{border:4px solid var(--ink)!important;background:var(--cream)!important;box-shadow:inset 0 4px 0 rgba(0,0,0,.1)!important;font-family:'Silkscreen',monospace!important}
+  #pName,#dName{border:calc(var(--px)*2) solid var(--ink)!important;background:var(--cream)!important;box-shadow:inset 0 calc(var(--px)*2) 0 rgba(0,0,0,.1)!important;font-family:'Silkscreen',monospace!important}
   .ptab{font-size:4vh!important}
   .ctabs{gap:.7vw!important;flex-wrap:wrap!important;margin:3vh 0 2.4vh!important}
   .ctab{background:var(--mus)!important;color:var(--ink)!important;font-size:2.3vh!important;padding:.5vh .8vw .5vh .3vw!important;gap:.4vw!important}
-  .ctab.on{background:var(--grd)!important;color:var(--cream)!important;text-shadow:2px 2px 0 var(--ink)}
+  .ctab.on{background:var(--grd)!important;color:var(--cream)!important;text-shadow:calc(var(--px)*1) calc(var(--px)*1) 0 var(--ink)}
   .ctab i{width:5.5vh!important;height:5.5vh!important;margin:-.8vh 0!important}
   .it{background:var(--cream)!important}
-  .it.sel{outline:0!important;box-shadow:0 0 0 5px var(--grd),inset 0 4px 0 rgba(255,255,255,.38),inset 0 -5px 0 rgba(0,0,0,.2)!important}
-  .it .price{background:var(--teal)!important;border:3px solid var(--ink)!important;color:var(--cream)!important;font-size:2.4vh!important}
+  .it.sel{outline:0!important;box-shadow:0 0 0 calc(var(--px)*2) var(--grd),inset 0 calc(var(--px)*2) 0 rgba(255,255,255,.38),inset 0 calc(var(--px)*-2) 0 rgba(0,0,0,.2)!important}
+  .it .price{background:var(--teal)!important;border:calc(var(--px)*2) solid var(--ink)!important;color:var(--cream)!important;font-size:2.4vh!important}
   .it.confirm .price{background:var(--red)!important}
   .wallet{background:var(--br)!important}
   .drawpanel{background:var(--cream)!important}
   .drawpanel h2{color:var(--ink)!important;text-shadow:none!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
   /* editor */
-  .dhead{background:var(--mus)!important;border:4px solid var(--ink)!important;background-image:none!important;box-shadow:inset 0 4px 0 rgba(255,255,255,.35),inset 0 -5px 0 rgba(0,0,0,.2)!important}
+  .dhead{background:var(--mus)!important;border:calc(var(--px)*2) solid var(--ink)!important;background-image:none!important;box-shadow:inset 0 calc(var(--px)*2) 0 rgba(255,255,255,.35),inset 0 calc(var(--px)*-2) 0 rgba(0,0,0,.2)!important}
   .dhead span{font-size:3.4vh!important;border:0!important}
-  .dhead i{border:3px solid var(--ink)!important;background:var(--cream)!important}
-  .dpen{background:var(--teall)!important;border:4px solid var(--ink)!important}
+  .dhead i{border:calc(var(--px)*2) solid var(--ink)!important;background:var(--cream)!important}
+  .dpen{background:var(--teall)!important;border:calc(var(--px)*2) solid var(--ink)!important}
   .dsz{background:var(--mus)!important}
-  .dswatch{background:#9fe0d0!important;border:4px solid var(--ink)!important}
-  .dface{background:var(--teal)!important;border:4px solid var(--ink)!important}
+  .dswatch{background:#9fe0d0!important;border:calc(var(--px)*2) solid var(--ink)!important}
+  .dface{background:var(--teal)!important;border:calc(var(--px)*2) solid var(--ink)!important}
   .dface .lbl{font-family:'Silkscreen',monospace}
-  .dsheet{background:var(--cream)!important;border:5px solid var(--ink)!important}
+  .dsheet{background:var(--cream)!important;border:calc(var(--px)*2) solid var(--ink)!important}
   .dbig.blue,.rbtn.blue{background:#4aa3e8!important}.dbig.yellow,.rbtn.yellow{background:var(--mus)!important}.rbtn.green{background:var(--grd)!important}
-  .dpol{border:5px solid var(--ink)!important;background:var(--cream)!important}
+  .dpol{border:calc(var(--px)*2) solid var(--ink)!important;background:var(--cream)!important}
   .dpencils{display:none}
-  #toast{background:var(--cream)!important;font-family:'Silkscreen',monospace;font-size:13px}
+  #toast{background:var(--cream)!important;font-family:'Silkscreen',monospace;font-size:calc(var(--px)*6)}
   .card.blue .lbox{background:var(--teal)!important}
-  #modal .card.blue{max-width:720px!important}
-  .ocol{flex:1 1 200px!important}
+  #modal .card.blue{max-width:calc(var(--px)*360)!important}
+  .ocol{flex:1 1 calc(var(--px)*100)!important}
   .hand svg{max-height:10vh}
-  .hand{padding:2px 4px 4px!important}
-  input[type=range]{border:4px solid var(--ink)!important;background:linear-gradient(90deg,var(--grd) var(--v,50%),var(--cream) var(--v,50%))!important;box-shadow:inset 0 3px 0 rgba(0,0,0,.12)!important}
-  input[type=range]::-webkit-slider-thumb{border-radius:0!important;background:var(--mus)!important;border:4px solid var(--ink)!important;width:24px!important;height:30px!important}
-  #quit{font-family:'Silkscreen',monospace;border:3px solid var(--ink);background:var(--cream);border-radius:0;font-size:11px;opacity:.9;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+  .hand{padding:calc(var(--px)*1) calc(var(--px)*2) calc(var(--px)*2)!important}
+  input[type=range]{border:calc(var(--px)*2) solid var(--ink)!important;background:linear-gradient(90deg,var(--grd) var(--v,50%),var(--cream) var(--v,50%))!important;box-shadow:inset 0 calc(var(--px)*2) 0 rgba(0,0,0,.12)!important}
+  input[type=range]::-webkit-slider-thumb{border-radius:0!important;background:var(--mus)!important;border:calc(var(--px)*2) solid var(--ink)!important;width:calc(var(--px)*12)!important;height:calc(var(--px)*15)!important}
+  #quit{font-family:'Silkscreen',monospace;border:calc(var(--px)*2) solid var(--ink);background:var(--cream);border-radius:0;font-size:calc(var(--px)*6);opacity:.9;box-shadow:inset 0 calc(var(--px)*-2) 0 rgba(0,0,0,.15)}
+
+  /* ===== PIXEL PERFECT: font hanya kelipatan 8 piksel seni, gambar tampil 1:1 di grid ===== */
+  body,button,input,.chip,.hint,.ctab,.it .price,.gtile b,.ico,.ico em,.lbox,.pnl,.tog,.orow span,.list,.grid4,#toast,#quit,.dface .lbl,.hand b,.olabel,h3,#tab,.wallet,.logo h1{font-family:'Silkscreen',monospace!important;font-size:calc(var(--px)*8)!important;font-weight:400;line-height:1.25}
+  h1,h2,.otitle,.gtitle,.mbtn span,.go,.ptab,.badge b,#champ,.dhead span,#pName,#dName{font-family:'Silkscreen',monospace!important;font-size:calc(var(--px)*16)!important;font-weight:700!important;line-height:1.1}
+  .go.small,.chip.big,.x,.dclose{font-size:calc(var(--px)*8)!important}
+  .logo{display:flex;align-items:center;gap:calc(var(--px)*4)}
+  .logoic{width:calc(var(--px)*24);height:calc(var(--px)*24);image-rendering:pixelated;filter:drop-shadow(calc(var(--px)*1) calc(var(--px)*1) 0 var(--ink))}
+  .pxi{display:block;flex:none;image-rendering:pixelated;width:auto;height:auto}
+  .sbtn,.ico,.badge,.bots button,.back,.mbtn .ic,.ctab i,.dhead i,.dname i,.dbig,.rbtn,.dtoolbtn{display:flex!important;align-items:center;justify-content:center}
+  .badge{position:relative}
+  .badge b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .ico .pxi,.ico svg{width:calc(var(--px)*24)!important;height:calc(var(--px)*24)!important}
+  .sbtn{width:auto!important;height:auto!important;padding:calc(var(--px)*3)!important}
+  .avwrap{width:auto!important;height:auto!important;display:inline-block;line-height:0}
+  .avwrap canvas,.drawpanel canvas,#dprev,.it canvas,.fopt canvas{width:auto;height:auto;display:block;flex:none}
+  .items{grid-template-columns:repeat(auto-fill,calc(var(--px)*46))!important;justify-content:start}
+  .it{aspect-ratio:auto!important;width:auto;padding:0!important;line-height:0}
+  .fopt{width:auto!important;height:auto!important;line-height:0}
+  .drawpanel canvas{border-radius:0}
+  .dpol{width:auto!important}
+  .ggrid{grid-template-columns:repeat(5,auto)!important;justify-content:center;gap:calc(var(--px)*8) calc(var(--px)*8)!important;padding:calc(var(--px)*8) calc(var(--px)*8) calc(var(--px)*24)!important}
+  .gtile .pic{width:auto!important;aspect-ratio:auto!important;line-height:0}
+  .gtile img{width:auto;height:auto}
+  .mbtn{height:calc(var(--px)*30)!important;padding:0 calc(var(--px)*4) 0 calc(var(--px)*32)!important}
+  .mbtn .ic{left:calc(var(--px)*4)!important;width:calc(var(--px)*24)!important;height:calc(var(--px)*24)!important}
+  .mbtn span{margin:calc(var(--px)*4) 0 calc(var(--px)*5)!important}
+  .inner{gap:calc(var(--px)*6)!important}
+  .dcv{height:auto!important;aspect-ratio:1;max-width:none!important}
+  #dc{image-rendering:pixelated}
 </style>
 </head>
 <body>
@@ -344,7 +374,7 @@
     <button class="sbtn" id="giftBtn" data-icon="gift"></button>
     <button class="sbtn" id="spinBtn" data-icon="wheel"></button>
   </div>
-  <div class="logo"><h1><span class="a">Draw Party</span> <span class="b">234</span> <span class="c">MiniGames</span></h1></div>
+  <div class="logo"><img class="logoic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABn0lEQVR4XrWWPUsDQRCGN5JChJAUgp2kNgpWMWghJJ0/wcIqCGlS2IlgJ/Y2giiIRf7FCRaKdkJML3aCxaWzU2bOWed2Z+aOoE91H7vvOzM7u3cVx2i1Nr/4/axMJg8VmosXXDgZNL3ufKPhrz/TNPKT3vfOX/04MPIG94frswYssnX6jAZVip5HCFHwTIrQxoP2HEzmYjD4pO5yqVpo40kTDSTKmJC4RVV62VnOFjdxWSYQDV88Iln7bQI3jpsAQAPohrBLli7PMpP+MDPhYj/QmPf+UE3Cl4i3HAdELHEN0vMl4hk8vqWuY0QFUNQwVoL0MAMuDvU+mprrloPWS0Ptor8iMggXtHY1cj2hQ8LnWlsXZtBu74jJaM9DxH3AkToI21doWwl1Hyx0j11tdzE3Z3VjD+9fnm5yz7ujD3d7fSAaRPsAd+04jcQtIBDoPOmoF/eBRhi5hboPsL6Dpi9HGaB02vGudlFZE0scQAPppCyTiSVOmv6TebGtF2P/Tn5XNAc/mTSVRMJawqmYrMgHGhAe9WE1/O8F8B+/Ld+zIa+/BHX7ywAAAABJRU5ErkJggg==" alt=""><h1><span class="a">Draw Party</span> <span class="b">234</span> <span class="c">MiniGames</span></h1></div>
   <div class="panel"><div class="inner">
     <div class="tops">
       <button class="badge" id="bStars"><span data-icon="starbadge"></span><b id="starN">0</b></button>
@@ -425,23 +455,33 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v1.1 · pixel lebih tajam & bersih';
+const VERSION = 'v1.2 · pixel perfect + ikon baru + font bitmap';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#2b2b3a', FONT = "'Pixelify Sans',monospace";
-const font = px => `600 ${px}px ${FONT}`;
-const fontT = px => `700 ${px}px 'Silkscreen',${FONT}`;
+const snapF = px => Math.max(8, Math.round(px/PXC/8)*8)*PXC;   // font pixel hanya di ukuran 8/16/24.. piksel seni
+const font = px => `400 ${snapF(px)}px 'Silkscreen',${FONT}`;
+const fontT = px => `700 ${snapF(px)}px 'Silkscreen',${FONT}`;
 let WW = 1200, CX = 600, lockWorld = false;
 const WH = 675, CY = 337.5;
 let W, H, DPR, S, OX, OY;
+// ===== PIXEL PERFECT =====
+// Semua aset memakai satu grid: 1 piksel seni = tepat K piksel fisik layar (bilangan bulat).
+let K = 5, PXC = 1, AW = 400, AH = 216, GBW = 400, GOX = 0, PXS = 3;
 function resize(){
-  DPR = Math.min(devicePixelRatio || 1, 2);
+  DPR = devicePixelRatio || 1;
   W = innerWidth; H = innerHeight;
-  cv.style.width = W + 'px'; cv.style.height = H + 'px';
-  cv.width = W*DPR; cv.height = H*DPR;
-  // arena melebar mengikuti rasio layar HP (20:9 dll) supaya penuh tanpa sisa kiri-kanan
-  if(!lockWorld){ WW = Math.round(Math.max(1200, Math.min(1560, WH*W/H))); CX = WW/2; }
-  S = Math.min(W/WW, H/WH); OX = (W-WW*S)/2; OY = (H-WH*S)/2;
+  const Wd = Math.round(W*DPR), Hd = Math.round(H*DPR);
+  cv.width = Wd; cv.height = Hd; cv.style.width = (Wd/DPR) + 'px'; cv.style.height = (Hd/DPR) + 'px';
+  K = Math.max(2, Math.round(Hd/216));          // ±216 piksel seni tingginya, seperti game pixel HD
+  PXC = K/DPR;                                  // ukuran 1 piksel seni dalam px CSS
+  AW = Math.floor(Wd/K); AH = Math.floor(Hd/K);
+  PXS = WH/AH;                                  // satuan dunia per piksel seni
+  if(!lockWorld){ WW = Math.max(1200, Math.min(1560, AW*PXS)); CX = WW/2; }
+  GBW = Math.min(AW, Math.round(WW/PXS)); GOX = Math.floor((AW - GBW)/2);
+  S = PXC/PXS; OX = GOX*PXC; OY = 0;
+  document.documentElement.style.setProperty('--px', PXC + 'px');
+  if(typeof hydrateIcons === 'function'){ try{ hydrateIcons(); }catch(e){} }
 }
 addEventListener('resize', () => { resize(); buildBg(); }); resize();
 
@@ -497,7 +537,7 @@ function quantize(g, w, h){
   g.putImageData(id, 0, 0);
 }
 let PXW = 1;                // lebar garis minimum (= 1 piksel di kanvas kecil)
-const PXS = 3;              // 1 piksel game = 3 satuan dunia (lebih tajam & detail)
+function fitCss(cvs){ cvs.style.width = (cvs.width*PXC) + 'px'; cvs.style.height = (cvs.height*PXC) + 'px'; }
 function pxCanvas(cvs, L, H2, f){
   const w = Math.round(L/f), h = Math.round(H2/f);
   if(cvs.width !== w || cvs.height !== h){ cvs.width = w; cvs.height = h; }
@@ -634,7 +674,7 @@ function buildBg(){
   bg.width = W*DPR; bg.height = H*DPR;
   const g = bg.getContext('2d'); g.setTransform(DPR,0,0,DPR,0,0);
   g.fillStyle = '#e8945a'; g.fillRect(0,0,W,H);
-  g.fillStyle = '#f0a46a'; const dm = 48;
+  g.fillStyle = '#f0a46a'; const dm = 24*PXC;
   for(let y=-dm; y<H+dm; y+=dm) for(let x=-dm; x<W+dm; x+=dm){ g.beginPath(); g.moveTo(x, y - dm/2); g.lineTo(x + dm/2, y); g.lineTo(x, y + dm/2); g.lineTo(x - dm/2, y); g.closePath(); g.fill(); }
   const x0 = OX - 6, y0 = OY - 6, x1 = OX + WW*S + 6, y1 = OY + WH*S + 6;
   const outside = (x, y, m) => x < x0 - m || x > x1 + m || y < y0 - m || y > y1 + m;
@@ -738,8 +778,9 @@ const ICONS = {
   help: G('<circle cx="50" cy="50" r="40" fill="#f2c94c"/><path d="M38 38c0-16 26-16 26 0 0 10-14 10-14 22" fill="none" stroke-width="7"/><circle cx="50" cy="74" r="4" fill="#262322"/>')
 };
 const PIXICON = {};
-const iconHTML = n => PIXICON[n] ? `<img class="pxi" src="${PIXICON[n]}" alt="">` : (ICONS[n] || '');
-function hydrateIcons(){ document.querySelectorAll('[data-icon]').forEach(e => e.innerHTML = iconHTML(e.dataset.icon)); }
+const iconHTML = (n, sz) => { sz = sz || 24; const u = PIXICON[n + '@' + sz]; return u ? `<img class="pxi" src="${u}" alt="" style="width:${sz*PXC}px;height:${sz*PXC}px">` : (ICONS[n] || ''); };
+const iconSize = e => e.closest('.badge') ? 32 : (e.matches('.back,.dbig,.rbtn:not(.big),.dtoolbtn') || e.closest('.dhead,.dname')) ? 16 : 24;
+function hydrateIcons(){ document.querySelectorAll('[data-icon]').forEach(e => e.innerHTML = iconHTML(e.dataset.icon, iconSize(e))); }
 hydrateIcons();
 // ubah semua ikon vektor jadi sprite pixel 32x32 yang dikunci ke palet
 (function(){
@@ -747,9 +788,11 @@ hydrateIcons();
   names.forEach(n => {
     const img = new Image();
     img.onload = () => {
-      const c = document.createElement('canvas'); c.width = c.height = 32;
-      const g = c.getContext('2d', {willReadFrequently:true}); g.drawImage(img, 0, 0, 32, 32); quantize(g, 32, 32);
-      PIXICON[n] = c.toDataURL();
+      for(const sz of [16, 24, 32]){
+        const c = document.createElement('canvas'); c.width = c.height = sz;
+        const g = c.getContext('2d', {willReadFrequently:true}); g.drawImage(img, 0, 0, sz, sz); quantize(g, sz, sz);
+        PIXICON[n + '@' + sz] = c.toDataURL();
+      }
       if(--left === 0){ hydrateIcons(); if(!$('chars').classList.contains('hidden')) renderChars(); }
     };
     img.onerror = () => { if(--left === 0) hydrateIcons(); };
@@ -957,7 +1000,7 @@ let thumbCache = null;
 function showGames(){
   if(!thumbCache) thumbCache = makeThumbs();
   const keys = [...ALL_GAMES, 'random'];
-  $('ggrid').innerHTML = keys.map((k,i) => `<button class="gtile" data-g="${k}" style="--r:${(i%2 ? 1 : -1)*1.2}deg"><span class="pic"><img src="${thumbCache[k]}" alt=""></span><b>${t('m_'+k)}</b></button>`).join('');
+  $('ggrid').innerHTML = keys.map((k,i) => `<button class="gtile" data-g="${k}"><span class="pic"><img src="${thumbCache[k]}" alt="" style="width:${64*PXC}px;height:${42*PXC}px"></span><b>${t('m_'+k)}</b></button>`).join('');
   $('ggrid').querySelectorAll('.gtile').forEach(b => b.onclick = () => {
     const k = b.dataset.g;
     askPlayers((k === 'random' ? '🎲 ' : '') + t('m_'+k), t(k === 'random' ? 'd_random' : 'h_'+k), k === 'random' ? shuffleModes : () => [k,k,k]);
@@ -983,14 +1026,14 @@ function previewChar(canvas, i, over, opt){
   const p = {i, x:w/2, y:w*.56, vx:0, vy:0, m:r*r, alive:true, fall:0, fallMax:1, fx:0, fy:.3, seed:i*1.7, expr:'happy', dashFx:0};
   if(opt && opt.fx){ const tmp = []; p.vx = -200; for(let k=0;k<7;k++){ p.x = w/2 + 20; trail(p, opt.fx, tmp); } tmp.forEach((q,k) => { q.x += -k*9 - 18; q.y += rnd(-10, 10); q.life = q.max*(1 - k/9); }); const kp = parts; parts = tmp; drawParts(true); parts = kp; p.vx = 0; p.x = w/2 + 20; }
   drawChar(p);
-  quantize(g, canvas.width, canvas.height);
+  quantize(g, canvas.width, canvas.height); fitCss(canvas);
   for(const k in keep) c[k] = keep[k];
   ctx = keepCtx; PXW = 1;
 }
 function renderChars(){
   $('ptabs').innerHTML = [0,1,2,3].map(i => `<button class="ptab ${i === cP ? 'on' : ''}" data-p="${i}" style="background:${CHARS[i].c}">${i+1}P</button>`).join('') + `<div class="wallet">⭐ ${save.stars}</div>`;
   $('ptabs').querySelectorAll('.ptab').forEach(b => b.onclick = () => { cP = +b.dataset.p; pending = null; renderChars(); });
-  $('ctabs').innerHTML = CATS.map(([k,ic,lab]) => `<button class="ctab ${k === cTab ? 'on' : ''}" data-c="${k}"><i>${iconHTML(ic)}</i>${t(lab)}</button>`).join('');
+  $('ctabs').innerHTML = CATS.map(([k,ic,lab]) => `<button class="ctab ${k === cTab ? 'on' : ''}" data-c="${k}"><i>${iconHTML(ic, 16)}</i>${t(lab)}</button>`).join('');
   $('ctabs').querySelectorAll('.ctab').forEach(b => b.onclick = () => { cTab = b.dataset.c; pending = null; renderChars(); });
   $('pName').value = save.cust[cP].name; $('pName').placeholder = t('c'+cP);
   applyLang();
@@ -1021,7 +1064,7 @@ function renderChars(){
       if(it.pat){ const gr = g.createLinearGradient(0, 0, 160, 160); (it.pat === 'rainbow' ? ['#e8735a','#f2c94c','#7cc47a','#6aa6d8','#c58fd6'] : ['#fff3b0','#f2c94c','#c48a0c','#f2c94c']).forEach((cc,k,a) => gr.addColorStop(k/(a.length-1), cc)); g.fillStyle = gr; }
       else g.fillStyle = it.c;
       g.fillRect(0, 0, 160, 160);
-      g.fillStyle = 'rgba(255,255,255,.4)'; g.fillRect(12, 12, 40, 12); g.fillRect(12, 24, 12, 24); g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(0, 148, 160, 12); g.fillRect(148, 0, 12, 160); quantize(g, cvs.width, cvs.height);
+      g.fillStyle = 'rgba(255,255,255,.4)'; g.fillRect(12, 12, 40, 12); g.fillRect(12, 24, 12, 24); g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(0, 148, 160, 12); g.fillRect(148, 0, 12, 160); quantize(g, cvs.width, cvs.height); fitCss(cvs);
     } else previewChar(cvs, cP, {[cTab]: it.id, useSkin: cTab === 'fx' ? c.useSkin : c.useSkin}, {bg:'#fff3d6', L:160, r:.26, fx: cTab === 'fx' && it.id !== 'none' ? it.id : null});
     if(!own) b.insertAdjacentHTML('beforeend', `<span class="price">${pending === key ? t('buy') + ' ' : ''}⭐ ${it.p}</span>`);
     if(on) b.insertAdjacentHTML('beforeend', '<span class="ok">✔</span>');
@@ -1048,7 +1091,7 @@ function renderAvatar(dt){
   if(fxk !== 'none'){ p.fxT = (renderAvatar.ft || 0) - dt; if(p.fxT <= 0){ p.fxT = .06; trail(p, fxk); } renderAvatar.ft = p.fxT; }
   updateParts(dt); drawParts(true); avParts = parts;
   drawChar(p);
-  quantize(g, cvs.width, cvs.height);
+  quantize(g, cvs.width, cvs.height); fitCss(cvs);
   parts = kp; ctx = keepCtx; PXW = 1;
 }
 
@@ -1061,7 +1104,7 @@ function dUpdatePen(){
   const dot = $('dDot'), px = 4 + dSize*6;
   dot.style.width = dot.style.height = px + 'px';
   dot.style.background = dTool === 'era' ? '#fff' : dCol === 'rainbow' ? 'conic-gradient(#e8735a,#f2c94c,#5cbf4a,#3fa9e0,#8a63c9,#e8735a)' : dCol;
-  $('dTool').innerHTML = iconHTML(dTool === 'era' ? 'eraser' : 'pencil');
+  $('dTool').innerHTML = iconHTML(dTool === 'era' ? 'eraser' : 'pencil', 16);
 }
 function openDraw(){
   const c = save.cust[cP];
@@ -1074,6 +1117,8 @@ function openDraw(){
   document.querySelectorAll('.fopt').forEach(b => b.classList.toggle('on', (b.dataset.e === '1') === dEyesOn));
   $('dSz').value = dSize; dUpdatePen(); applyLang();
   $('draw').classList.remove('hidden');
+  const sh = document.querySelector('.dsheet').getBoundingClientRect(), m = Math.max(1, Math.floor(Math.min(sh.width, sh.height)*DPR*.96/32/K))*K;
+  const dcv = document.querySelector('.dcv'); dcv.style.width = dcv.style.height = (32*m/DPR) + 'px';
 }
 $('dSz').oninput = () => { dSize = +$('dSz').value; dUpdatePen(); };
 $('dTool').onclick = () => { dTool = dTool === 'pen' ? 'era' : 'pen'; dUpdatePen(); };
@@ -1118,10 +1163,10 @@ function renderDrawPreview(){
     const g = pxCanvas(cvs, L, L, 4); ctx = g; PXW = 4; c.eyes = eyes;
     g.fillStyle = bg; g.fillRect(0, 0, L, L);
     drawChar({i:cP, x:L/2, y:L*.56, vx:0, vy:0, m:(L*r)**2, alive:true, fall:0, fallMax:1, fx:0, fy:.3, seed:cP*1.7, expr:'normal', dashFx:0});
-    quantize(g, cvs.width, cvs.height);
+    quantize(g, cvs.width, cvs.height); fitCss(cvs);
   };
   if(!$('dPol').classList.contains('hidden')) draw1($('dprev'), dEyesOn, '#a9d3f0', .3, 240);
-  if(Math.floor(T*10) % 3 === 0) document.querySelectorAll('.fopt canvas').forEach((cv2,k) => draw1(cv2, k === 0, k === 0 ? '#e8735a' : '#b54a33', .32, 120));
+  if(Math.floor(T*10) % 3 === 0) document.querySelectorAll('.fopt canvas').forEach((cv2,k) => draw1(cv2, k === 0, k === 0 ? '#e8584a' : '#b03a3a', .32, 96));
   ctx = keepCtx; PXW = 1; [c.useSkin, c.eyes, skinImgs[cP]] = keep;
 }
 document.querySelectorAll('.mbtn').forEach(b => b.onclick = () => {
@@ -1819,7 +1864,7 @@ function makeThumbs(){
       [[50,60],[350,60],[50,205],[350,205]].forEach(([x,y],i) => drawChar(mk(i, x, y, 30, 'happy', 0, .3))); }
   };
   for(const k of Object.keys(D)){
-    const c = document.createElement('canvas'); ctx = pxCanvas(c, 400, 260, 4); PXW = 4;
+    const c = document.createElement('canvas'); ctx = pxCanvas(c, 400, 260, 6.25); PXW = 6.25;
     ctx.fillStyle = TILE_BG[k]; ctx.fillRect(0, 0, 400, 260);
     ctx.fillStyle = 'rgba(255,255,255,.18)'; for(let x=0;x<400;x+=40) for(let y=0;y<260;y+=40) if(((x+y)/40) % 2 === 0) ctx.fillRect(x, y, 40, 40);
     try{ D[k](); }catch(e){ console.error(e); }
@@ -2156,9 +2201,20 @@ function drawParts(trailPass){
 
 const sctx = ctx;
 const PB = document.createElement('canvas');
+const HUDB = document.createElement('canvas');
+function artCanvas(cvs){                       // kanvas seukuran layar dalam piksel seni, koordinat dalam px CSS
+  if(cvs.width !== AW || cvs.height !== AH){ cvs.width = AW; cvs.height = AH; }
+  const g = cvs.getContext('2d', {willReadFrequently:true});
+  g.setTransform(1/PXC, 0, 0, 1/PXC, 0, 0); g.imageSmoothingEnabled = false; return g;
+}
+function blit(list){
+  sctx.setTransform(1,0,0,1,0,0); sctx.imageSmoothingEnabled = false;
+  sctx.fillStyle = '#2b2b3a'; sctx.fillRect(0, 0, cv.width, cv.height);
+  for(const [c, ax, ay] of list) sctx.drawImage(c, ax*K, ay*K, c.width*K, c.height*K);
+}
 function render(){
-  // 1) gambar dunia ke kanvas kecil (1 px = 4 satuan dunia), 2) kunci ke palet, 3) perbesar tajam ke layar
-  const BW = Math.ceil(WW/PXS), BH = Math.ceil(WH/PXS);
+  // 1) dunia digambar di kanvas piksel seni, 2) dikunci ke palet, 3) diperbesar tepat K kali
+  const BW = GBW, BH = AH;
   const g = pxCanvas(PB, BW*PXS, BH*PXS, PXS);
   ctx = g; PXW = PXS;
   g.fillStyle = '#1a1c2c'; g.fillRect(0, 0, WW, WH);
@@ -2169,62 +2225,110 @@ function render(){
   [...players].sort((a,b) => a.m - b.m || a.y - b.y).forEach(drawChar);
   drawTopExtra();
   drawParts(false);
-  quantize(g, BW, BH);
-  ctx = sctx; PXW = 1;
-  ctx.setTransform(DPR,0,0,DPR,0,0); ctx.imageSmoothingEnabled = false;
-  ctx.fillStyle = '#1a1c2c'; ctx.fillRect(0, 0, W, H);
-  const sx = Math.round((Math.random()-.5)*shake/2)*2, sy = Math.round((Math.random()-.5)*shake/2)*2;
-  ctx.drawImage(PB, OX + sx, OY + sy, BW*PXS*S, BH*PXS*S);
+  quantize(g, PB.width, PB.height);
+  const hg = artCanvas(HUDB); hg.clearRect(0, 0, W, H);
+  ctx = hg; PXW = PXC;
   if(match) hud();
+  quantize(hg, AW, AH);
+  ctx = sctx; PXW = 1;
+  const sx = Math.round((Math.random()-.5)*shake/3), sy = Math.round((Math.random()-.5)*shake/3);
+  blit([[PB, GOX + sx, sy], [HUDB, 0, 0]]);
 }
 
-function pxBox(x, y, w, h, fill, u){
-  u = u || 3; x = Math.round(x); y = Math.round(y); w = Math.round(w); h = Math.round(h);
-  ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(x + u, y + h, w - u, u); ctx.fillRect(x + w, y + u, u, h);
-  ctx.fillStyle = INK; ctx.fillRect(x + u, y, w - 2*u, h); ctx.fillRect(x, y + u, w, h - 2*u);
+const snapA = v => Math.round(v/PXC)*PXC;
+// ---------- Font bitmap 5x7 (selalu tajam, tidak tergantung font web) ----------
+const PF = (() => {
+  const src = {
+    A:'01110 10001 10001 11111 10001 10001 10001', B:'11110 10001 10001 11110 10001 10001 11110', C:'01110 10001 10000 10000 10000 10001 01110',
+    D:'11110 10001 10001 10001 10001 10001 11110', E:'11111 10000 10000 11110 10000 10000 11111', F:'11111 10000 10000 11110 10000 10000 10000',
+    G:'01110 10001 10000 10111 10001 10001 01111', H:'10001 10001 10001 11111 10001 10001 10001', I:'111 010 010 010 010 010 111',
+    J:'00111 00010 00010 00010 00010 10010 01100', K:'10001 10010 10100 11000 10100 10010 10001', L:'10000 10000 10000 10000 10000 10000 11111',
+    M:'10001 11011 10101 10101 10001 10001 10001', N:'10001 10001 11001 10101 10011 10001 10001', O:'01110 10001 10001 10001 10001 10001 01110',
+    P:'11110 10001 10001 11110 10000 10000 10000', Q:'01110 10001 10001 10001 10101 10010 01101', R:'11110 10001 10001 11110 10100 10010 10001',
+    S:'01111 10000 10000 01110 00001 00001 11110', T:'11111 00100 00100 00100 00100 00100 00100', U:'10001 10001 10001 10001 10001 10001 01110',
+    V:'10001 10001 10001 10001 10001 01010 00100', W:'10001 10001 10001 10101 10101 10101 01010', X:'10001 10001 01010 00100 01010 10001 10001',
+    Y:'10001 10001 01010 00100 00100 00100 00100', Z:'11111 00001 00010 00100 01000 10000 11111',
+    0:'01110 10001 10011 10101 11001 10001 01110', 1:'010 110 010 010 010 010 111', 2:'01110 10001 00001 00010 00100 01000 11111',
+    3:'11111 00010 00100 00010 00001 10001 01110', 4:'00010 00110 01010 10010 11111 00010 00010', 5:'11111 10000 11110 00001 00001 10001 01110',
+    6:'00110 01000 10000 11110 10001 10001 01110', 7:'11111 00001 00010 00100 01000 01000 01000', 8:'01110 10001 10001 01110 10001 10001 01110',
+    9:'01110 10001 10001 01111 00001 00010 01100',
+    '!':'1 1 1 1 1 0 1', '.':'0 0 0 0 0 0 1', ',':'00 00 00 00 00 01 10', ':':'0 0 1 0 0 1 0', '-':'000 000 000 111 000 000 000',
+    '+':'000 000 010 111 010 000 000', '/':'00001 00010 00010 00100 01000 01000 10000', "'":'1 1 0 0 0 0 0', '?':'01110 10001 00001 00010 00100 00000 00100',
+    '(':'01 10 10 10 10 10 01', ')':'10 01 01 01 01 01 10', '&':'01100 10010 10100 01000 10101 10010 01101', '=':'000 000 111 000 111 000 000',
+    '%':'11001 11010 00010 00100 01000 01011 10011', '·':'0 0 0 1 0 0 0', ' ':'000 000 000 000 000 000 000',
+    '★':'0001000 0001000 1111111 0111110 0011100 0110110 1100011', '❤':'0110110 1111111 1111111 1111111 0111110 0011100 0001000',
+    '💣':'0000110 0001001 0011100 0111110 0111110 0111110 0011100', '⚽':'0011100 0110110 1101011 1010101 1101011 0110110 0011100',
+    '👑':'1000001 1001001 1101011 1111111 1111111 0111110 0000000', '⏱':'0011100 0111110 1100011 1101011 1101111 1000001 0111110',
+    '❄':'0001000 1001001 0101010 0011100 0101010 1001001 0001000', '✕':'00000 10001 01010 00100 01010 10001 00000', '♥':'0110110 1111111 1111111 0111110 0011100 0001000 0000000'
+  };
+  const out = {}; for(const k in src) out[k] = src[k].split(' '); return out;
+})();
+const PF_COL = {'★':'#f5c542', '❤':'#e8584a', '♥':'#e8584a', '👑':'#f5c542', '⚽':'#f5f5f0', '❄':'#a3d4f5', '💣':'#3e3a52'};
+const pfChars = txt => Array.from(String(txt).normalize('NFD').replace(/[̀-ͯ️]/g, '').toUpperCase());
+function pixWidth(txt, sc){ let w = 0; for(const ch of pfChars(txt)){ const g = PF[ch]; w += (g ? g[0].length : 3) + 1; } return Math.max(0, w - 1)*sc*PXC; }
+function drawPixText(txt, x, y, sc, col, align, outline){
+  const u = PXC*sc, chars = pfChars(txt), w = pixWidth(txt, sc);
+  const x0 = snapA(align === 'left' ? x : align === 'right' ? x - w : x - w/2), y0 = snapA(y - 3.5*u);
+  const pass = (dx, dy, ink) => {
+    let cx = x0;
+    for(const ch of chars){
+      const g = PF[ch]; if(!g){ cx += 4*u; continue; }
+      ctx.fillStyle = ink || PF_COL[ch] || col;
+      for(let r=0; r<7; r++){ const row = g[r]; for(let c=0; c<row.length; c++) if(row[c] === '1') ctx.fillRect(cx + c*u + dx, y0 + r*u + dy, u, u); }
+      cx += (g[0].length + 1)*u;
+    }
+  };
+  if(outline){ const o = PXC*Math.max(1, Math.floor(sc/2)); for(const [dx,dy] of [[o,0],[-o,0],[0,o],[0,-o],[o,o],[-o,-o],[o,-o],[-o,o],[0,2*o],[o,2*o],[-o,2*o]]) pass(dx, dy, INK); }
+  pass(0, 0);
+  return w;
+}
+
+function pxBox(x, y, w, h, fill){
+  const u = PXC; x = snapA(x); y = snapA(y); w = snapA(w); h = snapA(h);
+  ctx.fillStyle = INK; ctx.fillRect(x + u, y + h, w - u, u); ctx.fillRect(x + w, y + u, u, h);      // bayangan 1px
+  ctx.fillRect(x + u, y, w - 2*u, h); ctx.fillRect(x, y + u, w, h - 2*u);                           // tepi 1px, sudut terpotong
   ctx.fillStyle = fill; ctx.fillRect(x + u, y + u, w - 2*u, h - 2*u);
 }
-function pxDisc(x, y, r, fill, u, cut, cutCol){
-  u = u || 3; const R = Math.max(2, Math.round(r/u)); x = Math.round(x); y = Math.round(y);
+function pxDisc(x, y, r, fill, _u, cut, cutCol, ring){
+  const u = PXC, R = Math.max(3, Math.round(r/u)); x = snapA(x); y = snapA(y);
   for(let yy=-R; yy<R; yy++){
     const hw = Math.round(Math.sqrt(Math.max(0, R*R - (yy + .5)**2)));
     ctx.fillStyle = INK; ctx.fillRect(x - hw*u, y + yy*u, hw*2*u, u);
-    if(yy > -R && yy < R-1){ const hi = Math.round(Math.sqrt(Math.max(0, (R-1)**2 - (yy + .5)**2)));
-      ctx.fillStyle = cut !== undefined && (yy + R)/(2*R) < cut ? cutCol : fill; ctx.fillRect(x - hi*u + u*0, y + yy*u, hi*2*u, u); }
+    if(yy > -R && yy < R-1){
+      const hi = Math.round(Math.sqrt(Math.max(0, (R-1)**2 - (yy + .5)**2)));
+      if(ring){ const R2 = R - 2, h2 = Math.abs(yy + .5) < R2 ? Math.round(Math.sqrt(R2*R2 - (yy + .5)**2)) : 0;
+        ctx.fillStyle = fill; ctx.fillRect(x - hi*u, y + yy*u, (hi - h2)*u, u); ctx.fillRect(x + h2*u, y + yy*u, (hi - h2)*u, u);
+        if(h2) ctx.clearRect(x - h2*u, y + yy*u, h2*2*u, u); }
+      else { ctx.fillStyle = cut !== undefined && (yy + R)/(2*R) < cut ? cutCol : fill; ctx.fillRect(x - hi*u, y + yy*u, hi*2*u, u); }
+    }
   }
 }
-function pxText(txt, x, y, size, col, align, base){
-  ctx.font = fontT(size); ctx.textAlign = align || 'center'; ctx.textBaseline = base || 'middle';
-  const o = Math.max(2, Math.round(size/10)); ctx.fillStyle = INK;
-  for(const [dx,dy] of [[o,0],[-o,0],[0,o],[0,-o],[o,o],[-o,-o],[o,-o],[-o,o],[o*2,o*2]]) ctx.fillText(txt, Math.round(x + dx), Math.round(y + dy));
-  ctx.fillStyle = col; ctx.fillText(txt, Math.round(x), Math.round(y));
-}
+function pxText(txt, x, y, size, col, align){ drawPixText(txt, x, y, Math.max(1, Math.round(size/PXC/9)), col, align || 'center', true); }
 function tag(x, y, text, col, size, align, title){
-  ctx.font = title ? fontT(size) : font(size); const w = Math.round(ctx.measureText(text).width) + 16, h = size + 10;
+  const sc = title && size >= 16 ? 2 : 1, w = snapA(pixWidth(text, sc) + 8*PXC), h = (7*sc + 6)*PXC;
   const x0 = align === 'left' ? x : align === 'right' ? x - w : x - w/2;
   pxBox(x0, y - h/2, w, h, title ? '#3e6a6a' : '#fff4dc');
-  if(title){ ctx.fillStyle = 'rgba(255,255,255,.25)'; ctx.fillRect(Math.round(x0) + 3, Math.round(y - h/2) + 3, w - 6, 3); }
-  ctx.fillStyle = title ? '#fff4dc' : col; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, Math.round(x0 + w/2), Math.round(y + 1));
+  if(title){ ctx.fillStyle = '#5fa8a0'; ctx.fillRect(snapA(x0) + PXC, snapA(y - h/2) + PXC, w - 2*PXC, PXC); }
+  drawPixText(text, x0 + w/2, y + PXC*.5, sc, title ? '#fff4dc' : col, 'center', title);
 }
 function bigText(txt, y, size, col){ pxText(txt, W/2, y, size, col); }
 function hudPops(){
   for(const q of parts){
     if(q.type !== 'text') continue;
-    const k = q.life/q.max, sx = OX + q.x*S, sy = OY + q.y*S - (1-k)*10, sz = Math.round(q.sz*.7);
-    ctx.globalAlpha = Math.min(1, k*2.5);
-    ctx.font = fontT(sz); const w = Math.round(ctx.measureText(q.txt).width) + 14, h = sz + 10;
-    pxBox(sx - w/2, sy - h/2, w, h, '#ffffff');
-    ctx.fillStyle = INK; ctx.fillRect(Math.round(sx) - 3, Math.round(sy + h/2), 6, 3); ctx.fillRect(Math.round(sx) - 0, Math.round(sy + h/2 + 3), 3, 3);
-    ctx.fillStyle = q.col; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(q.txt, Math.round(sx), Math.round(sy + 1));
-    ctx.globalAlpha = 1;
+    const k = q.life/q.max; if(k < .15) continue;
+    const sx = snapA(OX + q.x*S), sy = snapA(OY + q.y*S - (1-k)*10), sz = q.sz > 28 ? 16 : 8;
+    const sc = sz > 8 ? 2 : 1, w = snapA(pixWidth(q.txt, sc) + 8*PXC), h = (7*sc + 6)*PXC;
+    pxBox(sx - snapA(w/2), sy - snapA(h/2), w, h, '#ffffff');
+    ctx.fillStyle = INK; ctx.fillRect(sx - PXC, sy + snapA(h/2), 3*PXC, PXC); ctx.fillRect(sx, sy + snapA(h/2) + PXC, PXC, PXC);
+    drawPixText(q.txt, sx, sy + PXC*.5, sc, q.col, 'center');
   }
 }
 
 function hud(){
   // garis pembagi area (pensil)
-  ctx.fillStyle = 'rgba(26,28,44,.3)';
-  for(let y=70; y<H; y+=12) ctx.fillRect(Math.round(W/2) - 1, y, 3, 6);
-  if(match.n > 2) for(let x=0; x<W; x+=12) ctx.fillRect(x, Math.round(H/2) - 1, 6, 3);
+  ctx.fillStyle = '#2b2b3a';
+  for(let y=snapA(70); y<H; y+=6*PXC) ctx.fillRect(snapA(W/2), y, PXC, 3*PXC);
+  if(match.n > 2) for(let x=0; x<W; x+=6*PXC) ctx.fillRect(x, snapA(H/2), 3*PXC, PXC);
   hudPops();
 
   const R = BR();
@@ -2233,19 +2337,19 @@ function hud(){
     // joystick
     if(pad.id !== null){
       const jr = JR();
-      ctx.globalAlpha = .55; pxDisc(pad.ox, pad.oy, jr, 'rgba(255,255,255,.35)', 4); ctx.globalAlpha = 1;
+      pxDisc(pad.ox, pad.oy, jr, '#fff4dc', 0, undefined, undefined, true);
       let kx = pad.px - pad.ox, ky = pad.py - pad.oy; const kl = Math.hypot(kx,ky);
       if(kl > jr){ kx = kx/kl*jr; ky = ky/kl*jr; }
-      pxDisc(pad.ox + kx, pad.oy + ky, jr*.45, ch.c, 3);
+      pxDisc(pad.ox + kx, pad.oy + ky, jr*.45, ch.c);
     }
     // tombol dash
-    ctx.save(); ctx.translate(b.x, b.y); if(top) ctx.rotate(Math.PI);
-    const sc = pad.press > 0 ? .88 : 1; ctx.scale(sc, sc);
+    ctx.save(); ctx.translate(snapA(b.x), snapA(b.y)); if(top) ctx.rotate(Math.PI);
+    if(pad.press > 0) ctx.translate(0, 2*PXC);
     const ready = canDash(p) && state === 'play';
-    pxDisc(3, 4, R, 'rgba(0,0,0,.35)', 4);
-    pxDisc(0, 0, R, ready ? ch.c : '#a8a8b3', 4, p.dashCd > 0 ? p.dashCd/p.dashMax : undefined, '#6e6e7a');
-    ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.fillRect(-Math.round(R*.55), -Math.round(R*.6), 8, 4);
-    ctx.font = fontT(Math.round(R*.42)); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = INK; ctx.fillText(mode === 'snow' ? '❄' : 'DASH', 0, 2);
+    pxDisc(PXC, 2*PXC, R, '#2b2b3a');
+    pxDisc(0, 0, R, ready ? ch.c : '#9a9aa8', 0, p.dashCd > 0 ? p.dashCd/p.dashMax : undefined, '#6a6a78');
+    ctx.fillStyle = '#fff4dc'; ctx.fillRect(-snapA(R*.55), -snapA(R*.6), 3*PXC, 2*PXC);
+    drawPixText(mode === 'snow' ? '❄' : 'DASH', 0, PXC*.5, 1, INK, 'center');
     // label pemain
     const dir = ((p.i === 0 || p.i === 3) ? 1 : -1) * (save.dashPos === 'in' ? -1 : 1);
     const live = liveText(p);
@@ -2253,9 +2357,9 @@ function hud(){
     ctx.restore();
   }
   // judul ronde & waktu
-  const tm = MODES[mode].time ? '  ⏱' + Math.max(0, Math.ceil(tLeft)) : '';
+  const tm = MODES[mode].time ? '  ⏱ ' + Math.max(0, Math.ceil(tLeft)) : '';
   tag(W/2, 44, `${MODES[mode].name}${tm}${mode === 'soccer' ? '   ' + X.goals[0] + ' : ' + X.goals[1] : ''}`, INK, 15, 'center', true);
-  pxText(`${t('round')} ${Math.min(match.idx+1, match.order.length)}/${match.order.length}`, W/2, 68, 12, '#fff3d6');
+  pxText(`${t('round')} ${Math.min(match.idx+1, match.order.length)}/${match.order.length}`, W/2, 68, 12, '#fff4dc');
 
   if(state === 'count'){
     const n = Math.ceil(tCount);
@@ -2291,7 +2395,7 @@ function drawTrophy(x, y, h){
 const HB = document.createElement('canvas');
 function renderMenu(dt){
   T += dt;
-  const g = pxCanvas(HB, W, H, 2); ctx = g; PXW = 2;
+  const g = artCanvas(HB); ctx = g; PXW = PXC;
   ctx.drawImage(bg, 0, 0, W, H);
   const hx = W*.3, hy = H*.53, u = Math.min(W*.46, H*.9)/100;
   // sinar di belakang trofi
@@ -2323,8 +2427,7 @@ function renderMenu(dt){
   }
   quantize(g, HB.width, HB.height);
   ctx = sctx; PXW = 1;
-  ctx.setTransform(DPR,0,0,DPR,0,0); ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(HB, 0, 0, W, H);
+  blit([[HB, 0, 0]]);
 }
 refreshHome();
 
