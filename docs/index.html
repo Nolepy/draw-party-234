@@ -745,7 +745,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.3 · tombol menu bisa diklik';
+const VERSION = 'v8.4 · ukuran karakter seragam';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -3127,7 +3127,7 @@ function customSpr(src, R, outline, live){
   if(x1 < 0) return null;
   const bw = x1 - x0 + 1, bh = y1 - y0 + 1, S = Math.max(bw, bh), D = 2*R + 2;
   let tw, th, sample;
-  if(D >= 2*S){ const k = Math.min(3, Math.floor(D/S)); tw = bw*k; th = bh*k; sample = (x, y) => u[(y0 + Math.floor(y/k))*G + x0 + Math.floor(x/k)]; }
+  if(D >= 48 || D >= 2*S){ const k = D >= 48 ? Math.min(3, Math.max(1, Math.round(D/32))) : Math.min(3, Math.floor(D/S));  /* skala bulat dari grid 32 (bukan bbox): ukuran piksel semua karakter sama */ tw = bw*k; th = bh*k; sample = (x, y) => u[(y0 + Math.floor(y/k))*G + x0 + Math.floor(x/k)]; }
   else if(D >= S){ tw = bw; th = bh; sample = (x, y) => u[(y0 + y)*G + x0 + x]; }
   else { const f = D/S; tw = Math.max(2, Math.round(bw*f)); th = Math.max(2, Math.round(bh*f));
     sample = (x, y) => { const sx0 = x0 + Math.floor(x/f), sx1 = Math.max(sx0 + 1, x0 + Math.floor((x + 1)/f)), sy0 = y0 + Math.floor(y/f), sy1 = Math.max(sy0 + 1, y0 + Math.floor((y + 1)/f));
