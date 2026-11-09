@@ -674,6 +674,13 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .cl{margin:calc(var(--px)*4) 0 calc(var(--px)*4) calc(var(--px)*4)!important;height:auto!important;align-self:stretch;border:var(--p1) solid #422a3c!important;box-shadow:inset var(--p1) var(--p1) 0 #fefefe,inset calc(var(--p1)*-1) calc(var(--p1)*-1) 0 #ccc4aa,0 calc(var(--px)*2) 0 #2d1e2c!important;background:#eee4ce!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .mtitle,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #chars .hint,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .galhead > span,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .gal .hint{color:#feffec!important;text-shadow:var(--p1) 0 0 #422a3c,calc(var(--p1)*-1) 0 0 #422a3c,0 var(--p1) 0 #422a3c,0 calc(var(--p1)*-1) 0 #422a3c,0 calc(var(--p1)*2) 0 #422a3c!important}
   /* ===== warna kotak & tombol tema pesta (sama dengan home) ===== */
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .avrow{display:flex;align-items:flex-start;justify-content:center;gap:calc(var(--px)*3);width:100%}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .avrow .avwrap{flex:1 1 auto;min-width:0}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .mtabs{display:flex;flex-direction:column;gap:calc(var(--px)*3);flex:none}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .mtab{width:calc(var(--px)*18);height:calc(var(--px)*18);min-width:0!important;min-height:0!important;padding:0!important;display:flex;align-items:center;justify-content:center;background:#feffec!important;border:var(--p1) solid #422a3c!important;border-radius:0!important;box-shadow:inset 0 var(--p1) 0 #fefefe,inset 0 calc(var(--px)*-2) 0 #ccc4aa,0 var(--p1) 0 #422a3c!important;cursor:pointer}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .mtab.on{background:#1cbc74!important;box-shadow:inset 0 var(--p1) 0 #98d864,inset 0 calc(var(--px)*-2) 0 #249064,0 var(--p1) 0 #422a3c!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .mtab:active{transform:translateY(var(--p1))}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .mtab img,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .mtab .pxi{width:calc(var(--px)*11)!important;height:calc(var(--px)*11)!important;image-rendering:pixelated}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .it{background:#feffec!important;background-image:none!important;border:var(--p1) solid #422a3c!important;border-radius:0!important;box-shadow:inset 0 var(--p1) 0 #fefefe,inset 0 calc(var(--px)*-2) 0 #ccc4aa,0 var(--p1) 0 #422a3c!important;transform:none!important;filter:none!important;opacity:1!important;position:relative}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .it canvas{background:transparent!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs) #chars .it.sel{background:#fcc22c!important;background-image:none!important;border:var(--p1) solid #422a3c!important;border-radius:0!important;box-shadow:inset 0 var(--p1) 0 #fae67c,inset 0 calc(var(--px)*-2) 0 #f89618,0 var(--p1) 0 #422a3c!important;transform:none!important;filter:none!important;opacity:1!important;outline:0!important}
@@ -741,7 +748,7 @@
 <div id="chars" class="hidden">
   <div class="cl">
     <button class="back" id="cBack" data-icon="back" style="position:absolute"></button>
-    <div class="avwrap"><canvas id="avatar" width="320" height="320"></canvas></div>
+    <div class="avrow"><div class="avwrap"><canvas id="avatar" width="320" height="320"></canvas></div><div class="mtabs" id="mTabs"></div></div>
     <div class="pnl" data-t="pname">Nama Pemain</div>
     <input id="pName" maxlength="10" autocomplete="off" spellcheck="false">
   </div>
@@ -802,7 +809,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v9.1 · warna tombol tema pesta';
+const VERSION = 'v9.2 · tab gaya di samping pratinjau';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -1521,8 +1528,17 @@ function renderChars(){
   $('ptabs').innerHTML = [0,1,2,3].map(i => `<button class="ptab ${i === cP ? 'on' : ''}" data-p="${i}" style="background:${CHARS[i].c}">${i+1}P</button>`).join('') + `<div class="wallet">⭐ ${save.stars}</div>`;
   $('ptabs').querySelectorAll('.ptab').forEach(b => b.onclick = () => { cP = +b.dataset.p; pending = null; cMode = null; renderChars(); });
   const c = save.cust[cP];
+  if(!cMode) cMode = c.useSkin && c.skin ? 'draw' : 'animal';     // langsung tampil UI karakter (gaya yang sedang dipakai)
   if(cMode === 'draw') cTab = 'draw'; else if(cTab === 'draw') cTab = 'sp';
-  const backBtn = cMode ? `<button class="ctab mback" id="mBack" title="${t('modeBack')}" aria-label="${t('modeBack')}"><i>${iconHTML('back', 16)}</i>${cMode === 'draw' ? t('modeBack') : ''}</button>` : '';
+  // tab gaya di samping kotak pratinjau: Karakter Lucu / Gambar Sendiri
+  $('mTabs').innerHTML = [['animal','tsp','modeA'],['draw','tdraw','modeD']].map(([m,ic,lab]) => `<button class="mtab ${cMode === m ? 'on' : ''}" data-m="${m}" title="${t(lab)}" aria-label="${t(lab)}">${iconHTML(ic, 16)}</button>`).join('');
+  $('mTabs').querySelectorAll('.mtab').forEach(b => b.onclick = () => {
+    if(cMode === b.dataset.m) return;
+    cMode = b.dataset.m; pending = null;
+    if(cMode === 'animal'){ c.useSkin = false; cTab = 'sp'; } else if(c.skin) c.useSkin = true;
+    persist(); thumbCache = null; sfx('blip'); renderChars(); if(cMode === 'draw' && !c.skin && !save.gal.length) openDraw();
+  });
+  const backBtn = '';
   $('ctabs').innerHTML = !cMode ? '' : backBtn + (cMode === 'animal' ? CATS.filter(x => x[0] !== 'draw').map(([k,ic,lab]) => `<button class="ctab ${k === cTab ? 'on' : ''}" data-c="${k}" title="${t(lab)}" aria-label="${t(lab)}"><i>${iconHTML(ic, 16)}</i>${k === cTab ? t(lab) : ''}</button>`).join('') : '');
   $('ctabs').querySelectorAll('.ctab[data-c]').forEach(b => b.onclick = () => { cTab = b.dataset.c; pending = null; renderChars(); });
   if($('mBack')) $('mBack').onclick = () => { cMode = null; pending = null; renderChars(); };
@@ -1558,7 +1574,7 @@ function renderChars(){
     box.querySelectorAll('.gdel').forEach(b => b.onclick = e => { e.stopPropagation(); save.gal.splice(+b.dataset.k, 1); persist(); renderChars(); });
     if(c.skin){
       $('tEyes').onchange = e => { c.outline = e.target.checked; persist(); renderChars(); };
-      $('dDel').onclick = () => { c.skin = ''; c.useSkin = false; persist(); loadSkin(cP); thumbCache = null; cMode = null; renderChars(); };
+      $('dDel').onclick = () => { c.skin = ''; c.useSkin = false; persist(); loadSkin(cP); thumbCache = null; cMode = 'animal'; renderChars(); };
     }
     return;
   }
