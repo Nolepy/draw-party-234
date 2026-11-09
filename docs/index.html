@@ -599,6 +599,8 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard canvas{width:calc(var(--px)*30)!important;height:calc(var(--px)*30)!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard b{white-space:nowrap}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .mcard em{top:calc(var(--px)*2)!important;right:calc(var(--px)*2)!important;padding:calc(var(--px)*1) calc(var(--px)*2)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .mcard b,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .mcard small,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .mcard em{font-size:calc(var(--pf)*16)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .mcard{padding:calc(var(--px)*5) calc(var(--px)*6)!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .avwrap,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .pnl,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) #pName{max-width:calc(var(--px)*84)!important}
   @media (pointer:coarse){ html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .chip,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ctab,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ptab,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .go,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .fopt,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .arw,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .back,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .x,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) #mx{min-height:40px!important} html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .arw,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .ctab:not(.on){min-width:40px!important} }
   /* v6.3b: tanpa scroll untuk layar berisi sedikit */
@@ -770,7 +772,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.7 · warna bebas (hue)';
+const VERSION = 'v8.8 · teks kartu lebih kecil';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -800,6 +802,7 @@ function resize(){
   S = PXC/PXS; OX = GOX*PXC; OY = GOY*PXC;
   document.documentElement.style.setProperty('--px', (2*PXC) + 'px');   // satuan tata letak DOM = 2 piksel seni
   document.documentElement.style.setProperty('--p1', PXC + 'px');       // garis tepat 1 piksel seni
+  { const k = Math.round(PXC*DPR), ks = k >= 3 ? Math.round(k*.75) : k; document.documentElement.style.setProperty('--pf', (ks/DPR) + 'px'); }   // piksel font kecil: tetap bulat di layar (tajam), ~75%
   if(typeof hydrateIcons === 'function'){ try{ hydrateIcons(); }catch(e){} }
 }
 addEventListener('resize', () => { resize(); buildBg(); }); resize();
