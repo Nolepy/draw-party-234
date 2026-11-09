@@ -744,7 +744,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.0 · palet makanan + karakter benda';
+const VERSION = 'v8.1 · efek tanpa kotak';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -3508,10 +3508,10 @@ function hudPops(){
     if(q.type !== 'text') continue;
     const k = q.life/q.max; if(k < .15) continue;
     const sx = snapA(OX + q.x*S), sy = snapA(OY + q.y*S - (1-k)*10), sz = q.sz > 28 ? 16 : 8;
-    const sc = 1, w = snapA(pixWidth(q.txt, sc) + 14*PXC), h = (FH + 10)*PXC;
-    pxBox(sx - snapA(w/2), sy - snapA(h/2), w, h, '#eee4ce');
-    ctx.fillStyle = INK; ctx.fillRect(sx - PXC, sy + snapA(h/2), 3*PXC, PXC); ctx.fillRect(sx, sy + snapA(h/2) + PXC, PXC, PXC);
-    drawPixText(q.txt, sx, sy + PXC*.5, sc, q.col, 'center', 'ol');
+    // tanpa kotak: teks bergaris gelap supaya tetap terbaca di latar apa pun
+    const lum = h => { const v = parseInt(h.slice(1), 16); return ((v >> 16) & 255) + ((v >> 8) & 255) + (v & 255); };
+    let col = q.col; for(let k=0; k<3 && lum(col) < 420 && hexRamp(col, -1) !== col; k++) col = hexRamp(col, -1);   // warna gelap dicerahkan lewat ramp
+    drawPixText(q.txt, sx, sy, 1, col, 'center', 'ol');
   }
 }
 
