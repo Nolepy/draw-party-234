@@ -772,7 +772,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.8 · teks kartu lebih kecil';
+const VERSION = 'v8.9 · kanvas kosong tidak disimpan';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -1071,13 +1071,16 @@ save.cust.slice().reverse().forEach(c => { if(c.skin && !save.gal.some(g => g.s 
 if(!save.v2){ save.cust.forEach(c => { if(['ears','ahoge','leaf','bow'].includes(c.acc)) c.acc = 'none'; }); save.v2 = true; }   // karakter lama -> kepala hewan
 if(!Array.isArray(save.owned)) save.owned = [];
 const skinImgs = [null,null,null,null];
+function isBlank(im){ const k = document.createElement('canvas'); k.width = k.height = 32; const g = k.getContext('2d', {willReadFrequently:true}); g.drawImage(im, 0, 0, 32, 32); const d = g.getImageData(0, 0, 32, 32).data; for(let j=3;j<d.length;j+=4) if(d[j] > 127) return false; return true; }
 function loadSkin(i){ const c = save.cust[i]; if(!c.skin){ skinImgs[i] = null; return; } const im = new Image();
+  if(c.free) im.onload = () => { if(isBlank(im)){ save.gal = save.gal.filter(g => g.s !== c.skin); c.skin = ''; c.useSkin = false; skinImgs[i] = null; persist(); thumbCache = null; } };   // gambar kosong -> kembali ke karakter lucu
   if(!c.free) im.onload = () => {                    // gambar versi lama (kulit kotak) -> potong bulat sekali agar jadi karakter utuh
     const k = document.createElement('canvas'); k.width = k.height = 32; const g = k.getContext('2d'); g.drawImage(im, 0, 0, 32, 32);
     const id = g.getImageData(0, 0, 32, 32); for(let y=0;y<32;y++) for(let x=0;x<32;x++) if((x - 15.5)**2 + (y - 15.5)**2 > 16*16) id.data[(y*32 + x)*4 + 3] = 0;
     g.putImageData(id, 0, 0); c.skin = k.toDataURL('image/png'); c.free = true; c.eyes = false; persist(); loadSkin(i); };
   im.src = c.skin; skinImgs[i] = im; }
 [0,1,2,3].forEach(loadSkin);
+save.gal.slice().forEach(gi => { const im = new Image(); im.onload = () => { if(isBlank(im)){ save.gal = save.gal.filter(x => x !== gi); persist(); } }; im.src = gi.s; });   // buang gambar kosong dari galeri
 const palOf = i => PAL[i];
 CHARS.forEach((ch,i) => Object.defineProperties(ch, {
   c:{get: () => palOf(i).c, configurable:true}, d:{get: () => palOf(i).d, configurable:true}, pat:{get: () => palOf(i).pat, configurable:true},
@@ -1277,7 +1280,7 @@ const L = {
   pname:'Nama Pemain', tabSp:'KARAKTER', tabCol:'WARNA', tabHat:'TOPI', tabAcc:'AKSESORI', tabFx:'EFEK', tabDraw:'GAMBAR',
   buy:'Beli?', bought:'Terbeli! ✔', noStars:'Bintang kurang! Menang ronde untuk dapat ⭐',
   drawT:'Karakter gambarmu', drawS:'Bagian kosong jadi transparan.', autoOl:'Outline otomatis', drawGo:'✏️ MULAI GAMBAR', drawEdit:'✏️ UBAH',
-  useSkin:'Pakai gambar', modeT:'Mau pakai karakter apa?', modeA:'KARAKTER LUCU', modeAS:'Benda & hewan, topi, aksesori', modeD:'GAMBAR SENDIRI', modeDS:'Gambar dari nol', inUse:'DIPAKAI', modeBack:'GANTI GAYA', noDraw:'Belum ada gambar', galT:'Gambar tersimpan', galNew:'BARU', galUse:'Pakai gambar ini', galDel:'Hapus dari galeri', galEmpty:'Belum ada gambar tersimpan.', eyes:'Mata otomatis', delSkin:'🗑 Lepas', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
+  useSkin:'Pakai gambar', drawEmpty:'Kanvas masih kosong, gambar dulu ya!', modeT:'Mau pakai karakter apa?', modeA:'KARAKTER LUCU', modeAS:'Benda & hewan, topi, aksesori', modeD:'GAMBAR SENDIRI', modeDS:'Gambar dari nol', inUse:'DIPAKAI', modeBack:'GANTI GAYA', noDraw:'Belum ada gambar', galT:'Gambar tersimpan', galNew:'BARU', galUse:'Pakai gambar ini', galDel:'Hapus dari galeri', galEmpty:'Belum ada gambar tersimpan.', eyes:'Mata otomatis', delSkin:'🗑 Lepas', save:'SIMPAN', cancel:'BATAL', saved:'Gambar tersimpan!', saveErr:'Memori penuh, gambar tidak tersimpan',
   drawHint:'Gambar bebas, lingkaran hanya panduan ukuran', drawHero:'Pixel Jagoanmu!', faceL:'Outline', previewL:'Pratinjau', pen:'Pena', eraser:'Hapus', fillbg:'Isi latar',
   pts:'poin', safe:'aman', fell:'jatuh!', round:'Ronde', win:' menang!', draw:'Seri!', drawW:'Seri: ', champ:' juara!', allDraw:'Semua seri!'},
  en: {lang:'English', flag:'EN', c0:'Red', c1:'Blue', c2:'Green', c3:'Yellow',
@@ -1305,7 +1308,7 @@ const L = {
   pname:'Player Name', tabSp:'BUDDY', tabCol:'COLOR', tabHat:'HATS', tabAcc:'EXTRAS', tabFx:'EFFECTS', tabDraw:'DRAW',
   buy:'Buy?', bought:'Bought! ✔', noStars:'Not enough stars! Win rounds to earn ⭐',
   drawT:'Your drawn character', drawS:'Empty pixels stay transparent.', autoOl:'Auto outline', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT',
-  useSkin:'Use drawing', modeT:'Which character do you want?', modeA:'CUTE BUDDIES', modeAS:'Objects & animals, hats, extras', modeD:'DRAW YOUR OWN', modeDS:'Draw from scratch', inUse:'IN USE', modeBack:'CHANGE STYLE', noDraw:'No drawing yet', galT:'Saved drawings', galNew:'NEW', galUse:'Use this drawing', galDel:'Remove from gallery', galEmpty:'No saved drawings yet.', eyes:'Auto eyes', delSkin:'🗑 Remove', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
+  useSkin:'Use drawing', drawEmpty:'The canvas is empty, draw something first!', modeT:'Which character do you want?', modeA:'CUTE BUDDIES', modeAS:'Objects & animals, hats, extras', modeD:'DRAW YOUR OWN', modeDS:'Draw from scratch', inUse:'IN USE', modeBack:'CHANGE STYLE', noDraw:'No drawing yet', galT:'Saved drawings', galNew:'NEW', galUse:'Use this drawing', galDel:'Remove from gallery', galEmpty:'No saved drawings yet.', eyes:'Auto eyes', delSkin:'🗑 Remove', save:'SAVE', cancel:'CANCEL', saved:'Drawing saved!', saveErr:'Storage full, drawing not saved',
   drawHint:'Draw freely, the circle is just a size guide', drawHero:'Pixel your Hero!', faceL:'Outline', previewL:'Preview', pen:'Pen', eraser:'Eraser', fillbg:'Fill bg',
   pts:'pts', safe:'safe', fell:'out!', round:'Round', win:' wins!', draw:'Draw!', drawW:'Draw: ', champ:' is champion!', allDraw:'All draw!'}
 };
@@ -1647,6 +1650,7 @@ $('dUndo').onclick = () => { const h = dHist.pop(); if(h) dctx.putImageData(h, 0
 $('dClr').onclick = () => { snap(); dctx.clearRect(0, 0, 32, 32); };
 $('dCancel').onclick = () => { $('draw').classList.add('hidden'); renderChars(); };
 $('dSave').onclick = () => {
+  if(!dctx.getImageData(0, 0, 32, 32).data.some((v, j) => (j & 3) === 3 && v > 127)){ toast(t('drawEmpty')); sfx('bonk'); return; }   // kanvas kosong tidak boleh disimpan
   const c = save.cust[cP], prevSkin = c.skin;
   c.skin = dc.toDataURL('image/png');   // 32x32 piksel, latar transparan = bentuk karakter
   c.useSkin = true; c.eyes = false; c.free = true; c.outline = dEyesOn; $('pName').value = c.name; galAdd(c.skin, c.outline);
