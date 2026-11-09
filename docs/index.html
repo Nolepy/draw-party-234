@@ -745,7 +745,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.2 · tombol menu presisi';
+const VERSION = 'v8.3 · tombol menu bisa diklik';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -1795,7 +1795,10 @@ function zoneOf(x, y){
 const inputOn = () => match && (state === 'count' || state === 'play' || state === 'end');
 function startJoy(pad, id, x, y){ pad.id = id; pad.ox = pad.px = x; pad.oy = pad.py = y; pad.t0 = performance.now(); pad.moved = false; }
 
+let QR = null;   // area tombol Menu (px CSS); cadangan kalau sentuhan jatuh ke kanvas
+const inQR = e => QR && match && e.clientX >= QR[0] && e.clientX <= QR[0] + QR[2] && e.clientY >= QR[1] && e.clientY <= QR[1] + QR[3];
 cv.addEventListener('pointerdown', e => {
+  if(inQR(e)){ e.preventDefault(); toMenu(); return; }
   if(!inputOn()) return;
   e.preventDefault();
   const z = zoneOf(e.clientX, e.clientY); if(z < 0 || !players[z]) return;
@@ -3568,8 +3571,9 @@ function hud(){
     const cx0 = mx + snapA(mw/2) - 3*u, cy0 = Y + snapA(mh/2) - 3*u;      // ✕ piksel 6x6, tebal 2
     for(let k=0;k<6;k++){ ctx.fillStyle = '#7c3042'; ctx.fillRect(cx0 + k*u + u, cy0 + k*u + u, 2*u, u); ctx.fillRect(cx0 + (5-k)*u + u, cy0 + k*u + u, 2*u, u); }
     for(let k=0;k<6;k++){ ctx.fillStyle = '#feffec'; ctx.fillRect(cx0 + k*u, cy0 + k*u, 2*u, u); ctx.fillRect(cx0 + (5-k)*u, cy0 + k*u, 2*u, u); } }
-  { const q = $('quit').style, pad = Math.max(0, (44*DPR - mh)/2), cr = ctx.canvas.getBoundingClientRect(), tf = ctx.getTransform();       // area sentuh min 44px, pas di tengah tombol
-    q.left = cr.left + (tf.e + mx - pad)/DPR + 'px'; q.top = cr.top + Math.max(0, tf.f + my - pad)/DPR + 'px'; q.width = (mw + 2*pad)/DPR + 'px'; q.height = (mh + 2*pad)/DPR + 'px'; }
+  { const q = $('quit').style, pad = Math.max(0, (44 - mh)/2), cr = cv.getBoundingClientRect(), sx = cr.width/W, sy = cr.height/H;       // area sentuh min 44px, pas di tengah tombol
+    QR = [cr.left + (mx - pad)*sx, cr.top + Math.max(0, my - pad)*sy, (mw + 2*pad)*sx, (mh + 2*pad)*sy];
+    ['left','top','width','height'].forEach((k,i) => q.setProperty(k, QR[i] + 'px', 'important')); q.setProperty('right','auto','important'); q.setProperty('bottom','auto','important'); }
   const ty = snapA(my + mh + PXC*16);   // judul di bawah tombol Menu, tidak tertumpuk
   tag(W/2, ty, `${MODES[mode].name}${tm}${mode === 'soccer' ? '   ' + X.goals[0] + ' : ' + X.goals[1] : ''}`, INK, 15, 'center', true);
   pxText(`${t('round')} ${Math.min(match.idx+1, match.order.length)}/${match.order.length}`, W/2, ty + PXC*28, 12, '#feffec');
