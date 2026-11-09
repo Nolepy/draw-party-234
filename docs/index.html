@@ -430,6 +430,7 @@
   html body:not(#zz):not(#zy) #pName,html body:not(#zz):not(#zy) #dName{-webkit-text-fill-color:#feffec!important;color:#feffec!important;text-align:center}
   html body:not(#zz):not(#zy) #draw{background:repeating-conic-gradient(#464c74 0 25%,transparent 0 50%) 0 0/calc(var(--px)*2) calc(var(--px)*2)!important;image-rendering:pixelated}
   html body:not(#zz):not(#zy) .dcv{background:repeating-conic-gradient(#eee4ce 0 25%,#ccc4aa 0 50%) 0 0/calc(100%/16) calc(100%/16)!important;image-rendering:pixelated}
+  .dedge{position:absolute;inset:0;pointer-events:none;box-sizing:border-box;border:var(--de,4px) solid rgba(66,42,60,.55)}
   html body:not(#zz):not(#zy) .dring{box-shadow:none!important;border:var(--px) dashed rgba(66,42,60,.35)!important}
   html body:not(#zz):not(#zy) #dTool.on,html body:not(#zz):not(#zy) #dFill.on{outline:calc(var(--p1)*2) solid #fcc22c;outline-offset:0}
   html body:not(#zz):not(#zy) #quit{opacity:1!important;top:calc(var(--px)*2)!important;padding:0 calc(var(--px)*5)!important;height:calc(var(--px)*12)!important;line-height:1!important}
@@ -714,7 +715,7 @@
     <div class="dbtns"><button class="dbig blue" id="dFill" data-icon="bucket"></button><button class="dbig yellow" id="dClr" data-icon="trash"></button></div>
   </div>
   <div class="dright">
-    <div class="dsheet"><div class="dcv"><canvas id="dc" width="32" height="32"></canvas><div class="dgrid"></div><div class="dring"></div></div></div>
+    <div class="dsheet"><div class="dcv"><canvas id="dc" width="32" height="32"></canvas><div class="dgrid"></div><div class="dring"></div><div class="dedge"></div></div></div>
     <div class="dbar">
       <button class="rbtn blue on" id="dGuide" data-icon="guide"></button>
       <button class="rbtn blue on" id="dPrevBtn" data-icon="person"></button>
@@ -745,7 +746,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.4 · ukuran karakter seragam';
+const VERSION = 'v8.5 · kanvas gambar 30+outline';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -1554,7 +1555,7 @@ function dUpdatePen(){
 function openDraw(fresh){
   const c = save.cust[cP];
   dctx.globalCompositeOperation = 'source-over'; dctx.clearRect(0, 0, 32, 32); dHist = [];
-  if(fresh !== true && c.skin && skinImgs[cP] && skinImgs[cP].complete){ dctx.imageSmoothingEnabled = skinImgs[cP].naturalWidth > 64; dctx.drawImage(skinImgs[cP], 0, 0, 32, 32); quantize(dctx, 32, 32); }
+  if(fresh !== true && c.skin && skinImgs[cP] && skinImgs[cP].complete){ dctx.imageSmoothingEnabled = skinImgs[cP].naturalWidth > 64; dctx.drawImage(skinImgs[cP], 0, 0, 32, 32); quantize(dctx, 32, 32); dClearEdge(); }
   dEyesOn = c.outline !== false; dTool = 'pen';
   $('dName').value = c.name; $('dName').placeholder = t('c'+cP);
   $('dColors').innerHTML = DCOLS.map((cc,k) => `<button data-c="${cc}" class="${cc === dCol ? 'on' : ''}" style="--r:${((k*7)%5-2)*1.5}deg;background-color:${cc === 'rainbow' ? '#eee4ce' : cc};${cc === 'rainbow' ? 'background:conic-gradient(#cc683c,#fcc22c,#1cbc74,#4c9ce8,#4e66b4,#cc683c)' : ''}"></button>`).join('');
@@ -1563,7 +1564,7 @@ function openDraw(fresh){
   $('dSz').value = dSize; dUpdatePen(); applyLang();
   $('draw').classList.remove('hidden');
   const sh = document.querySelector('.dsheet').getBoundingClientRect(), m = Math.max(1, Math.floor(Math.min(sh.width, sh.height)*DPR*.96/32/K))*K;
-  const dcv = document.querySelector('.dcv'); dcv.style.width = dcv.style.height = (32*m/DPR) + 'px';
+  const dcv = document.querySelector('.dcv'); dcv.style.width = dcv.style.height = (32*m/DPR) + 'px'; dcv.style.setProperty('--de', (m/DPR) + 'px');   // tepi 1 piksel = tempat outline otomatis
 }
 $('dSz').oninput = () => { dSize = +$('dSz').value; dUpdatePen(); };
 $('dTool').onclick = () => { dTool = dTool === 'pen' ? 'era' : 'pen'; dUpdatePen(); };
@@ -1572,16 +1573,17 @@ $('dName').addEventListener('keydown', e => { if(e.key === 'Enter') $('dName').b
 document.querySelectorAll('.fopt').forEach(b => b.onclick = () => { dEyesOn = b.dataset.e === '1'; document.querySelectorAll('.fopt').forEach(x => x.classList.toggle('on', x === b)); });
 $('dGuide').onclick = () => { const on = $('dGuide').classList.toggle('on'); document.querySelector('.dring').classList.toggle('off', !on); };
 $('dPrevBtn').onclick = () => { const on = $('dPrevBtn').classList.toggle('on'); $('dPol').classList.toggle('hidden', !on); };
+function dClearEdge(){ dctx.clearRect(0, 0, 32, 1); dctx.clearRect(0, 31, 32, 1); dctx.clearRect(0, 0, 1, 32); dctx.clearRect(31, 0, 1, 32); }   // area gambar maks 30x30 + outline 1 px = 32x32 (sama dengan karakter default)
 function snap(){ dHist.push(dctx.getImageData(0, 0, 32, 32)); if(dHist.length > 40) dHist.shift(); }
 $('dFill').onclick = () => { dTool = dTool === 'fill' ? 'pen' : 'fill'; dUpdatePen(); };
 function dFlood(x, y){                          // ember: isi area bersambung yang warnanya sama (termasuk area kosong)
-  if(x < 0 || y < 0 || x > 31 || y > 31) return;
+  if(x < 1 || y < 1 || x > 30 || y > 30) return;
   const id = dctx.getImageData(0, 0, 32, 32), u = new Uint32Array(id.data.buffer), from = u[y*32 + x];
   const col = dCol === 'rainbow' ? RAINBOW[(dHue = (dHue + 8) % 64) >> 3] : dCol, to = hexU(col);
   if(from === to) return;
   const st = [y*32 + x];
   while(st.length){ const i = st.pop(); if(u[i] !== from) continue; u[i] = to; const px = i & 31;
-    if(px > 0) st.push(i - 1); if(px < 31) st.push(i + 1); if(i >= 32) st.push(i - 32); if(i < 992) st.push(i + 32); }
+    if(px > 1) st.push(i - 1); if(px < 30) st.push(i + 1); if(i >= 64) st.push(i - 32); if(i < 960) st.push(i + 32); }
   dctx.putImageData(id, 0, 0);
 }
 $('dUndo').onclick = () => { const h = dHist.pop(); if(h) dctx.putImageData(h, 0, 0); };
@@ -1601,7 +1603,8 @@ const RAINBOW = ['#ae2432','#f89618','#fcc22c','#cee06e','#1cbc74','#98d864','#4
 function dPlot(x, y){
   const z = dSize, o = Math.floor((z-1)/2);
   if(dTool === 'era') dctx.clearRect(x - o, y - o, z, z);
-  else { dctx.fillStyle = dCol === 'rainbow' ? RAINBOW[(dHue = (dHue + 1) % 64) >> 3] : dCol; dctx.fillRect(x - o, y - o, z, z); }
+  else { const x0 = Math.max(1, x - o), y0 = Math.max(1, y - o), x1 = Math.min(31, x - o + z), y1 = Math.min(31, y - o + z); if(x1 <= x0 || y1 <= y0) return;
+    dctx.fillStyle = dCol === 'rainbow' ? RAINBOW[(dHue = (dHue + 1) % 64) >> 3] : dCol; dctx.fillRect(x0, y0, x1 - x0, y1 - y0); }
 }
 function dLine(a, b){                       // garis Bresenham: piksel demi piksel
   let x0 = a.x, y0 = a.y; const dx = Math.abs(b.x - x0), dy = -Math.abs(b.y - y0), sx = x0 < b.x ? 1 : -1, sy = y0 < b.y ? 1 : -1;
@@ -3119,9 +3122,20 @@ const customCache = new WeakMap();
 function customSpr(src, R, outline, live){
   let m = !live && customCache.get(src); const key = R + (outline ? 'o' : 'n');
   if(m && m.has(key)) return m.get(key);
-  const G = src.__grid || 32, t32 = document.createElement('canvas'); t32.width = t32.height = G; const tg = t32.getContext('2d', {willReadFrequently:true});
+  let G = src.__grid || 32; const t32 = document.createElement('canvas'); t32.width = t32.height = G; const tg = t32.getContext('2d', {willReadFrequently:true});
   tg.imageSmoothingEnabled = false; tg.drawImage(src, 0, 0, G, G);
-  const u = new Uint32Array(tg.getImageData(0, 0, G, G).data.buffer);
+  let u = new Uint32Array(tg.getImageData(0, 0, G, G).data.buffer);
+  if(outline){                                   // outline 1 piksel seni di grid (tebal sama dengan karakter default), warna = dark tone piksel tetangga
+    initOut(); const P = G + 2, v = new Uint32Array(P*P);
+    for(let y=0;y<G;y++) for(let x=0;x<G;x++) if(u[y*G + x] >>> 24 > 127) v[(y + 1)*P + x + 1] = (u[y*G + x] | 0xff000000) >>> 0;
+    const add = [];
+    for(let y=0;y<P;y++) for(let x=0;x<P;x++){ const i = y*P + x; if(v[i]) continue; let best = 0, bl = 1e9, any = false;
+      for(const j of [x > 0 ? i-1 : -1, x < P-1 ? i+1 : -1, y > 0 ? i-P : -1, y < P-1 ? i+P : -1]){ if(j < 0 || !v[j]) continue; any = true;
+        const t = OUTTONE.get(v[j]) || INKU, l = (t & 255) + ((t >> 8) & 255) + ((t >> 16) & 255); if(l < bl){ bl = l; best = t; } }
+      if(any) add.push(i, best); }
+    for(let k=0;k<add.length;k+=2) v[add[k]] = add[k+1];
+    u = v; G = P;
+  }
   let x0 = G, y0 = G, x1 = -1, y1 = -1;
   for(let y=0;y<G;y++) for(let x=0;x<G;x++) if(u[y*G + x] >>> 24 > 127){ if(x < x0) x0 = x; if(x > x1) x1 = x; if(y < y0) y0 = y; if(y > y1) y1 = y; }
   if(x1 < 0) return null;
@@ -3140,7 +3154,6 @@ function customSpr(src, R, outline, live){
   const id = g.createImageData(w, h), o = new Uint32Array(id.data.buffer), ox = (w - tw) >> 1, oy = (h - th) >> 1;
   for(let y=0;y<th;y++) for(let x=0;x<tw;x++){ const v = sample(x, y); if(v >>> 24 > 127) o[(oy + y)*w + ox + x] = (v | 0xff000000) >>> 0; }
   g.putImageData(id, 0, 0);
-  if(outline){ autoOutline(g, w, h); selOut(g, w, h); }
   c.__base = c; c.__rot = null;
   if(!live){ if(!m){ m = new Map(); customCache.set(src, m); } if(m.size > 40) m.clear(); m.set(key, c); }
   return c;
