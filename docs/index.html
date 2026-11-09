@@ -670,6 +670,9 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #pkHex{flex:1;color:#422a3c}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .dcust i{position:absolute;inset:0;margin:auto;width:40%;height:40%;background:linear-gradient(#feffec,#feffec) center/100% 34% no-repeat,linear-gradient(#feffec,#feffec) center/34% 100% no-repeat;filter:drop-shadow(var(--p1) var(--p1) 0 #422a3c)}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .dcust{position:relative}
+  /* tema pesta (sama dengan home): panel krem melayang dengan garis tinta & bayangan, judul krem bertepi */
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .cl{margin:calc(var(--px)*4) 0 calc(var(--px)*4) calc(var(--px)*4)!important;height:auto!important;align-self:stretch;border:var(--p1) solid #422a3c!important;box-shadow:inset var(--p1) var(--p1) 0 #fefefe,inset calc(var(--p1)*-1) calc(var(--p1)*-1) 0 #ccc4aa,0 calc(var(--px)*2) 0 #2d1e2c!important;background:#eee4ce!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .mtitle,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #chars .hint,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .galhead > span,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .gal .hint{color:#feffec!important;text-shadow:var(--p1) 0 0 #422a3c,calc(var(--p1)*-1) 0 0 #422a3c,0 var(--p1) 0 #422a3c,0 calc(var(--p1)*-1) 0 #422a3c,0 calc(var(--p1)*2) 0 #422a3c!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .keys{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--px)*2) calc(var(--px)*4);margin:0}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow{display:flex;align-items:center;gap:calc(var(--px)*2);background:#feffec;border:var(--p1) solid #422a3c;box-shadow:0 var(--p1) 0 #422a3c;padding:var(--px) calc(var(--px)*3);color:#422a3c;white-space:nowrap}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow i{width:calc(var(--px)*4);height:calc(var(--px)*4);border:var(--p1) solid #422a3c;flex:none}
@@ -772,7 +775,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.9 · kanvas kosong tidak disimpan';
+const VERSION = 'v9.0 · tema karakter = home';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -1465,7 +1468,13 @@ $('gBack').onclick = () => $('games').classList.add('hidden');
 let cP = 0, cTab = 'sp', pending = null, cMode = null;   // cMode: null = layar pilih gaya, 'animal' = kostum hewan, 'draw' = gambar sendiri
 const CATS = [['sp','tsp','tabSp',SPECIES],['hat','that','tabHat',HATS],['acc','tacc','tabAcc',ACCS],['fx','tfx','tabFx',FXS],['draw','tdraw','tabDraw',null]];
 const isOwned = (cat, it) => it.p === 0 || save.owned.includes(cat + ':' + it.id);
-function showChars(){ cMode = null; $('chars').classList.remove('hidden'); renderChars(); }
+let PARTYBG = {k:'', url:''};
+function partyBg(){                              // latar pesta yang sama dengan home (langit ungu ber-dither + sorot lampu), tanpa panggung
+  const k = AW + 'x' + AH;
+  if(PARTYBG.k !== k){ HOME.bgKey = null; homeBg(homeLayout(), 0, true); PARTYBG = {k, url: HB3.toDataURL('image/png')}; HOME.bgKey = null; }
+  for(const id of ['chars','draw']){ const st = $(id).style; st.setProperty('background-image', `url(${PARTYBG.url})`, 'important'); st.setProperty('background-size', '100% 100%', 'important'); st.setProperty('background-color', '#464c74', 'important'); st.setProperty('image-rendering', 'pixelated'); }
+}
+function showChars(){ cMode = null; partyBg(); $('chars').classList.remove('hidden'); renderChars(); }
 $('cBack').onclick = () => { $('chars').classList.add('hidden'); refreshHome(); };
 $('pName').addEventListener('input', () => { save.cust[cP].name = $('pName').value.trim().slice(0,10); persist(); });
 $('pName').addEventListener('keydown', e => { if(e.key === 'Enter') $('pName').blur(); });
@@ -1582,6 +1591,7 @@ function dUpdatePen(){
   $('dFill').classList.toggle('on', dTool === 'fill'); $('dTool').classList.toggle('on', dTool !== 'fill');
 }
 function openDraw(fresh){
+  partyBg();
   const c = save.cust[cP];
   dctx.globalCompositeOperation = 'source-over'; dctx.clearRect(0, 0, 32, 32); dHist = [];
   if(fresh !== true && c.skin && skinImgs[cP] && skinImgs[cP].complete){ dctx.imageSmoothingEnabled = skinImgs[cP].naturalWidth > 64; dctx.drawImage(skinImgs[cP], 0, 0, 32, 32); if(skinImgs[cP].naturalWidth > 64) quantize(dctx, 32, 32); dClearEdge(); }
