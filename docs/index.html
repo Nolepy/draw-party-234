@@ -719,6 +719,14 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .it .ok{width:calc(var(--pf)*8)!important;height:calc(var(--pf)*8)!important;right:calc(var(--pf)*2)!important;top:calc(var(--pf)*2)!important;font-size:calc(var(--pf)*8)!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .it .price{left:calc(var(--pf)*1)!important;bottom:calc(var(--pf)*2)!important;font-size:calc(var(--pf)*10)!important;padding:0 calc(var(--pf)*2)!important;line-height:1.3!important;border-width:var(--p1)!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .mcard{padding:calc(var(--pf)*4) calc(var(--pf)*5)!important}
+  /* nama karakter default */
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .it{height:auto!important;aspect-ratio:auto!important;flex-direction:column!important;justify-content:flex-start!important;overflow:hidden}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .it canvas{margin:calc(var(--pg)*-2) 0 0!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .it .nm{display:block;width:100%;text-align:center;color:#422a3c;font-size:calc(var(--pf)*10);line-height:1;padding:0 0 calc(var(--pf)*3);white-space:nowrap;overflow:hidden;text-overflow:clip;min-width:0;max-width:100%;box-sizing:border-box;margin-top:calc(var(--pg)*-3);position:relative;z-index:1}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .it.sel .nm{color:#422a3c}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .it .price{top:calc(var(--pf)*2)!important;bottom:auto!important;left:calc(var(--pf)*2)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .spname{text-align:center;color:#422a3c;font-size:calc(var(--pf)*14);line-height:1;margin:calc(var(--pf)*-2) 0 0;min-height:calc(var(--pf)*14);flex:none}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt):not(#zs):not(#zr) #chars .spname:empty{display:none}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .keys{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--px)*2) calc(var(--px)*4);margin:0}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow{display:flex;align-items:center;gap:calc(var(--px)*2);background:#feffec;border:var(--p1) solid #422a3c;box-shadow:0 var(--p1) 0 #422a3c;padding:var(--px) calc(var(--px)*3);color:#422a3c;white-space:nowrap}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow i{width:calc(var(--px)*4);height:calc(var(--px)*4);border:var(--p1) solid #422a3c;flex:none}
@@ -761,6 +769,7 @@
   <div class="cl">
     <div class="clhead"><button class="back" id="cBack" data-icon="back"></button><div class="mtabs" id="mTabs"></div></div>
     <div class="avwrap"><canvas id="avatar" width="320" height="320"></canvas></div>
+    <div class="spname" id="spName"></div>
     <div class="pnl" data-t="pname">Nama Pemain</div>
     <input id="pName" maxlength="10" autocomplete="off" spellcheck="false">
   </div>
@@ -821,7 +830,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v9.3 · kotak & tombol lebih kecil';
+const VERSION = 'v9.4 · nama karakter default';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -1327,6 +1336,7 @@ const L = {
   h_bomb:'Tabrak lawan untuk oper bom sebelum meledak!', h_soccer:'Tim kiri vs kanan. DASH dekat bola = tendang! 3 gol menang.', h_crown:'Kuasai lingkaran mahkota sendirian untuk dapat poin!',
   h_snow:'DASH = lempar bola salju. Kena 3x = keluar!', h_meteor:'Hindari bayangan merah meteor! Bertahan paling lama.', h_paint:'Warnai lantai sebanyak mungkin! DASH = cipratan besar.',
   d_random:'game acak tiap ronde', goal:'GOL!', gamesT:'PILIH GAME', help6:'🎮 Ada 9 mini game — lihat semuanya di PILIH GAME.',
+  n_cat:'Kucing', n_bunny:'Kelinci', n_slime:'Slime', n_toaster:'Toaster', n_milk:'Susu', n_cactus:'Kaktus', n_burger:'Burger', n_cloud:'Awan', n_fries:'Kentang', n_mug:'Cangkir', n_onigiri:'Onigiri', n_juice:'Jus', n_octo:'Gurita', n_taco:'Taco', n_dog:'Anjing', n_cassette:'Kaset', n_robot:'Robot', n_console:'Konsol',
   pname:'Nama Pemain', tabSp:'KARAKTER', tabCol:'WARNA', tabHat:'TOPI', tabAcc:'AKSESORI', tabFx:'EFEK', tabDraw:'GAMBAR',
   buy:'Beli?', bought:'Terbeli! ✔', noStars:'Bintang kurang! Menang ronde untuk dapat ⭐',
   drawT:'Karakter gambarmu', drawS:'Bagian kosong jadi transparan.', autoOl:'Outline otomatis', drawGo:'✏️ MULAI GAMBAR', drawEdit:'✏️ UBAH',
@@ -1355,6 +1365,7 @@ const L = {
   h_bomb:'Bump rivals to pass the bomb before it blows!', h_soccer:'Left vs right team. DASH near the ball = kick! First to 3.', h_crown:'Hold the crown circle alone to score!',
   h_snow:'DASH = throw a snowball. 3 hits and you\'re out!', h_meteor:'Dodge the red meteor shadows! Last one standing.', h_paint:'Paint as much floor as you can! DASH = big splash.',
   d_random:'random game each round', goal:'GOAL!', gamesT:'PICK A GAME', help6:'🎮 9 mini games — see them all in PICK GAME.',
+  n_cat:'Cat', n_bunny:'Bunny', n_slime:'Slime', n_toaster:'Toaster', n_milk:'Milk', n_cactus:'Cactus', n_burger:'Burger', n_cloud:'Cloud', n_fries:'Fries', n_mug:'Mug', n_onigiri:'Onigiri', n_juice:'Juice', n_octo:'Octopus', n_taco:'Taco', n_dog:'Dog', n_cassette:'Tape', n_robot:'Robot', n_console:'Console',
   pname:'Player Name', tabSp:'BUDDY', tabCol:'COLOR', tabHat:'HATS', tabAcc:'EXTRAS', tabFx:'EFFECTS', tabDraw:'DRAW',
   buy:'Buy?', bought:'Bought! ✔', noStars:'Not enough stars! Win rounds to earn ⭐',
   drawT:'Your drawn character', drawS:'Empty pixels stay transparent.', autoOl:'Auto outline', drawGo:'✏️ START DRAWING', drawEdit:'✏️ EDIT',
@@ -1557,6 +1568,15 @@ function renderChars(){
   if($('mBack')) $('mBack').onclick = () => { cMode = null; pending = null; renderChars(); };
   $('pName').value = save.cust[cP].name; $('pName').placeholder = t('c'+cP);
   applyLang();
+  $('spName').textContent = cMode === 'animal' ? t('n_' + c.sp) : '';   // nama karakter default
+  requestAnimationFrame(() => document.querySelectorAll('#chars .it .nm').forEach(e => {   // muatkan nama ke lebar kotak
+    let fs = parseFloat(getComputedStyle(e).fontSize) || 10;
+    const set = v => e.style.setProperty('font-size', v + 'px', 'important'); set(fs);
+    const lim = e.parentNode.clientWidth - 8; e.style.width = 'max-content';
+    while(e.getBoundingClientRect().width > lim && fs > 3){ fs -= .5; set(fs); }
+    e.style.width = ''; e._fs = fs;
+  }));
+  requestAnimationFrame(() => requestAnimationFrame(() => { const all = [...document.querySelectorAll('#chars .it .nm')]; const m = Math.min(...all.map(e => e._fs || 99)); all.forEach(e => e.style.setProperty('font-size', m + 'px', 'important')); }));   // ukuran seragam
   const box = $('items'); box.innerHTML = ''; box.scrollTop = 0;
   if(!cMode){                                    // langkah 1: pilih gaya karakter dulu
     const useD = !!(c.useSkin && c.skin);
@@ -1598,6 +1618,7 @@ function renderChars(){
     b.className = 'it' + (on ? ' sel' : '') + (own ? '' : ' locked') + (pending === key ? ' confirm' : '');
     b.style.setProperty('--r', ((n % 3) - 1)*1.2 + 'deg');
     const cvs = document.createElement('canvas'); cvs.width = cvs.height = 160; b.appendChild(cvs);
+    if(cTab === 'sp') b.insertAdjacentHTML('beforeend', `<span class="nm">${t('n_' + it.id)}</span>`);
     if(cTab === 'col'){
       const g = pxCanvas(cvs, 160, 160, 2);
       if(it.pat){ const gr = g.createLinearGradient(0, 0, 160, 160); (it.pat === 'rainbow' ? ['#cc683c','#fcc22c','#98d864','#4c9ce8','#f08284'] : ['#feffec','#fcc22c','#cc683c','#fcc22c']).forEach((cc,k,a) => gr.addColorStop(k/(a.length-1), cc)); g.fillStyle = gr; }
