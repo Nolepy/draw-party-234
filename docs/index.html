@@ -636,7 +636,7 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .srow > .orow{flex:1 1 auto;flex-wrap:nowrap!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .srow.sfoot{justify-content:space-between}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .srow.sfoot .hint{opacity:.7}
-  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .zbox{flex:0 0 auto!important;min-width:calc(var(--px)*34)!important}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .zbox{flex:0 0 auto!important;min-width:0!important;width:calc(var(--px)*50)!important;padding-left:0!important;padding-right:0!important;justify-content:center!important;text-align:center!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .drawpanel .go{white-space:normal!important;text-align:center!important;line-height:1.25!important;flex-wrap:wrap!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .items > .drawpanel{padding:calc(var(--px)*3)!important;gap:calc(var(--px)*2) calc(var(--px)*5)!important}
   /* galeri gambar tersimpan */
@@ -656,6 +656,11 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .galhead{margin:calc(var(--px)*3) 0 calc(var(--px)*2)!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gal{grid-template-columns:repeat(auto-fill,minmax(calc(var(--px)*20),1fr))!important;padding:calc(var(--px)*2) calc(var(--px)*1)}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gal > .hint{grid-column:1 / -1}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .keys{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--px)*2) calc(var(--px)*4);margin:0}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow{display:flex;align-items:center;gap:calc(var(--px)*2);background:#feffec;border:var(--p1) solid #422a3c;box-shadow:0 var(--p1) 0 #422a3c;padding:var(--px) calc(var(--px)*3);color:#422a3c;white-space:nowrap}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow i{width:calc(var(--px)*4);height:calc(var(--px)*4);border:var(--p1) solid #422a3c;flex:none}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow b{font-weight:400;min-width:calc(var(--px)*10)}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow kbd{font:inherit;background:#eee4ce;border:var(--p1) solid #422a3c;box-shadow:inset 0 calc(var(--p1)*-2) 0 #ccc4aa;padding:0 calc(var(--px)*2);line-height:1.2}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #quit{transform:none!important;background:transparent!important;border:0!important;box-shadow:none!important;color:transparent!important;padding:0!important;min-height:0!important;min-width:0!important;opacity:1!important;font-size:0!important}
 /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
   #home#home{touch-action:none}
@@ -746,7 +751,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.5 · kanvas gambar 30+outline';
+const VERSION = 'v8.6 · UI desktop & android';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -1011,7 +1016,7 @@ let tickPrev = 4, tCount = 0, tLeft = 0, tEnd = 0, endText = '', endCol = INK, a
 
 // ---------- Data tersimpan (di HP ini saja) ----------
 const SAVE_KEY = 'dp234';
-const save = {stars:0, wins:[0,0,0,0], trophies:[0,0,0,0], matches:0, gift:'', spin:'', vib:true, size:1, sfx:.8, music:.6, lang:'id', dashPos:'out'};
+const save = {stars:0, wins:[0,0,0,0], trophies:[0,0,0,0], matches:0, gift:'', spin:'', vib:true, size:1, sfx:.8, music:.6, lang:'id', dashPos:'out', ui:'auto'};
 try{ Object.assign(save, JSON.parse(localStorage.getItem(SAVE_KEY) || '{}')); }catch(e){}
 function persist(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(save)); }catch(e){} }
 const today = () => new Date().toDateString();
@@ -1239,7 +1244,7 @@ const L = {
   total:'Total pertandingan', rounds:'ronde', helpT:'Cara Main',
   help1:'👆 Sentuh & geser di area warnamu untuk bergerak.', help2:'💨 Tekan <b>DASH</b> di pojokmu (atau ketuk cepat / jari kedua) untuk menerjang.',
   help3:'🍡 <b>Sel Rebutan</b>: makan permen, telan blob yang lebih kecil.', help4:'🤼 <b>Sumo Blob</b>: dorong lawan keluar ring yang terus mengecil.', help5:'🍙 <b>Rebutan Makanan</b>: onigiri 1 poin, bintang 3 poin.',
-  setT:'PENGATURAN', vib:'Getar', on:'Nyala', off:'Mati', size:'Ukuran', s0:'Kecil', s1:'Sedang', s2:'Besar', dashL:'Posisi tombol DASH',
+  setT:'PENGATURAN', vib:'Getar', on:'Nyala', off:'Mati', size:'Ukuran', s0:'Kecil', s1:'Sedang', s2:'Besar', dashL:'Posisi tombol DASH', uiL:'Tampilan', uiauto:'Otomatis', uipc:'Desktop', uihp:'Android', keysL:'Kontrol keyboard', kMenu:'Menu',
   dOut:'DI TEPI', dIn:'DI TENGAH', reset:'🗑 Hapus data skor', resetQ:'Yakin? Ketuk lagi', resetDone:'Data skor dihapus',
   giftT:'🎁 Hadiah Harian!', giftNext:'Kembali besok untuk hadiah lagi.', giftDone:'Sudah diambil hari ini. Kembali besok ya!',
   spinT:'🎡 Roda Putar', spin:'PUTAR!', spinUsed:'Besok lagi ya',
@@ -1267,7 +1272,7 @@ const L = {
   total:'Matches played', rounds:'rounds', helpT:'How to Play',
   help1:'👆 Touch & drag in your colour zone to move.', help2:'💨 Press <b>DASH</b> in your corner (or quick tap / second finger) to charge.',
   help3:'🍡 <b>Blob Feast</b>: eat candy, swallow smaller blobs.', help4:'🤼 <b>Sumo Blob</b>: push rivals out of the shrinking ring.', help5:'🍙 <b>Snack Grab</b>: onigiri 1 pt, star 3 pts.',
-  setT:'OPTIONS', vib:'Vibration', on:'On', off:'Off', size:'Size', s0:'Small', s1:'Medium', s2:'Large', dashL:'DASH button position',
+  setT:'OPTIONS', vib:'Vibration', on:'On', off:'Off', size:'Size', s0:'Small', s1:'Medium', s2:'Large', dashL:'DASH button position', uiL:'Layout', uiauto:'Auto', uipc:'Desktop', uihp:'Android', keysL:'Keyboard controls', kMenu:'Menu',
   dOut:'EDGE', dIn:'CENTER', reset:'🗑 Reset scores', resetQ:'Sure? Tap again', resetDone:'Scores reset',
   giftT:'🎁 Daily Gift!', giftNext:'Come back tomorrow for more.', giftDone:'Already claimed today. Come back tomorrow!',
   spinT:'🎡 Lucky Wheel', spin:'SPIN!', spinUsed:'Come back tomorrow',
@@ -1654,10 +1659,13 @@ function showSettings(confirmReset){
   <div class="srow s2"><label class="vrow"><i>${SPK}</i><input type="range" id="vSfx" min="0" max="100" value="${Math.round(save.sfx*100)}"></label>
     <label class="vrow"><i>${NOTE}</i><input type="range" id="vMus" min="0" max="100" value="${Math.round(save.music*100)}"></label></div>
   <div class="langsel"><button class="arw" id="lPrev">◀</button><div class="lbox"><span>${t('flag')}</span>${t('lang')}</div><button class="arw" id="lNext">▶</button></div>
-  <div class="srow"><div class="orow"><span>${t('vib')}</span><button class="chip ${save.vib ? 'sel' : ''}" data-v="${save.vib ? 0 : 1}">${save.vib ? t('on') : t('off')}</button></div>
-    <div class="orow"><span>${t('size')}</span><button class="arw" id="zPrev">◀</button><div class="lbox zbox">${t('s' + save.size)}</div><button class="arw" id="zNext">▶</button></div></div>
-  <div class="olabel">${t('dashL')}</div>
-  <div class="hands">${['out','in'].map(k => `<div class="hand ${save.dashPos === k ? 'on' : ''}" data-d="${k}">${handSvg(k)}<b>${t(k === 'out' ? 'dOut' : 'dIn')}</b>${save.dashPos === k ? '<em>✔</em>' : ''}</div>`).join('')}</div>
+  <div class="srow"><div class="orow"><span>${t('uiL')}</span><button class="arw" id="uPrev">◀</button><div class="lbox zbox">${t('ui' + (save.ui || 'auto'))}</div><button class="arw" id="uNext">▶</button></div>
+    <div class="orow"><span>${t('size')}</span><button class="arw" id="zPrev">◀</button><div class="lbox zbox">${t('s' + save.size)}</div><button class="arw" id="zNext">▶</button></div>
+    ${isTouch() ? `<div class="orow"><span>${t('vib')}</span><button class="chip ${save.vib ? 'sel' : ''}" data-v="${save.vib ? 0 : 1}">${save.vib ? t('on') : t('off')}</button></div>` : ''}</div>
+  ${isTouch() ? `<div class="olabel">${t('dashL')}</div>
+  <div class="hands">${['out','in'].map(k => `<div class="hand ${save.dashPos === k ? 'on' : ''}" data-d="${k}">${handSvg(k)}<b>${t(k === 'out' ? 'dOut' : 'dIn')}</b>${save.dashPos === k ? '<em>✔</em>' : ''}</div>`).join('')}</div>`
+  : `<div class="olabel">${t('keysL')} · ESC = ${t('kMenu')}</div>
+  <div class="keys">${[['WASD','SPASI'],['← ↑ → ↓','ENTER'],['IJKL','O'],['8 4 5 6','0']].map((k,i) => `<div class="krow"><i style="background:${CHARS[i].c}"></i><b>P${i+1}</b><kbd>${k[0]}</kbd><kbd>${k[1]}</kbd></div>`).join('')}</div>`}
   <div class="srow sfoot"><button class="go small" id="rst">${confirmReset ? t('resetQ') : t('reset')}</button><div class="hint">${VERSION}</div></div>`, 'blue');
   const fill = el => el.style.setProperty('--v', el.value + '%');
   [['vSfx','sfx'],['vMus','music']].forEach(([id,key]) => {
@@ -1669,6 +1677,8 @@ function showSettings(confirmReset){
   $('lPrev').onclick = () => setLang(-1); $('lNext').onclick = () => setLang(1);
   $('mbody').querySelectorAll('[data-d]').forEach(b => b.onclick = () => { save.dashPos = b.dataset.d; persist(); showSettings(); });
   $('mbody').querySelectorAll('[data-v]').forEach(b => b.onclick = () => { save.vib = b.dataset.v === '1'; persist(); if(save.vib) buzz(30); showSettings(); });
+  const UIS = ['auto','pc','hp'], setUi = d => { save.ui = UIS[(UIS.indexOf(save.ui || 'auto') + d + 3) % 3]; persist(); showSettings(); };
+  $('uPrev').onclick = () => setUi(-1); $('uNext').onclick = () => setUi(1);
   const setSize = d => { save.size = (save.size + d + 3) % 3; persist(); showSettings(); };
   $('zPrev').onclick = () => setSize(-1); $('zNext').onclick = () => setSize(1);
   $('rst').onclick = () => {
@@ -1848,7 +1858,7 @@ const KEYMAP = [
   {mv:['KeyJ','KeyL','KeyI','KeyK'], dash:['KeyO','KeyU']},
   {mv:['Numpad4','Numpad6','Numpad8','Numpad5'], dash:['Numpad0','NumpadDecimal']},
 ];
-const isTouch = () => matchMedia('(pointer:coarse)').matches;
+const isTouch = () => save.ui === 'hp' ? true : save.ui === 'pc' ? false : matchMedia('(pointer:coarse)').matches;   // UI: Otomatis / Desktop / Android
 addEventListener('keydown', e => {
   if(e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
   keys[e.code] = true;
