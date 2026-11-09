@@ -656,6 +656,18 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .galhead{margin:calc(var(--px)*3) 0 calc(var(--px)*2)!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gal{grid-template-columns:repeat(auto-fill,minmax(calc(var(--px)*20),1fr))!important;padding:calc(var(--px)*2) calc(var(--px)*1)}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gal > .hint{grid-column:1 / -1}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #dPick{position:fixed;inset:0;z-index:12;display:flex;align-items:center;justify-content:center;background:rgba(66,42,60,.55)}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #dPick.hidden{display:none}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .pkwin{background:#eee4ce;border:var(--p1) solid #422a3c;box-shadow:0 calc(var(--px)*2) 0 #422a3c;padding:0 calc(var(--px)*4) calc(var(--px)*4);display:flex;flex-direction:column;gap:calc(var(--px)*3);width:min(86vw,calc(var(--px)*150))}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .pkhead{display:flex;align-items:center;justify-content:space-between;background:#c8dcd0;margin:0 calc(var(--px)*-4);padding:calc(var(--px)*2) calc(var(--px)*4);border-bottom:var(--p1) solid #422a3c;color:#422a3c}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #pkSV,html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #pkH{display:block;width:100%;image-rendering:pixelated;border:var(--p1) solid #422a3c;touch-action:none;cursor:crosshair}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #pkSV{aspect-ratio:48/30;height:auto;max-height:42vh;object-fit:fill}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #pkH{aspect-ratio:48/6;height:auto}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .pkrow{display:flex;align-items:center;gap:calc(var(--px)*4)}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #pkCol{width:calc(var(--px)*14);height:calc(var(--px)*14);border:var(--p1) solid #422a3c;box-shadow:inset 0 calc(var(--p1)*-2) 0 rgba(0,0,0,.2);flex:none}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #pkHex{flex:1;color:#422a3c}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .dcust i{position:absolute;inset:0;margin:auto;width:40%;height:40%;background:linear-gradient(#feffec,#feffec) center/100% 34% no-repeat,linear-gradient(#feffec,#feffec) center/34% 100% no-repeat;filter:drop-shadow(var(--p1) var(--p1) 0 #422a3c)}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .dcust{position:relative}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .keys{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--px)*2) calc(var(--px)*4);margin:0}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow{display:flex;align-items:center;gap:calc(var(--px)*2);background:#feffec;border:var(--p1) solid #422a3c;box-shadow:0 var(--p1) 0 #422a3c;padding:var(--px) calc(var(--px)*3);color:#422a3c;white-space:nowrap}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) .krow i{width:calc(var(--px)*4);height:calc(var(--px)*4);border:var(--p1) solid #422a3c;flex:none}
@@ -728,6 +740,13 @@
       <button class="rbtn yellow" id="dUndo" data-icon="undo"></button>
       <button class="rbtn green big" id="dSave" data-icon="check"></button>
     </div>
+  </div>
+  <div id="dPick" class="hidden"><div class="pkwin">
+    <div class="pkhead"><span data-t="pickT">Warna bebas</span><button class="x" id="pkX">✕</button></div>
+    <canvas id="pkSV" width="48" height="30"></canvas>
+    <canvas id="pkH" width="48" height="6"></canvas>
+    <div class="pkrow"><b id="pkCol"></b><span id="pkHex"></span><button class="go" id="pkOk" data-t="pickOk">PAKAI</button></div>
+  </div>
     <div class="dpol" id="dPol"><canvas id="dprev" width="240" height="240"></canvas><span data-t="previewL">Pratinjau</span></div>
   </div>
   <button class="dclose" id="dCancel">✕</button>
@@ -751,7 +770,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.6 · UI desktop & android';
+const VERSION = 'v8.7 · warna bebas (hue)';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -1244,7 +1263,7 @@ const L = {
   total:'Total pertandingan', rounds:'ronde', helpT:'Cara Main',
   help1:'👆 Sentuh & geser di area warnamu untuk bergerak.', help2:'💨 Tekan <b>DASH</b> di pojokmu (atau ketuk cepat / jari kedua) untuk menerjang.',
   help3:'🍡 <b>Sel Rebutan</b>: makan permen, telan blob yang lebih kecil.', help4:'🤼 <b>Sumo Blob</b>: dorong lawan keluar ring yang terus mengecil.', help5:'🍙 <b>Rebutan Makanan</b>: onigiri 1 poin, bintang 3 poin.',
-  setT:'PENGATURAN', vib:'Getar', on:'Nyala', off:'Mati', size:'Ukuran', s0:'Kecil', s1:'Sedang', s2:'Besar', dashL:'Posisi tombol DASH', uiL:'Tampilan', uiauto:'Otomatis', uipc:'Desktop', uihp:'Android', keysL:'Kontrol keyboard', kMenu:'Menu',
+  setT:'PENGATURAN', vib:'Getar', on:'Nyala', off:'Mati', size:'Ukuran', s0:'Kecil', s1:'Sedang', s2:'Besar', dashL:'Posisi tombol DASH', pickT:'Warna bebas', pickOk:'PAKAI', uiL:'Tampilan', uiauto:'Otomatis', uipc:'Desktop', uihp:'Android', keysL:'Kontrol keyboard', kMenu:'Menu',
   dOut:'DI TEPI', dIn:'DI TENGAH', reset:'🗑 Hapus data skor', resetQ:'Yakin? Ketuk lagi', resetDone:'Data skor dihapus',
   giftT:'🎁 Hadiah Harian!', giftNext:'Kembali besok untuk hadiah lagi.', giftDone:'Sudah diambil hari ini. Kembali besok ya!',
   spinT:'🎡 Roda Putar', spin:'PUTAR!', spinUsed:'Besok lagi ya',
@@ -1272,7 +1291,7 @@ const L = {
   total:'Matches played', rounds:'rounds', helpT:'How to Play',
   help1:'👆 Touch & drag in your colour zone to move.', help2:'💨 Press <b>DASH</b> in your corner (or quick tap / second finger) to charge.',
   help3:'🍡 <b>Blob Feast</b>: eat candy, swallow smaller blobs.', help4:'🤼 <b>Sumo Blob</b>: push rivals out of the shrinking ring.', help5:'🍙 <b>Snack Grab</b>: onigiri 1 pt, star 3 pts.',
-  setT:'OPTIONS', vib:'Vibration', on:'On', off:'Off', size:'Size', s0:'Small', s1:'Medium', s2:'Large', dashL:'DASH button position', uiL:'Layout', uiauto:'Auto', uipc:'Desktop', uihp:'Android', keysL:'Keyboard controls', kMenu:'Menu',
+  setT:'OPTIONS', vib:'Vibration', on:'On', off:'Off', size:'Size', s0:'Small', s1:'Medium', s2:'Large', dashL:'DASH button position', pickT:'Any colour', pickOk:'USE', uiL:'Layout', uiauto:'Auto', uipc:'Desktop', uihp:'Android', keysL:'Keyboard controls', kMenu:'Menu',
   dOut:'EDGE', dIn:'CENTER', reset:'🗑 Reset scores', resetQ:'Sure? Tap again', resetDone:'Scores reset',
   giftT:'🎁 Daily Gift!', giftNext:'Come back tomorrow for more.', giftDone:'Already claimed today. Come back tomorrow!',
   spinT:'🎡 Lucky Wheel', spin:'SPIN!', spinUsed:'Come back tomorrow',
@@ -1452,8 +1471,7 @@ function previewChar(canvas, i, over, opt){
   const w = L, r = w*(opt && opt.r || .27);
   const p = {i, x:w/2, y:w*.56, vx:0, vy:0, m:r*r, alive:true, fall:0, fallMax:1, fx:0, fy:.3, seed:i*1.7, expr:'happy', dashFx:0};
   if(opt && opt.fx){ const tmp = []; p.vx = -200; for(let k=0;k<7;k++){ p.x = w/2 + 20; trail(p, opt.fx, tmp); } tmp.forEach((q,k) => { q.x += -k*9 - 18; q.y += rnd(-10, 10); q.life = q.max*(1 - k/9); }); const kp = parts; parts = tmp; drawParts(true); parts = kp; p.vx = 0; p.x = w/2 + 20; }
-  drawCharPix(p);
-  quantize(g, canvas.width, canvas.height, true); fitCss(canvas);
+  quantize(g, canvas.width, canvas.height, true); drawCharPix(p); fitCss(canvas);   // karakter ditempel setelah kunci palet: warna bebas tidak tergeser
   for(const k in keep) c[k] = keep[k];
   ctx = keepCtx; PXW = 1;
 }
@@ -1540,14 +1558,14 @@ function renderAvatar(dt){
   parts = avParts;
   if(fxk !== 'none'){ p.fxT = (renderAvatar.ft || 0) - dt; if(p.fxT <= 0){ p.fxT = .06; trail(p, fxk); } renderAvatar.ft = p.fxT; }
   updateParts(dt); drawParts(true); avParts = parts;
-  drawCharPix(p);
-  quantize(g, cvs.width, cvs.height, true); fitCss(cvs);
+  quantize(g, cvs.width, cvs.height, true); drawCharPix(p); fitCss(cvs);
   parts = kp; ctx = keepCtx; PXW = 1;
 }
 
 // ---------- Editor gambar (gaya kertas sketsa) ----------
-const DCOLS = ['#fcc22c','#e43e3c','#4c9ce8','#f89618','#1cbc74','#f05078','#422a3c','#feffec','#cc683c','#8c5caa','#9aacb0','rainbow'];
+const DCOLS = ['#fcc22c','#e43e3c','#4c9ce8','#f89618','#1cbc74','#f05078','#422a3c','#feffec','#cc683c','#8c5caa','rainbow','custom'];   // 10 warna template + pelangi + warna bebas (hue)
 const dc = $('dc'), dctx = dc.getContext('2d');
+let dCust = {h:200, s:.7, v:.9}, dCustHex = '#4cb4e6';
 let dTool = 'pen', dCol = '#cc683c', dSize = 1, dHist = [], dDown = null, dHue = 0, dEyesOn = true;
 function dUpdatePen(){
   const z = $('dSz'); z.style.setProperty('--v', ((dSize-1)/3*100) + '%');
@@ -1560,17 +1578,48 @@ function dUpdatePen(){
 function openDraw(fresh){
   const c = save.cust[cP];
   dctx.globalCompositeOperation = 'source-over'; dctx.clearRect(0, 0, 32, 32); dHist = [];
-  if(fresh !== true && c.skin && skinImgs[cP] && skinImgs[cP].complete){ dctx.imageSmoothingEnabled = skinImgs[cP].naturalWidth > 64; dctx.drawImage(skinImgs[cP], 0, 0, 32, 32); quantize(dctx, 32, 32); dClearEdge(); }
+  if(fresh !== true && c.skin && skinImgs[cP] && skinImgs[cP].complete){ dctx.imageSmoothingEnabled = skinImgs[cP].naturalWidth > 64; dctx.drawImage(skinImgs[cP], 0, 0, 32, 32); if(skinImgs[cP].naturalWidth > 64) quantize(dctx, 32, 32); dClearEdge(); }
   dEyesOn = c.outline !== false; dTool = 'pen';
   $('dName').value = c.name; $('dName').placeholder = t('c'+cP);
-  $('dColors').innerHTML = DCOLS.map((cc,k) => `<button data-c="${cc}" class="${cc === dCol ? 'on' : ''}" style="--r:${((k*7)%5-2)*1.5}deg;background-color:${cc === 'rainbow' ? '#eee4ce' : cc};${cc === 'rainbow' ? 'background:conic-gradient(#cc683c,#fcc22c,#1cbc74,#4c9ce8,#4e66b4,#cc683c)' : ''}"></button>`).join('');
-  $('dColors').querySelectorAll('button').forEach(b => b.onclick = () => { dCol = b.dataset.c; dTool = 'pen'; $('dColors').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); dUpdatePen(); });
+  dRenderSwatches();
   document.querySelectorAll('.fopt').forEach(b => b.classList.toggle('on', (b.dataset.e === '1') === dEyesOn));
   $('dSz').value = dSize; dUpdatePen(); applyLang();
   $('draw').classList.remove('hidden');
   const sh = document.querySelector('.dsheet').getBoundingClientRect(), m = Math.max(1, Math.floor(Math.min(sh.width, sh.height)*DPR*.96/32/K))*K;
   const dcv = document.querySelector('.dcv'); dcv.style.width = dcv.style.height = (32*m/DPR) + 'px'; dcv.style.setProperty('--de', (m/DPR) + 'px');   // tepi 1 piksel = tempat outline otomatis
 }
+function dRenderSwatches(){
+  const isCust = !DCOLS.includes(dCol);
+  $('dColors').innerHTML = DCOLS.map((cc,k) => cc === 'custom'
+    ? `<button data-c="custom" class="dcust ${isCust ? 'on' : ''}" style="--r:${((k*7)%5-2)*1.5}deg;background-color:${dCustHex}"><i></i></button>`
+    : `<button data-c="${cc}" class="${cc === dCol ? 'on' : ''}" style="--r:${((k*7)%5-2)*1.5}deg;background-color:${cc === 'rainbow' ? '#eee4ce' : cc};${cc === 'rainbow' ? 'background:conic-gradient(#cc683c,#fcc22c,#1cbc74,#4c9ce8,#4e66b4,#cc683c)' : ''}"></button>`).join('');
+  $('dColors').querySelectorAll('button').forEach(b => b.onclick = () => {
+    if(b.dataset.c === 'custom'){ dOpenPick(); return; }
+    dCol = b.dataset.c; dTool = 'pen'; $('dColors').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); dUpdatePen(); });
+}
+// ---- pemilih warna bebas: kotak saturasi/kecerahan + strip hue (piksel) ----
+const hsv2hex = (h, s, v) => { const f = n => { const k = (n + h/60) % 6; return Math.round(255*(v - v*s*Math.max(0, Math.min(k, 4 - k, 1)))); }; return '#' + [f(5), f(3), f(1)].map(x => x.toString(16).padStart(2, '0')).join(''); };
+const PKW = 48, PKH = 30, PKB = 6;
+function dDrawPick(){
+  const sv = $('pkSV'), hu = $('pkH'), g = sv.getContext('2d'), gh = hu.getContext('2d');
+  for(let y=0;y<PKH;y++) for(let x=0;x<PKW;x++){ g.fillStyle = hsv2hex(dCust.h, x/(PKW-1), 1 - y/(PKH-1)); g.fillRect(x, y, 1, 1); }
+  const cx = Math.round(dCust.s*(PKW-1)), cy = Math.round((1 - dCust.v)*(PKH-1));
+  g.fillStyle = dCust.v > .55 ? '#422a3c' : '#feffec'; for(const [dx,dy] of [[-2,0],[2,0],[0,-2],[0,2],[-3,0],[3,0],[0,-3],[0,3]]) g.fillRect(cx + dx, cy + dy, 1, 1);
+  for(let x=0;x<PKW;x++){ gh.fillStyle = hsv2hex(x/(PKW-1)*359, 1, 1); gh.fillRect(x, 0, 1, PKB); }
+  const hx = Math.round(dCust.h/359*(PKW-1)); gh.fillStyle = '#422a3c'; gh.fillRect(hx - 1, 0, 1, PKB); gh.fillRect(hx + 1, 0, 1, PKB); gh.fillStyle = '#feffec'; gh.fillRect(hx, 0, 1, PKB);
+  dCustHex = hsv2hex(dCust.h, dCust.s, dCust.v); $('pkCol').style.background = dCustHex; $('pkHex').textContent = dCustHex.toUpperCase();
+}
+function dOpenPick(){ $('dPick').classList.remove('hidden'); dDrawPick(); }
+function dPickUse(){ dCol = dCustHex; dTool = 'pen'; $('dPick').classList.add('hidden'); dRenderSwatches(); dUpdatePen(); sfx('blip'); }
+(() => {
+  const drag = (el, fn) => { let on = false; const at = e => { const b = el.getBoundingClientRect(); fn(Math.max(0, Math.min(1, (e.clientX - b.left)/b.width)), Math.max(0, Math.min(1, (e.clientY - b.top)/b.height))); dDrawPick(); };
+    el.addEventListener('pointerdown', e => { e.preventDefault(); on = true; try{ el.setPointerCapture(e.pointerId); }catch(_){} at(e); });
+    el.addEventListener('pointermove', e => { if(on) at(e); }); ['pointerup','pointercancel'].forEach(ev => el.addEventListener(ev, () => on = false)); };
+  drag($('pkSV'), (x, y) => { dCust.s = x; dCust.v = 1 - y; });
+  drag($('pkH'), x => { dCust.h = x*359; });
+  $('pkOk').onclick = dPickUse; $('pkX').onclick = () => $('dPick').classList.add('hidden');
+  $('dPick').addEventListener('pointerdown', e => { if(e.target === $('dPick')) $('dPick').classList.add('hidden'); });
+})();
 $('dSz').oninput = () => { dSize = +$('dSz').value; dUpdatePen(); };
 $('dTool').onclick = () => { dTool = dTool === 'pen' ? 'era' : 'pen'; dUpdatePen(); };
 $('dName').addEventListener('input', () => { save.cust[cP].name = $('dName').value.trim().slice(0,10); });
@@ -3062,7 +3111,16 @@ function cleanRot(u, n){
   if(n >= 12) shadeEdges(u, n, n);
 }
 // SEL-OUT: piksel garis luar (tinta di tepi transparan) diganti nada paling gelap dari warna isi di sebelahnya
-const OUTTONE = new Map();
+const OUTTONE = new Map(), DARKC = new Map();
+function darkU(u){                               // dark tone untuk warna bebas: lebih gelap, sedikit geser ke ungu (seperti ramp palet)
+  let d = DARKC.get(u); if(d) return d;
+  const r = (u & 255)/255, g = ((u >> 8) & 255)/255, b = ((u >> 16) & 255)/255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn)/2, c = mx - mn;
+  let h = 0; if(c){ h = mx === r ? ((g - b)/c) % 6 : mx === g ? (b - r)/c + 2 : (r - g)/c + 4; h *= 60; if(h < 0) h += 360; }
+  const s = c ? c/(1 - Math.abs(2*l - 1)) : 0, dh = ((280 - h + 540) % 360) - 180, H = (h + dh*.18 + 360) % 360, S = Math.min(1, s*.9 + .12), L = Math.max(.12, l*.42);
+  const C = (1 - Math.abs(2*L - 1))*S, X = C*(1 - Math.abs((H/60) % 2 - 1)), m = L - C/2, k = Math.floor(H/60);
+  const [R1, G1, B1] = [[C,X,0],[X,C,0],[0,C,X],[0,X,C],[X,0,C],[C,0,X]][k % 6];
+  d = ((255 << 24) | (Math.round((B1 + m)*255) << 16) | (Math.round((G1 + m)*255) << 8) | Math.round((R1 + m)*255)) >>> 0; DARKC.set(u, d); return d;
+}
 function initOut(){ if(OUTTONE.size) return; const ov = {'#fefefe':'#7c7084','#feffec':'#7c7084','#eee4ce':'#946e6c','#ccc4aa':'#946e6c','#c8dcd0':'#7c7084','#fae67c':'#cc683c','#ffd868':'#cc683c','#fcc22c':'#cc683c','#f89618':'#a04438','#f86c1e':'#a04438','#9aacb0':'#645464','#b09080':'#422a3c','#946e6c':'#422a3c','#fcd6a2':'#a04438','#f4a660':'#a04438'};
   for(const r of RAMPS){ const dk = PALHEX[r[r.length - 1]]; for(const k of r){ const h = PALHEX[k]; if(!OUTTONE.has(hexU(h))) OUTTONE.set(hexU(h), hexU(ov[h] || dk)); } }
   for(const h in ov) OUTTONE.set(hexU(h), hexU(ov[h])); }
@@ -3141,7 +3199,7 @@ function customSpr(src, R, outline, live){
     const add = [];
     for(let y=0;y<P;y++) for(let x=0;x<P;x++){ const i = y*P + x; if(v[i]) continue; let best = 0, bl = 1e9, any = false;
       for(const j of [x > 0 ? i-1 : -1, x < P-1 ? i+1 : -1, y > 0 ? i-P : -1, y < P-1 ? i+P : -1]){ if(j < 0 || !v[j]) continue; any = true;
-        const t = OUTTONE.get(v[j]) || INKU, l = (t & 255) + ((t >> 8) & 255) + ((t >> 16) & 255); if(l < bl){ bl = l; best = t; } }
+        const t = OUTTONE.get(v[j]) || darkU(v[j]), l = (t & 255) + ((t >> 8) & 255) + ((t >> 16) & 255); if(l < bl){ bl = l; best = t; } }
       if(any) add.push(i, best); }
     for(let k=0;k<add.length;k+=2) v[add[k]] = add[k+1];
     u = v; G = P;
