@@ -655,6 +655,7 @@
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .galhead{margin:calc(var(--px)*3) 0 calc(var(--px)*2)!important}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gal{grid-template-columns:repeat(auto-fill,minmax(calc(var(--px)*20),1fr))!important;padding:calc(var(--px)*2) calc(var(--px)*1)}
   html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu) .gal > .hint{grid-column:1 / -1}
+  html body:not(#zz):not(#zy):not(#zx):not(#zw):not(#zv):not(#zu):not(#zt) #quit{transform:none!important;background:transparent!important;border:0!important;box-shadow:none!important;color:transparent!important;padding:0!important;min-height:0!important;min-width:0!important;opacity:1!important;font-size:0!important}
 /* ===== HOME v2: digambar di kanvas, tombol DOM hanya area sentuh ===== */
   #home#home{touch-action:none}
   #home#home .hz:not(#zz){position:absolute;opacity:0;padding:0;margin:0;border:0!important;box-shadow:none!important;background:none!important;transform:none!important;min-width:0;min-height:0}
@@ -744,7 +745,7 @@
 <div id="rot" data-t="rot">Putar HP ke mode landscape 📱↔️</div>
 
 <script>
-const VERSION = 'v8.1 · efek tanpa kotak';
+const VERSION = 'v8.2 · tombol menu presisi';
 const $ = id => document.getElementById(id);
 const cv = $('c'); let ctx = cv.getContext('2d');
 const INK = '#422a3c', FONT = "'Pixelify Sans',monospace";
@@ -1714,6 +1715,7 @@ $('spinBtn').onclick = () => {
 $('again').onclick = () => lastLaunch && launch(lastLaunch.gen, lastLaunch.n, lastLaunch.hum);
 $('tomenu').onclick = toMenu;
 $('quit').onclick = toMenu;
+['pointerdown','pointerup','pointerleave','pointercancel'].forEach(ev => $('quit').addEventListener(ev, () => $('quit').classList.toggle('down', ev === 'pointerdown')));
 
 function goFull(){
   try{
@@ -3555,7 +3557,20 @@ function hud(){
   }
   // judul ronde & waktu
   const tm = MODES[mode].time ? '  ⏱ ' + Math.max(0, Math.ceil(tLeft)) : '';
-  const qb = $('quit').getBoundingClientRect(), ty = snapA(qb.bottom + PXC*18);   // judul di bawah tombol Menu, tidak tertumpuk
+  // tombol Menu digambar di kanvas (grid piksel sama dengan label), DOM #quit = area sentuh transparan di atasnya
+  const mh = (FH + 10)*PXC, mw = mh + 2*PXC, mx = snapA(W/2 - mw/2), my = snapA(3*PXC), u = PXC, qd = $('quit').classList.contains('down');
+  { const Y = my + (qd ? u : 0);
+    ctx.fillStyle = 'rgba(66,42,60,.35)'; ctx.fillRect(mx + u, my + mh, mw - u, u);
+    ctx.fillStyle = UIO; ctx.fillRect(mx + u, Y, mw - 2*u, mh); ctx.fillRect(mx, Y + u, mw, mh - 2*u);
+    ctx.fillStyle = '#f05078'; ctx.fillRect(mx + u, Y + u, mw - 2*u, mh - 2*u);
+    ctx.fillStyle = '#f08284'; ctx.fillRect(mx + u, Y + u, mw - 2*u, u); ctx.fillRect(mx + u, Y + u, u, mh - 2*u);
+    ctx.fillStyle = '#be2850'; ctx.fillRect(mx + u, Y + mh - 2*u, mw - 2*u, u); ctx.fillRect(mx + mw - 2*u, Y + u, u, mh - 2*u);
+    const cx0 = mx + snapA(mw/2) - 3*u, cy0 = Y + snapA(mh/2) - 3*u;      // ✕ piksel 6x6, tebal 2
+    for(let k=0;k<6;k++){ ctx.fillStyle = '#7c3042'; ctx.fillRect(cx0 + k*u + u, cy0 + k*u + u, 2*u, u); ctx.fillRect(cx0 + (5-k)*u + u, cy0 + k*u + u, 2*u, u); }
+    for(let k=0;k<6;k++){ ctx.fillStyle = '#feffec'; ctx.fillRect(cx0 + k*u, cy0 + k*u, 2*u, u); ctx.fillRect(cx0 + (5-k)*u, cy0 + k*u, 2*u, u); } }
+  { const q = $('quit').style, pad = Math.max(0, (44*DPR - mh)/2), cr = ctx.canvas.getBoundingClientRect(), tf = ctx.getTransform();       // area sentuh min 44px, pas di tengah tombol
+    q.left = cr.left + (tf.e + mx - pad)/DPR + 'px'; q.top = cr.top + Math.max(0, tf.f + my - pad)/DPR + 'px'; q.width = (mw + 2*pad)/DPR + 'px'; q.height = (mh + 2*pad)/DPR + 'px'; }
+  const ty = snapA(my + mh + PXC*16);   // judul di bawah tombol Menu, tidak tertumpuk
   tag(W/2, ty, `${MODES[mode].name}${tm}${mode === 'soccer' ? '   ' + X.goals[0] + ' : ' + X.goals[1] : ''}`, INK, 15, 'center', true);
   pxText(`${t('round')} ${Math.min(match.idx+1, match.order.length)}/${match.order.length}`, W/2, ty + PXC*28, 12, '#feffec');
   if(MODES[mode].time){                             // bar waktu bersegmen: 10 kotak, mudah dibaca sekilas
